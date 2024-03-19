@@ -1,0 +1,19 @@
+<div class="login-container">
+    <form class="form-container" (ngSubmit)="onSubmit()">
+        <div class="logo-container">
+          <img src="assets/images/Logo_ENICarthage.jpg" alt="ENICARTHAGE">
+        </div>
+        <h1>Login</h1>
+        <div class="form-group" name="username/email">
+          <input type="text" id="username" name="username" placeholder="username or email" onFocus="this.placeholder=''" onBlur="this.placeholder='Username'" class="form-control" [(ngModel)]="username">
+        </div>
+        <div class="form-group" name="password">
+          <input type="password" id="password" name="password" placeholder="password" onFocus="this.placeholder=''" onBlur="this.placeholder='Password'" class="form-control" [(ngModel)]="password">
+          <a href="#" target="_blank">Forgot password</a>
+        </div>
+        <p class="error-message" *ngIf="formSubmitted && !isValid">email or password invalide</p>
+        <div class="btn-container">
+          <button type="submit" class="btn btn-primary" (click)="login()">Login</button>
+        </div>
+    </form>
+</div>
