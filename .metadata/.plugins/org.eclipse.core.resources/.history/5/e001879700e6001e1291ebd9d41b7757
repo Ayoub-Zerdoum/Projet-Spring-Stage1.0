@@ -1,0 +1,11 @@
+package com.springers.SERVICES;
+
+import java.util.List;
+
+import com.springers.ENTITIES.Professor;
+
+public interface I_Service_Professor {
+	public void ajouter_Admin(Professor ad);
+	public void supprimer_Admin(Long id);
+	public List<Professor> afficher_Admin();
+}

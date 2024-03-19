@@ -1,0 +1,23 @@
+package com.springers.SERVICES;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.springers.ENTITIES.Admin;
+import com.springers.REPOSITORIES.AdminRepo;
+
+public class Service_Admin implements I_Service_Admin{
+	@Autowired
+	AdminRepo AdRepo;
+	
+	public void ajouter_Admin(Admin ad) {
+		
+	};
+	public void supprimer_Admin(Long id) {
+		
+	};
+	public List<Admin> afficher_Admins(){
+		
+	};
+}

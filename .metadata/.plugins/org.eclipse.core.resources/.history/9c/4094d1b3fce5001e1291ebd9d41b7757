@@ -1,0 +1,9 @@
+package com.springers.REPOSITORIES;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.springers.ENTITIES.Student;
+
+public interface UserRepo extends CrudRepository<User, Long>{
+	
+}

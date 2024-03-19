@@ -1,0 +1,6 @@
+package com.springers.SERVICES;
+
+@Service
+public class AuthService {
+
+}

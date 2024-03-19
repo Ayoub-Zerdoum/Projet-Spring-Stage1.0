@@ -6,3 +6,327 @@
 2024-03-16 17:20:57,865 [Worker-9: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2024-03-16 17:20:57,869 [Worker-9: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
 2024-03-16 17:20:57,871 [Worker-9: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:17:42,506 [Worker-3: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2024-03-19 15:17:59,081 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:17:59,181 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:17:59,515 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:18:04,041 [ForkJoinPool.commonPool-worker-3] ERROR o.e.m.e.l.MavenRuntimeClasspathProvider - Illegal character in path at index 20: file:/C:/Users/Ayoub Zerdoum/Downloads/sts-4.13.0.RELEASE/plugins/org.eclipse.m2e.maven.runtime_1.18.1.20211011-2139/jars/
+java.net.URISyntaxException: Illegal character in path at index 20: file:/C:/Users/Ayoub Zerdoum/Downloads/sts-4.13.0.RELEASE/plugins/org.eclipse.m2e.maven.runtime_1.18.1.20211011-2139/jars/
+	at java.base/java.net.URI$Parser.fail(URI.java:2974)
+	at java.base/java.net.URI$Parser.checkChars(URI.java:3145)
+	at java.base/java.net.URI$Parser.parseHierarchical(URI.java:3227)
+	at java.base/java.net.URI$Parser.parse(URI.java:3175)
+	at java.base/java.net.URI.<init>(URI.java:623)
+	at java.base/java.net.URL.toURI(URL.java:1056)
+	at org.eclipse.m2e.editor.lemminx.MavenRuntimeClasspathProvider.addJarsFromBundle(MavenRuntimeClasspathProvider.java:83)
+	at org.eclipse.m2e.editor.lemminx.MavenRuntimeClasspathProvider.get(MavenRuntimeClasspathProvider.java:66)
+	at org.eclipse.m2e.editor.lemminx.MavenRuntimeClasspathProvider.get(MavenRuntimeClasspathProvider.java:1)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.HashMap$EntrySpliterator.forEachRemaining(HashMap.java:1850)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+	at org.eclipse.wildwebdeveloper.xml.internal.XMLExtensionRegistry.getXMLLSClassPathExtensions(XMLExtensionRegistry.java:81)
+	at org.eclipse.wildwebdeveloper.xml.internal.XMLLanguageServer.getExtensionJarPaths(XMLLanguageServer.java:142)
+	at org.eclipse.wildwebdeveloper.xml.internal.XMLLanguageServer.<init>(XMLLanguageServer.java:83)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at org.eclipse.core.internal.registry.osgi.RegistryStrategyOSGI.createExecutableExtension(RegistryStrategyOSGI.java:204)
+	at org.eclipse.core.internal.registry.ExtensionRegistry.createExecutableExtension(ExtensionRegistry.java:920)
+	at org.eclipse.core.internal.registry.ConfigurationElement.createExecutableExtension(ConfigurationElement.java:246)
+	at org.eclipse.core.internal.registry.ConfigurationElementHandle.createExecutableExtension(ConfigurationElementHandle.java:63)
+	at org.eclipse.lsp4e.LanguageServersRegistry$ExtensionLanguageServerDefinition.createConnectionProvider(LanguageServersRegistry.java:127)
+	at org.eclipse.lsp4e.LanguageServerWrapper.lambda$1(LanguageServerWrapper.java:222)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1760)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:373)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1182)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1655)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1622)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165)
+2024-03-19 15:18:04,046 [ForkJoinPool.commonPool-worker-3] ERROR o.e.m.e.l.MavenRuntimeClasspathProvider - Illegal character in path at index 20: file:/C:/Users/Ayoub Zerdoum/Downloads/sts-4.13.0.RELEASE/plugins/org.eclipse.m2e.maven.indexer_1.18.1.20211011-2139/jars/
+java.net.URISyntaxException: Illegal character in path at index 20: file:/C:/Users/Ayoub Zerdoum/Downloads/sts-4.13.0.RELEASE/plugins/org.eclipse.m2e.maven.indexer_1.18.1.20211011-2139/jars/
+	at java.base/java.net.URI$Parser.fail(URI.java:2974)
+	at java.base/java.net.URI$Parser.checkChars(URI.java:3145)
+	at java.base/java.net.URI$Parser.parseHierarchical(URI.java:3227)
+	at java.base/java.net.URI$Parser.parse(URI.java:3175)
+	at java.base/java.net.URI.<init>(URI.java:623)
+	at java.base/java.net.URL.toURI(URL.java:1056)
+	at org.eclipse.m2e.editor.lemminx.MavenRuntimeClasspathProvider.addJarsFromBundle(MavenRuntimeClasspathProvider.java:83)
+	at org.eclipse.m2e.editor.lemminx.MavenRuntimeClasspathProvider.get(MavenRuntimeClasspathProvider.java:68)
+	at org.eclipse.m2e.editor.lemminx.MavenRuntimeClasspathProvider.get(MavenRuntimeClasspathProvider.java:1)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.HashMap$EntrySpliterator.forEachRemaining(HashMap.java:1850)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:150)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:173)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+	at org.eclipse.wildwebdeveloper.xml.internal.XMLExtensionRegistry.getXMLLSClassPathExtensions(XMLExtensionRegistry.java:81)
+	at org.eclipse.wildwebdeveloper.xml.internal.XMLLanguageServer.getExtensionJarPaths(XMLLanguageServer.java:142)
+	at org.eclipse.wildwebdeveloper.xml.internal.XMLLanguageServer.<init>(XMLLanguageServer.java:83)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at org.eclipse.core.internal.registry.osgi.RegistryStrategyOSGI.createExecutableExtension(RegistryStrategyOSGI.java:204)
+	at org.eclipse.core.internal.registry.ExtensionRegistry.createExecutableExtension(ExtensionRegistry.java:920)
+	at org.eclipse.core.internal.registry.ConfigurationElement.createExecutableExtension(ConfigurationElement.java:246)
+	at org.eclipse.core.internal.registry.ConfigurationElementHandle.createExecutableExtension(ConfigurationElementHandle.java:63)
+	at org.eclipse.lsp4e.LanguageServersRegistry$ExtensionLanguageServerDefinition.createConnectionProvider(LanguageServersRegistry.java:127)
+	at org.eclipse.lsp4e.LanguageServerWrapper.lambda$1(LanguageServerWrapper.java:222)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1760)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:373)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1182)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1655)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1622)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165)
+2024-03-19 15:18:07,844 [Worker-3: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.springers:Stage1.0:0.0.1-SNAPSHOT @ C:\Stage1.0\backend Stage1.0\pom.xml.
+2024-03-19 15:18:11,243 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:18:11,244 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:18:11,248 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:26:04,175 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:26:04,286 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:26:04,296 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:26:32,036 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:26:32,163 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:26:32,165 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:26:41,015 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:26:41,032 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:26:41,035 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:27:16,547 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:27:16,563 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:27:16,566 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:27:24,855 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:27:24,864 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:27:24,866 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:27:25,940 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:27:25,948 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:27:25,951 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:29:23,756 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:29:23,765 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:29:23,770 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:29:49,616 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:29:49,685 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:29:49,688 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:30:32,455 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:30:32,461 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:30:32,464 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:30:43,400 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:30:43,407 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:30:43,409 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:30:44,436 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:30:44,506 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:30:44,508 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:30:55,848 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:30:55,855 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:30:55,857 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:31:59,086 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:31:59,091 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:31:59,093 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:32:00,116 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:32:00,122 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:32:00,124 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:32:26,486 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:32:26,492 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:32:26,496 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:33:34,642 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:33:34,656 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:33:34,662 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:33:35,685 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:33:35,718 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:33:35,722 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:33:59,879 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:33:59,884 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:33:59,886 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:34:46,644 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:34:46,649 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:34:46,651 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:34:58,626 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:34:58,633 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:34:58,635 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:36:01,962 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:36:02,020 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:36:02,022 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:42:29,505 [Worker-19: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:42:29,514 [Worker-19: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:42:29,516 [Worker-19: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:42:46,405 [Worker-18: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:42:46,413 [Worker-18: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:42:46,417 [Worker-18: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:49:56,163 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:49:56,194 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:49:56,198 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:50:24,029 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:50:24,067 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:50:24,069 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:51:01,544 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:51:01,558 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:51:01,560 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:51:23,639 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:51:23,649 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:51:23,652 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:53:32,239 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:53:32,246 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:53:32,248 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:54:01,669 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:54:01,679 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:54:01,682 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:54:07,263 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:54:07,272 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:54:07,274 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:54:31,725 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:54:31,736 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:54:31,742 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:54:34,151 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:54:34,158 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:54:34,160 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:54:39,838 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:54:39,844 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:54:39,846 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:58:47,261 [Worker-27: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:58:47,267 [Worker-27: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:58:47,270 [Worker-27: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 15:58:55,385 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 15:58:55,431 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 15:58:55,433 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:00:37,432 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:00:37,463 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:00:37,469 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:00:42,946 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:00:42,955 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:00:42,958 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:00:52,068 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:00:52,080 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:00:52,083 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:01:01,071 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:01:01,079 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:01:01,081 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:01:03,144 [Worker-29: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:01:03,151 [Worker-29: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:01:03,153 [Worker-29: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:01:12,050 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:01:12,065 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:01:12,067 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:01:30,929 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:01:30,938 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:01:30,940 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:02:36,357 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:02:36,366 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:02:36,368 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:04:09,165 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:04:09,173 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:04:09,176 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:04:23,393 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:04:23,404 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:04:23,406 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:04:34,258 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:04:34,265 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:04:34,267 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:04:37,366 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:04:37,374 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:04:37,376 [Worker-28: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:04:44,174 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:04:44,276 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:04:44,278 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:05:30,834 [Worker-27: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:05:30,840 [Worker-27: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:05:30,842 [Worker-27: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:08:36,352 [Worker-29: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:08:36,360 [Worker-29: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:08:36,363 [Worker-29: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:08:51,084 [Worker-32: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:08:51,097 [Worker-32: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:08:51,099 [Worker-32: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:09:38,798 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:09:38,805 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:09:38,806 [Worker-30: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:12:56,247 [Worker-39: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:12:56,255 [Worker-39: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:12:56,258 [Worker-39: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:13:01,076 [Worker-39: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:13:01,082 [Worker-39: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:13:01,088 [Worker-39: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:15:48,263 [Worker-41: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:15:48,291 [Worker-41: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:15:48,295 [Worker-41: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:15:49,358 [Worker-42: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:15:49,378 [Worker-42: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:15:49,380 [Worker-42: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:16:27,498 [Worker-43: Updating Maven Project] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2024-03-19 16:16:32,434 [Worker-43: Updating Maven Project] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.springers:Stage1.0:0.0.1-SNAPSHOT @ C:\Stage1.0\backend Stage1.0\pom.xml.
+2024-03-19 16:16:38,981 [Worker-43: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /backend Stage1.0/src/main/java
+2024-03-19 16:16:38,982 [Worker-43: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /backend Stage1.0/src/main/resources
+2024-03-19 16:16:38,983 [Worker-43: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /backend Stage1.0/src/main/resources
+2024-03-19 16:16:38,984 [Worker-43: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /backend Stage1.0/src/test/java
+2024-03-19 16:16:39,855 [Worker-43: Updating Maven Project] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 12 sec
+2024-03-19 16:16:44,793 [Worker-57: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:16:44,831 [Worker-57: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:16:44,853 [Worker-57: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:16:53,609 [Worker-59: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:16:53,610 [Worker-59: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:16:53,612 [Worker-59: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:16:58,055 [Worker-48: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:16:58,055 [Worker-48: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:16:58,057 [Worker-48: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:24:52,133 [Worker-63: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:24:52,156 [Worker-63: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:24:52,158 [Worker-63: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:38:58,239 [Worker-70: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:38:58,365 [Worker-70: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:38:58,369 [Worker-70: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:42:23,738 [Worker-75: Updating Maven Project] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2024-03-19 16:42:24,538 [Worker-75: Updating Maven Project] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.springers:Stage1.0:0.0.1-SNAPSHOT @ C:\Stage1.0\backend Stage1.0\pom.xml.
+2024-03-19 16:42:25,298 [Worker-75: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /backend Stage1.0/src/main/java
+2024-03-19 16:42:25,298 [Worker-75: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /backend Stage1.0/src/main/resources
+2024-03-19 16:42:25,298 [Worker-75: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /backend Stage1.0/src/main/resources
+2024-03-19 16:42:25,299 [Worker-75: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /backend Stage1.0/src/test/java
+2024-03-19 16:42:25,962 [Worker-75: Updating Maven Project] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 2 sec
+2024-03-19 16:42:27,387 [Worker-73: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:42:27,413 [Worker-73: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:42:27,416 [Worker-73: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:44:58,055 [Worker-75: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:44:58,086 [Worker-75: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:44:58,089 [Worker-75: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:45:51,406 [Worker-96: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:45:51,433 [Worker-96: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:45:51,436 [Worker-96: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:46:35,240 [Worker-95: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:46:35,267 [Worker-95: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:46:35,269 [Worker-95: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:46:50,767 [Worker-94: Updating Maven Project] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2024-03-19 16:46:51,474 [Worker-94: Updating Maven Project] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.springers:Stage1.0:0.0.1-SNAPSHOT @ C:\Stage1.0\backend Stage1.0\pom.xml.
+2024-03-19 16:46:52,363 [Worker-94: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /backend Stage1.0/src/main/java
+2024-03-19 16:46:52,363 [Worker-94: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /backend Stage1.0/src/main/resources
+2024-03-19 16:46:52,363 [Worker-94: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /backend Stage1.0/src/main/resources
+2024-03-19 16:46:52,364 [Worker-94: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /backend Stage1.0/src/test/java
+2024-03-19 16:46:52,810 [Worker-94: Updating Maven Project] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 2 sec
+2024-03-19 16:46:54,350 [Worker-71: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:46:54,397 [Worker-71: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:46:54,399 [Worker-71: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 16:55:06,647 [Worker-103: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 16:55:06,663 [Worker-103: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 16:55:06,664 [Worker-103: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 17:29:00,742 [Worker-110: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 17:29:00,804 [Worker-110: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 17:29:00,806 [Worker-110: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 17:31:47,737 [Worker-110: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 17:31:47,780 [Worker-110: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 17:31:47,782 [Worker-110: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 17:31:48,850 [Worker-101: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 17:31:48,856 [Worker-101: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 17:31:48,858 [Worker-101: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources
+2024-03-19 17:40:16,272 [Worker-115: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-03-19 17:40:16,284 [Worker-115: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-03-19 17:40:16,285 [Worker-115: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Stage1.0\backend Stage1.0\src\test\resources

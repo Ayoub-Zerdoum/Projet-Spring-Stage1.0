@@ -23,18 +23,18 @@ export class LoginComponent {
   } 
 
   login() {
-    const fixedUsername = 'user';
-    const fixedPassword = 'password';
-
-    // Check if the entered username and password match the fixed values
-    if (this.username === fixedUsername && this.password === fixedPassword) {
-      // Simulating a successful login
-      console.log('Login successful');
-      this.router.navigate(['/admin']);
-    } else {
-      // Simulating a login error
-      console.error('Invalid username or password');
-      this.isValid = false;
-    }
+    this.authService.login(this.username, this.password).subscribe(
+      response => {
+        // Handle successful login
+        console.log('Login successful');
+        // Navigate to the desired route (e.g., '/admin')
+        this.router.navigate(['/admin']);
+      },
+      error => {
+        // Handle login error
+        console.error('Invalid username or password');
+        this.isValid = false;
+      }
+    );
   }
 }

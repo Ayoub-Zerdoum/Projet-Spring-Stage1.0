@@ -47,8 +47,8 @@ public abstract class User implements Serializable {
 
     @NotEmpty
     @Size(max = 255)
-    @Column(name = "name")
-    private String name;
+    @Column(name = "username")
+    private String username;
 
     @NotEmpty
     @Size(max = 15)

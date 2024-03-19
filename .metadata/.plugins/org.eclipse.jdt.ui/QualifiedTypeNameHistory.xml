@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+    <fullyQualifiedTypeName name="com.springers.REPOSITORIES.UserRepo"/>
+    <fullyQualifiedTypeName name="java.util.Optional"/>
+    <fullyQualifiedTypeName name="com.springers.SERVICES.AuthService"/>
+    <fullyQualifiedTypeName name="com.springers.ENTITIES.User"/>
+    <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
+    <fullyQualifiedTypeName name="java.util.Map"/>
+    <fullyQualifiedTypeName name="com.springers.ENTITIES.Professor"/>
+    <fullyQualifiedTypeName name="com.springers.REPOSITORIES.AdminRepo"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+    <fullyQualifiedTypeName name="com.springers.SERVICES.Service_Admin"/>
+    <fullyQualifiedTypeName name="com.springers.ENTITIES.Admin"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.DeleteMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="org.springframework.context.annotation.Bean"/>
+    <fullyQualifiedTypeName name="org.springframework.web.filter.CorsFilter"/>
+    <fullyQualifiedTypeName name="org.springframework.web.cors.UrlBasedCorsConfigurationSource"/>
+    <fullyQualifiedTypeName name="org.springframework.web.cors.CorsConfiguration"/>
+</qualifiedTypeNameHistroy>
