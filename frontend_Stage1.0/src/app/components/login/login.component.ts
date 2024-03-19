@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { AuthenticationService } from '../../services/authentication.service';
 
 
@@ -13,7 +15,7 @@ export class LoginComponent {
   isValid: boolean = false;
   formSubmitted: boolean = false;
 
-  constructor(private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService,private router: Router) {}
 
   onSubmit() {
     this.login();
@@ -28,7 +30,7 @@ export class LoginComponent {
     if (this.username === fixedUsername && this.password === fixedPassword) {
       // Simulating a successful login
       console.log('Login successful');
-      this.isValid = true;
+      this.router.navigate(['/admin']);
     } else {
       // Simulating a login error
       console.error('Invalid username or password');
