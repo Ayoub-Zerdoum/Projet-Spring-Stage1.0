@@ -1,0 +1,84 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background-color: var(--main-color);
+    color: #b5b6c6;
+    font-family: "Roboto Mono", monospace;
+    height: 100vh;
+}
+
+.break{
+    width: 95%;
+    height: 1px;
+    background-color: rgba(181,182,198,0.5);
+    margin: 2px auto;
+}
+
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 10px;
+}
+
+.logo img {
+    width: 90%;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+
+.user-info i{
+    font-size: 25px;
+}
+.username {
+    margin-left: 10px;
+}
+
+.user-actions{
+    display: flex;
+    flex-direction: column;
+    text-transform: uppercase;
+    padding-left: 0;
+}
+
+.user-actions li {
+    margin: 0 5px;
+    list-style: none;
+    padding: 5px 0px 5px 10px;
+    color: #b5b6c6;
+}
+
+.user-actions li.active{
+    margin-right: 0;
+    background-color: #b5b6c6;
+    color: var(--main-color);
+}
+
+.user-actions li:not(.active):hover{
+    background-color: var(--main-color-dark);
+}
+
+.user-actions li a {
+    text-decoration: none;
+    font-size: 18px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: inherit;
+}
+
+.user-actions li a i{
+    font-size: 25px;
+    text-align: center;
+    width: 25px;
+}
+
+.user-actions li a span{
+    padding-left: 20px;
+}

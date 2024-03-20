@@ -1,7 +1,12 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
 
 :root {
-  --main-color: #654aff; 
-  --main-color-rgb:101,74,255;
+  --main-color2: #654aff; 
+  --main-color-rgb2:101,74,255;
+  --main-color:#333561;
+  --main-color-rgb:51,53,97;
+  --main-color-dark:#292946;
+  --text-color:#b5b6c6;
 }
 
 

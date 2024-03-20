@@ -1,0 +1,38 @@
+<div class="wrapper">
+   <div class="filter-options">
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>
+        <div class="filter">
+            <i class="fa-solid fa-filter"></i>
+            <span>filter</span>
+        </div>
+    </div> 
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Telephone</th>
+            <th>Status</th>
+            <th>Specialité</th>
+            <th>Date de Naissance</th>
+            <th>Account</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let student of students">
+                <td>{{ student.username }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.telephone }}</td>
+                <td>{{ student.status }}</td>
+                <td>{{ student.specialite }}</td>
+                <td>{{ student.dateOfBirth }}</td>
+                <td>{{ student.account }}</td>
+                <td> action </td>
+              </tr>
+        </tbody>
+      </table>
+</div>

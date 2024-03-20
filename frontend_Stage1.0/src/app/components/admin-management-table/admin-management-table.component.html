@@ -1,0 +1,35 @@
+<div class="wrapper">
+    <div class="filter-options">
+         <form class="d-flex" role="search">
+             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+             <button class="btn btn-outline-primary" type="submit">Search</button>
+         </form>
+         <div class="filter">
+             <i class="fa-solid fa-filter"></i>
+             <span>filter</span>
+         </div>
+     </div> 
+     <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Telephone</th>
+            <th>Privilege</th>
+            <th>Account Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let admin of admins">
+            <td>{{ admin.username }}</td>
+            <td>{{ admin.email }}</td>
+            <td>{{ admin.telephone }}</td>
+            <td>{{ admin.privilege }}</td>
+            <td>{{ admin.accountStatus }}</td>
+            <td> <!-- Actions column content --> </td>
+          </tr>
+        </tbody>
+      </table>
+ </div>
+ 

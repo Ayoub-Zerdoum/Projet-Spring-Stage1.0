@@ -1,0 +1,4 @@
+.container-fluid{
+    --bs-gutter-x: 0;
+    overflow-x: hidden;
+}

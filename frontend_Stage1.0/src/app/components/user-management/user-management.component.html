@@ -1,0 +1,13 @@
+<h1 class="title">User Mangement</h1>
+<div class="container">
+    <div class="menu">
+        <ul class="users-type">
+            <li class="user-type" (click)="showTable('student')" [class.active]="selectedType === 'student'">Student</li>
+            <li class="user-type" (click)="showTable('admin')" [class.active]="selectedType === 'admin'">Admin</li>
+            <li class="user-type" (click)="showTable('professor')" [class.active]="selectedType === 'professor'">Professor</li>
+        </ul>
+    </div>
+    <app-student-management-table *ngIf="selectedType === 'student'"></app-student-management-table>
+    <app-professor-management-table *ngIf="selectedType === 'professor'"></app-professor-management-table>
+    <app-admin-management-table *ngIf="selectedType === 'admin'"></app-admin-management-table>
+</div>

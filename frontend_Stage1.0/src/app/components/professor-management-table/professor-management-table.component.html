@@ -1,0 +1,35 @@
+<div class="wrapper">
+    <div class="filter-options">
+         <form class="d-flex" role="search">
+             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+             <button class="btn btn-outline-primary" type="submit">Search</button>
+         </form>
+         <div class="filter">
+             <i class="fa-solid fa-filter"></i>
+             <span>filter</span>
+         </div>
+     </div> 
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Telephone</th>
+            <th>Department</th>
+            <th>Account Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let professor of professors">
+            <td>{{ professor.username }}</td>
+            <td>{{ professor.email }}</td>
+            <td>{{ professor.telephone }}</td>
+            <td>{{ professor.department }}</td>
+            <td>{{ professor.accountStatus }}</td>
+            <td> <!-- Actions column content --> </td>
+        </tr>
+        </tbody>
+    </table>
+ </div>
+ 
