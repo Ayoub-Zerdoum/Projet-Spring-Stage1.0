@@ -25,6 +25,10 @@ export class UserManagementService {
     return this.http.get<any[]>(`${this.baseUrl}/students/all`);
   }
 
+  searchStudentsByUsername(usernameQuery: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/students/search-username?username=${usernameQuery}`);
+  }
+
   addAdmin(admin: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/admins/add`, admin);
   }

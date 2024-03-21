@@ -1,8 +1,23 @@
 <div class="wrapper">
    <div class="filter-options">
         <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-primary" type="submit">Search</button>
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [formControl]="searchInput">
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary search-btn" (click)="triggerSearch()">SEARCH BY {{ searchOption | uppercase }}</button>
+              <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu">
+                <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
+                  <input type="radio" class="btn-check" name="search-radio-student" id="username-radio-student" autocomplete="off" checked (change)="updateSearchOption('Username')">
+                  <label class="btn btn-outline-success" for="username-radio-student">Username</label>
+                  <input type="radio" class="btn-check" name="search-radio-student" id="email-radio-student" autocomplete="off" (change)="updateSearchOption('Email')">
+                  <label class="btn btn-outline-success" for="email-radio-student">Email</label>
+                  <input type="radio" class="btn-check" name="search-radio-student" id="tel-radio-student" autocomplete="off" (change)="updateSearchOption('Telephone')">
+                  <label class="btn btn-outline-success" for="tel-radio-student">Telephone</label>
+                </div>
+              </ul>
+            </div>
         </form>
         <div class="filter">
             <i class="fa-solid fa-filter"></i>

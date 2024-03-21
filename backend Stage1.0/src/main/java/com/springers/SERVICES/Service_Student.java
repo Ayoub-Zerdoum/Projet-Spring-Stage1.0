@@ -28,4 +28,11 @@ public class Service_Student implements I_Service_Student{
 		List<Student> students = (List<Student>) StdRepo.findAll();
 		return students;
 	}
+	
+	@Override
+	public List<Student> searchStudentsByUsername(String usernameQuery) {
+		List<Student> students = (List<Student>) StdRepo.findByUsernameContainingIgnoreCase(usernameQuery);
+		return students;
+    }
 }
+

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springers.ENTITIES.Student;
@@ -38,6 +39,12 @@ public class StudentController {
     @GetMapping("/all")
     public ResponseEntity<List<Student>> getAllStudents() {
         List<Student> students = studentService.afficher_Students();
+        return ResponseEntity.ok(students);
+    }
+    
+    @GetMapping("/search-username")
+    public ResponseEntity<List<Student>> searchStudentsByUsername(@RequestParam("username") String usernameQuery) {
+        List<Student> students = studentService.searchStudentsByUsername(usernameQuery);
         return ResponseEntity.ok(students);
     }
 }
