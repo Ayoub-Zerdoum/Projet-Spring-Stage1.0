@@ -21,7 +21,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let professor of professors">
+        <tr *ngFor="let professor of profs$ |async">
             <td>{{ professor.username }}</td>
             <td>{{ professor.email }}</td>
             <td>{{ professor.telephone }}</td>

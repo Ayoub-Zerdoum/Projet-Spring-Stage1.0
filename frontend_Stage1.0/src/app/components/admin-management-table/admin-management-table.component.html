@@ -21,7 +21,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let admin of admins">
+          <tr *ngFor="let admin of admins$ | async">
             <td>{{ admin.username }}</td>
             <td>{{ admin.email }}</td>
             <td>{{ admin.telephone }}</td>

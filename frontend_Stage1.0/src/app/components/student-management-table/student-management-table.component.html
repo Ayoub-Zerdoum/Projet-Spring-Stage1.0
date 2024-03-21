@@ -23,14 +23,14 @@
           </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let student of students">
+            <tr *ngFor="let student of students$ |async">
                 <td>{{ student.username }}</td>
                 <td>{{ student.email }}</td>
                 <td>{{ student.telephone }}</td>
-                <td>{{ student.status }}</td>
-                <td>{{ student.specialite }}</td>
-                <td>{{ student.dateOfBirth }}</td>
-                <td>{{ student.account }}</td>
+                <td>{{ student.studentStatus }}</td>
+                <td>{{ student.specialization }}</td>
+                <td>{{ student.dateOfBirth | date: 'yyyy-MM-dd' }}</td>
+                <td>{{ student.accountStatus }}</td>
                 <td> action </td>
               </tr>
         </tbody>

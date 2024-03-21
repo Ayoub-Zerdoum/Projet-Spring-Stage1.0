@@ -1,4 +1,7 @@
 import { Component , OnInit} from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { UserManagementService } from '../../services/user-management.service';
 
 @Component({
   selector: 'app-student-management-table',
@@ -6,11 +9,11 @@ import { Component , OnInit} from '@angular/core';
   styleUrls: ['./student-management-table.component.css']
 })
 export class StudentManagementTableComponent implements OnInit{
-  students: any[] = [
-    { username: 'student1', email: 'student1@example.com', telephone: '1234567890', status: 'Active', specialite: 'Computer Science', dateOfBirth: '1990-01-01', account: 'Active' },
-    { username: 'student2', email: 'student2@example.com', telephone: '9876543210', status: 'Inactive', specialite: 'Mathematics', dateOfBirth: '1995-05-05', account: 'Inactive' }
-  ];
+  students$!: Observable<any[]>;
+
+  constructor(private userService: UserManagementService) { }
 
   ngOnInit(): void {
+    this.students$ = this.userService.getAllStudents();
   }
 }
