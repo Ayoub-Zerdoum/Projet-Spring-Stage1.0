@@ -18,7 +18,7 @@ class StudentTest {
 			    .username("John Doe")
 			    .telephone("1234567890")
 			    .accountStatus(AccountStatus.ACTIVE)
-			    .studentStatus(StudentStatus.NIVEAU_1)
+			    .studentStatus(StudentStatus.ENROLLED)
 			    .specialization(Specialization.INFORMATIQUE)
 			    .dateOfBirth(new Date())
 			    .build();
@@ -30,7 +30,7 @@ class StudentTest {
         assertEquals("John Doe", student.getUsername(), "Name should be John Doe");
         assertEquals("1234567890", student.getTelephone(), "Telephone should be 1234567890");
         assertEquals(AccountStatus.ACTIVE, student.getAccountStatus(), "Account status should be ACTIVE");
-        assertEquals(StudentStatus.NIVEAU_1, student.getStudentStatus(), "Student status should be NIVEAU_1");
+        assertEquals(StudentStatus.ENROLLED, student.getStudentStatus(), "Student status should be NIVEAU_1");
         assertEquals(Specialization.INFORMATIQUE, student.getSpecialization(), "Specialization should be INFORMATIQUE");
         
      
