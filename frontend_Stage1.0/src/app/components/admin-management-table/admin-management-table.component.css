@@ -4,3 +4,13 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+.dropdown-menu{
+    width: fit-content;
+    min-width: fit-content;
+    padding: 0;
+}
+
+.search-btn{
+    min-width: 200px;
+}

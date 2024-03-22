@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StudentRepo extends CrudRepository<Student, Long>{
 	List<Student> findByUsernameContainingIgnoreCase(String usernameQuery);
+	List<Student> findByEmailContainingIgnoreCase(String email);
+    List<Student> findByTelephoneContainingIgnoreCase(String telephone);
 }

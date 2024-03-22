@@ -47,4 +47,16 @@ public class StudentController {
         List<Student> students = studentService.searchStudentsByUsername(usernameQuery);
         return ResponseEntity.ok(students);
     }
+    
+    @GetMapping("/search-email")
+    public ResponseEntity<List<Student>> searchStudentsByEmail(@RequestParam("email") String emailQuery) {
+        List<Student> students = studentService.searchStudentsByEmail(emailQuery);
+        return ResponseEntity.ok(students);
+    }
+
+    @GetMapping("/search-telephone")
+    public ResponseEntity<List<Student>> searchStudentsByTelephone(@RequestParam("telephone") String telephoneQuery) {
+        List<Student> students = studentService.searchStudentsByTelephone(telephoneQuery);
+        return ResponseEntity.ok(students);
+    }
 }

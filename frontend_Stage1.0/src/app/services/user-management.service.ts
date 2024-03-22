@@ -29,6 +29,38 @@ export class UserManagementService {
     return this.http.get<any[]>(`${this.baseUrl}/students/search-username?username=${usernameQuery}`);
   }
 
+  searchStudentsByEmail(emailQuery: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/students/search-email?email=${emailQuery}`);
+  }
+
+  searchStudentsByTelephone(telephoneQuery: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/students/search-telephone?telephone=${telephoneQuery}`);
+  }
+
+  searchAdminsByUsername(usernameQuery: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/admins/search-username?username=${usernameQuery}`);
+  }
+
+  searchAdminsByEmail(emailQuery: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/admins/search-email?email=${emailQuery}`);
+  }
+
+  searchAdminsByTelephone(telephoneQuery: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/admins/search-telephone?telephone=${telephoneQuery}`);
+  }
+
+  searchProfessorsByUsername(usernameQuery: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/professors/search-username?username=${usernameQuery}`);
+  }
+
+  searchProfessorsByEmail(emailQuery: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/professors/search-email?email=${emailQuery}`);
+  }
+
+  searchProfessorsByTelephone(telephoneQuery: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/professors/search-telephone?telephone=${telephoneQuery}`);
+  }
+
   addAdmin(admin: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/admins/add`, admin);
   }

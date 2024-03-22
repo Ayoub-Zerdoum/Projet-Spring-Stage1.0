@@ -9,4 +9,6 @@ public interface I_Service_Student {
 	public void supprimer_Student(Long id);
 	public List<Student> afficher_Students();
 	public List<Student> searchStudentsByUsername(String usernameQuery);
+	public List<Student> searchStudentsByEmail(String emailQuery);
+	public List<Student> searchStudentsByTelephone(String telephoneQuery);
 }

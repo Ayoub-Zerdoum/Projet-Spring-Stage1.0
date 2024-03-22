@@ -28,4 +28,19 @@ public class Service_Professor implements I_Service_Professor{
 		List<Professor> students = (List<Professor>) ProfRepo.findAll();
 		return students;
 	}
+	
+	@Override
+	public List<Professor> searchProfessorsByUsername(String usernameQuery) {
+	    return ProfRepo.findByUsernameContainingIgnoreCase(usernameQuery);
+	}
+
+	@Override
+	public List<Professor> searchProfessorsByEmail(String emailQuery) {
+	    return ProfRepo.findByEmailContainingIgnoreCase(emailQuery);
+	}
+
+	@Override
+	public List<Professor> searchProfessorsByTelephone(String telephoneQuery) {
+	    return ProfRepo.findByTelephoneContainingIgnoreCase(telephoneQuery);
+	}
 }

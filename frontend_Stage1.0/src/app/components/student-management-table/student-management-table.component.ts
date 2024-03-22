@@ -1,7 +1,6 @@
 import { Component , OnInit} from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { of } from 'rxjs';
 
 
 
@@ -36,18 +35,19 @@ export class StudentManagementTableComponent implements OnInit{
   searchStudents(searchQuery: string, option: string) {
     console.log('Searching students with query:', searchQuery);
     if (searchQuery) {
-      if (option === 'Username') {
-        this.userService.searchStudentsByUsername(searchQuery).subscribe({
-          next: students => {
-            console.log('Search result:', students);
-            this.students$ = of(students);
-          },
-          error: error => {
-            console.error('Error searching students:', error);
-          }
-        });
-      } else {
-        // Implement other search options here if needed
+      switch(option) {
+        case 'Username':
+          this.students$ = this.userService.searchStudentsByUsername(searchQuery);
+          break;
+        case 'Email':
+          this.students$ = this.userService.searchStudentsByEmail(searchQuery);
+          break;
+        case 'Telephone':
+          this.students$ = this.userService.searchStudentsByTelephone(searchQuery);
+          break;
+        default:
+          this.students$ = this.userService.getAllStudents();
+          break;
       }
     } else {
       this.students$ = this.userService.getAllStudents(); // Reset to all students if search query is empty

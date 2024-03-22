@@ -33,6 +33,9 @@ public class Poster {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "poster_id")
     private Long id;
+	 
+	@Column(name = "title")
+	private String title;
 
     @Column(name = "pdf_path")
     private String pdfPath;

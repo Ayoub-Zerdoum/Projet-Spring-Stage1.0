@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springers.ENTITIES.Professor;
@@ -39,5 +40,23 @@ public class ProfessorController {
     public ResponseEntity<List<Professor>> getAllProfs() {
         List<Professor> profs = professorService.afficher_Profs();
         return ResponseEntity.ok(profs);
+    }
+    
+    @GetMapping("/search-username")
+    public ResponseEntity<List<Professor>> searchProfessorsByUsername(@RequestParam("username") String usernameQuery) {
+        List<Professor> professors = professorService.searchProfessorsByUsername(usernameQuery);
+        return ResponseEntity.ok(professors);
+    }
+
+    @GetMapping("/search-email")
+    public ResponseEntity<List<Professor>> searchProfessorsByEmail(@RequestParam("email") String emailQuery) {
+        List<Professor> professors = professorService.searchProfessorsByEmail(emailQuery);
+        return ResponseEntity.ok(professors);
+    }
+    
+    @GetMapping("/search-telephone")
+    public ResponseEntity<List<Professor>> searchProfessorsByTelephone(@RequestParam("telephone") String telephoneQuery) {
+        List<Professor> professors = professorService.searchProfessorsByTelephone(telephoneQuery);
+        return ResponseEntity.ok(professors);
     }
 }

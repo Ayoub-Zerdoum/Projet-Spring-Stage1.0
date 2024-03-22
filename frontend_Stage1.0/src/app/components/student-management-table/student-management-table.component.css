@@ -14,3 +14,20 @@
 .search-btn{
     min-width: 200px;
 }
+
+.filter{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-family: "Roboto Mono", monospace;
+    color: var(--main-color);
+    cursor: pointer;
+}
+
+.filter i{
+    font-size: 25px;
+}
+
+.filter:hover i{
+    transform: scale(1.05);
+}

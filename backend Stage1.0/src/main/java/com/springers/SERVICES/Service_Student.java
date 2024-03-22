@@ -34,5 +34,15 @@ public class Service_Student implements I_Service_Student{
 		List<Student> students = (List<Student>) StdRepo.findByUsernameContainingIgnoreCase(usernameQuery);
 		return students;
     }
+
+	@Override
+	public List<Student> searchStudentsByEmail(String emailQuery) {
+        return StdRepo.findByEmailContainingIgnoreCase(emailQuery);
+    }
+
+	@Override
+    public List<Student> searchStudentsByTelephone(String telephoneQuery) {
+        return StdRepo.findByTelephoneContainingIgnoreCase(telephoneQuery);
+    }
 }
 
