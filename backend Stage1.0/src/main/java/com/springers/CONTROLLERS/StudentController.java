@@ -1,8 +1,10 @@
 package com.springers.CONTROLLERS;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,5 +60,21 @@ public class StudentController {
     public ResponseEntity<List<Student>> searchStudentsByTelephone(@RequestParam("telephone") String telephoneQuery) {
         List<Student> students = studentService.searchStudentsByTelephone(telephoneQuery);
         return ResponseEntity.ok(students);
+    }
+    
+    @GetMapping("/search-date-of-birth")
+    public ResponseEntity<List<Student>> searchStudentsByDateOfBirth(@RequestParam("dateOfBirth") String dateOfBirthQuery) {
+        List<Student> students = studentService.searchStudentsByDateOfBirth(dateOfBirthQuery);
+        return ResponseEntity.ok(students);
+    }
+    
+    @GetMapping("/filter")
+    public ResponseEntity<List<Student>> filterStudents(@RequestParam(required = false) String studentStatus,
+                                                         @RequestParam(required = false) String specialization,
+                                                         @RequestParam(required = false) String accountStatus,
+                                                         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dobMin,
+                                                         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dobMax) {
+        List<Student> filteredStudents = studentService.filterStudents(studentStatus, specialization, accountStatus, dobMin, dobMax);
+        return ResponseEntity.ok(filteredStudents);
     }
 }

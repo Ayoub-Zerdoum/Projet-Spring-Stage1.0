@@ -1,7 +1,8 @@
 <div class="wrapper">
    <div class="filter-options">
-        <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [formControl]="searchInput">
+        <form class="d-flex search-form" role="search">
+            <input *ngIf="searchOption !== 'DateOfBirth'" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [formControl]="searchInput">
+            <input *ngIf="searchOption === 'DateOfBirth'" class="form-control me-2" type="date" placeholder="Search by Date of Birth" aria-label="Search by Date of Birth" [formControl]="searchInput">
             <div class="btn-group">
               <button type="button" class="btn btn-primary search-btn" (click)="triggerSearch()">SEARCH BY {{ searchOption | uppercase }}</button>
               <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
@@ -15,13 +16,16 @@
                   <label class="btn btn-outline-success" for="email-radio-student">Email</label>
                   <input type="radio" class="btn-check" name="search-radio-student" id="tel-radio-student" autocomplete="off" (change)="updateSearchOption('Telephone')">
                   <label class="btn btn-outline-success" for="tel-radio-student">Telephone</label>
+                  <input type="radio" class="btn-check" name="search-radio-student" id="dob-radio-student" autocomplete="off" (change)="updateSearchOption('DateOfBirth')">
+                  <label class="btn btn-outline-success" for="dob-radio-student">Date of Birth</label>
                 </div>
               </ul>
             </div>
         </form>
-        <div class="filter" data-bs-toggle="modal" data-bs-target="#StudentFilterModal">
+        <div class="filter" [ngClass]="{'changed': filterChanged}" data-bs-toggle="modal" data-bs-target="#StudentFilterModal">
             <i class="fa-solid fa-filter"></i>
             <span>filter</span>
+            <div class="filter-circle">{{ activeFilters }}</div>
         </div>
         <!-- Modal -->
         <div class="modal fade" id="StudentFilterModal" tabindex="-1" aria-labelledby="StudentFilterModalLabel" aria-hidden="true">
@@ -32,11 +36,67 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                ...
+                <form>
+                  <label>Status:</label><br>
+                  <div class="mb-3 d-flex justify-content-center">
+                    <input type="radio" class="btn-check" name="filter-radio-status-student" id="filter-student-enrolled" autocomplete="off" [checked]="selectedStatusFilter === 'ENROLLED'" (click)="toggleStatusFilter('ENROLLED')">
+                    <label class="btn btn-outline-success mx-1" for="filter-student-enrolled">ENROllED</label>
+                    <input type="radio" class="btn-check" name="filter-radio-status-student" id="filter-student-gradue" autocomplete="off" [checked]="selectedStatusFilter === 'GRADUE'" (click)="toggleStatusFilter('GRADUE')">
+                    <label class="btn btn-outline-success mx-1" for="filter-student-gradue">GRADUE</label>
+                  </div>
+                  <label>Specialité:</label><br>
+                  <div class="mb-3 d-grid justify-content-center spec-grid">
+                      <input type="radio" class="btn-check" name="filter-radio-specialization-student" id="filter-student-informatique" autocomplete="off" [checked]="selectedSpecialization === 'INFORMATIQUE'" (click)="toggleSpecialization('INFORMATIQUE')">
+                      <label class="btn btn-outline-success mx-1 my-1" for="filter-student-informatique">INFORMATIQUE</label>
+                      <input type="radio" class="btn-check" name="filter-radio-specialization-student" id="filter-student-mecatronique" autocomplete="off" [checked]="selectedSpecialization === 'MECATRONIQUE'" (click)="toggleSpecialization('MECATRONIQUE')">
+                      <label class="btn btn-outline-success mx-1 my-1" for="filter-student-mecatronique">MECATRONIQUE</label>
+                      <input type="radio" class="btn-check" name="filter-radio-specialization-student" id="filter-student-genie-industriel" autocomplete="off" [checked]="selectedSpecialization === 'GENIE_INDUSTRIEL'" (click)="toggleSpecialization('GENIE_INDUSTRIEL')">
+                      <label class="btn btn-outline-success mx-1 my-1" for="filter-student-genie-industriel">GENIE INDUSTRIEL</label>
+                      <input type="radio" class="btn-check" name="filter-radio-specialization-student" id="filter-student-genie-infotronique" autocomplete="off" [checked]="selectedSpecialization === 'GENIE_INFOTRONIQUE'" (click)="toggleSpecialization('GENIE_INFOTRONIQUE')">
+                      <label class="btn btn-outline-success mx-1 my-1" for="filter-student-genie-infotronique">GENIE INFOTRONIQUE</label>
+                  </div>
+                  <label>Account Status:</label><br>
+                  <div class="mb-3">
+                    <div class="mb-3 d-flex justify-content-center">
+                      <input type="radio" class="btn-check" name="filter-radio-account-status" id="filter-account-active" autocomplete="off" [checked]="selectedAccountStatusFilter === 'ACTIVE'" (click)="toggleAccountStatusFilter('ACTIVE')">
+                      <label class="btn btn-outline-success mx-1" for="filter-account-active">ACTIVE</label>
+                      <input type="radio" class="btn-check" name="filter-radio-account-status" id="filter-account-suspended" autocomplete="off" [checked]="selectedAccountStatusFilter === 'SUSPENDED'" (click)="toggleAccountStatusFilter('SUSPENDED')">
+                      <label class="btn btn-outline-success mx-1" for="filter-account-suspended">SUSPENDED</label>
+                    </div>
+                  </div>
+                  <label>Date de Naissance:</label><br>
+                  <div class="mb-3 d-flex justify-content-between align-items-center">
+                    <button class="btn btn-secondary" (click)="resetDateFilters()">Reset Dates</button>
+                    <div class="mb-9 d-flex justify-content-center flex-wrap">
+                      <div class="d-flex flex-column justify-content-center mx-1" style="width: 40%;">
+                        <label for="dobMin">date naissance min</label>
+                        <input type="date" class="form-control" name="dobMin" [(ngModel)]="minDOB" (change)="updateActiveFilters()">
+                      </div>
+                      <div class="d-flex flex-column justify-content-center mx-1" style="width: 40%;">
+                        <label for="dobMin">date naissance max</label>
+                        <input type="date" class="form-control mx-1" name="dobMax" [(ngModel)]="maxDOB" (change)="updateActiveFilters()">
+                      </div>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+                        
+                        
+                        <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
+                          <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                        </symbol>
+                      </svg>
+                      <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="showDateAlert">
+                        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                        <div>
+                          An example warning alert with an icon
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </form>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" (click)="applyFilters()">Apply Filters</button>
               </div>
             </div>
           </div>

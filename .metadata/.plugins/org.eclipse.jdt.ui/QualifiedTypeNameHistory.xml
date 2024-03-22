@@ -27,4 +27,13 @@
     <fullyQualifiedTypeName name="com.springers.SERVICES.Service_Student"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
+    <fullyQualifiedTypeName name="java.sql.Date"/>
+    <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.Query"/>
+    <fullyQualifiedTypeName name="org.springframework.data.repository.query.Param"/>
+    <fullyQualifiedTypeName name="org.springframework.format.annotation.DateTimeFormat"/>
+    <fullyQualifiedTypeName name="java.time.LocalDate"/>
+    <fullyQualifiedTypeName name="com.springers.ENTITIES.AccountStatus"/>
+    <fullyQualifiedTypeName name="com.springers.ENTITIES.StudentStatus"/>
+    <fullyQualifiedTypeName name="com.springers.ENTITIES.Specialization"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>

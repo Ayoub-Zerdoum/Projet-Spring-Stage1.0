@@ -1,0 +1,17 @@
+package com.springers.REPOSITORIES;
+
+import com.springers.ENTITIES.Student;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface StudentRepo extends CrudRepository<Student, Long>{
+	List<Student> findByUsernameContainingIgnoreCase(String usernameQuery);
+	List<Student> findByEmailContainingIgnoreCase(String email);
+    List<Student> findByTelephoneContainingIgnoreCase(String telephone);
+	List<Student> findByDateOfBirth(Date dateOfBirth);
+}

@@ -3,7 +3,9 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    height: 80px;
 }
+
 
 .dropdown-menu{
     width: fit-content;
@@ -12,7 +14,7 @@
 }
 
 .search-btn{
-    min-width: 200px;
+    min-width: 210px;
 }
 
 .filter{
@@ -20,8 +22,11 @@
     gap: 10px;
     align-items: center;
     font-family: "Roboto Mono", monospace;
-    color: var(--main-color);
+    color: white;
     cursor: pointer;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: green;
 }
 
 .filter i{
@@ -30,4 +35,32 @@
 
 .filter:hover i{
     transform: scale(1.05);
+}
+
+.spec-grid{
+    grid-template-columns: 1fr 1fr;
+}
+
+.filter-circle{
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: var(--main-color-dark);
+    border-radius: 50%;
+}
+
+.filter.changed{
+    background-color: var(--main-color);
+}
+
+.alert{
+    height: 50px;
+    margin-top: 10px;
+}
+.alert svg{
+    height: 20px;
+    width: 20px;
 }

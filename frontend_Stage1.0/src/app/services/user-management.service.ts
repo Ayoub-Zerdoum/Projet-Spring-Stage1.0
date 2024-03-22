@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
@@ -35,6 +35,20 @@ export class UserManagementService {
 
   searchStudentsByTelephone(telephoneQuery: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/students/search-telephone?telephone=${telephoneQuery}`);
+  }
+
+  searchStudentsByDateOfBirth(dateOfBirthQuery: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/students/search-date-of-birth?dateOfBirth=${dateOfBirthQuery}`);
+  }
+
+  applyFilters(filters: any): Observable<any> {
+    let params = new HttpParams();
+    Object.keys(filters).forEach(key => {
+      if (filters[key] !== undefined) {
+        params = params.set(key, filters[key]);
+      }
+    });
+    return this.http.get(`${this.baseUrl}/students/filter`, { params });
   }
 
   searchAdminsByUsername(usernameQuery: string): Observable<any[]> {

@@ -24,11 +24,12 @@ public class Student extends User {
 	private static final long serialVersionUID = 1L;
 	@Enumerated(EnumType.STRING)
     private StudentStatus studentStatus;
-
+	
     @Enumerated(EnumType.STRING)
     private Specialization specialization;
 
     @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
     
     @OneToMany(mappedBy = "studentReq")
