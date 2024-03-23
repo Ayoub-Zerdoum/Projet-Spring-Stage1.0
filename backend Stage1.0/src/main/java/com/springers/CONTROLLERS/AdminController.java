@@ -60,4 +60,11 @@ public class AdminController {
         List<Admin> admins = adminService.searchAdminsByTelephone(telephoneQuery);
         return ResponseEntity.ok(admins);
     }
+    
+    @GetMapping("/filter")
+    public ResponseEntity<List<Admin>> filterAdmins(@RequestParam(required = false) String privilege,
+                                                    @RequestParam(required = false) String accountStatus) {
+        List<Admin> filteredAdmins = adminService.filterAdmins(privilege, accountStatus);
+        return ResponseEntity.ok(filteredAdmins);
+    }
 }

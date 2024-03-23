@@ -19,10 +19,51 @@
               </ul>
             </div>
         </form>
-         <div class="filter">
-             <i class="fa-solid fa-filter"></i>
-             <span>filter</span>
-         </div>
+        <div class="filter" [ngClass]="{'changed': filterChanged}" data-bs-toggle="modal" data-bs-target="#StudentFilterModal">
+          <i class="fa-solid fa-filter"></i>
+          <span>filter</span>
+          <div class="filter-circle">{{ activeFilters }}</div>
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="StudentFilterModal" tabindex="-1" aria-labelledby="StudentFilterModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="StudentFilterModalLabel">Filter Students</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <label>Privilege:</label><br>
+                <div class="mb-3 d-flex justify-content-center">
+                  <input type="radio" class="btn-check" name="filter-radio-department" id="filter-professor-INFO" autocomplete="off" [checked]="selectedDepartmentFilter === 'INFO'" (click)="toggleDepartmentFilter('INFO')">
+                  <label class="btn btn-outline-success mx-1 my-1" for="filter-professor-INFO">INFO</label>
+
+                  <input type="radio" class="btn-check" name="filter-radio-department" id="filter-professor-ELEC" autocomplete="off" [checked]="selectedDepartmentFilter === 'ELEC'" (click)="toggleDepartmentFilter('ELEC')">
+                  <label class="btn btn-outline-success mx-1 my-1" for="filter-professor-ELEC">ELEC</label>
+
+                  <input type="radio" class="btn-check" name="filter-radio-department" id="filter-professor-INDUS" autocomplete="off" [checked]="selectedDepartmentFilter === 'INDUS'" (click)="toggleDepartmentFilter('INDUS')">
+                  <label class="btn btn-outline-success mx-1 my-1" for="filter-professor-INDUS">INDUS</label>
+    
+                </div>
+                <label>Account Status:</label><br>
+                <div class="mb-3">
+                  <div class="mb-3 d-flex justify-content-center">
+                    <input type="radio" class="btn-check" name="filter-radio-account-status" id="filter-account-active" autocomplete="off" [checked]="selectedAccountStatusFilter === 'ACTIVE'" (click)="toggleAccountStatusFilter('ACTIVE')">
+                    <label class="btn btn-outline-success mx-1" for="filter-account-active">ACTIVE</label>
+                    <input type="radio" class="btn-check" name="filter-radio-account-status" id="filter-account-suspended" autocomplete="off" [checked]="selectedAccountStatusFilter === 'SUSPENDED'" (click)="toggleAccountStatusFilter('SUSPENDED')">
+                    <label class="btn btn-outline-success mx-1" for="filter-account-suspended">SUSPENDED</label>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" (click)="applyFilters()">Apply Filters</button>
+            </div>
+          </div>
+        </div>
+      </div>
      </div> 
     <table class="table table-striped">
         <thead>

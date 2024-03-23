@@ -139,7 +139,7 @@ export class StudentManagementTableComponent implements OnInit{
     if (this.checkDateRange()) {
       this.searchInput.setValue('');
       this.filterChanged = false;
-      this.students$ = this.userService.applyFilters(filters);
+      this.students$ = this.userService.filterStudents(filters);
     }
   }
 
@@ -163,7 +163,8 @@ export class StudentManagementTableComponent implements OnInit{
     if (this.maxDOB !== null) {
         this.activeFilters++;
     }
-}
+  }
+
   checkDateRange(): boolean {
     // Parse the date strings to Date objects
     const minDate = this.minDOB ? new Date(this.minDOB) : null;

@@ -11,4 +11,5 @@ public interface I_Service_Admin {
 	public List<Admin> searchAdminsByUsername(String usernameQuery);
 	public List<Admin> searchAdminsByEmail(String emailQuery);
 	public List<Admin> searchAdminsByTelephone(String telephoneQuery);
+	public List<Admin> filterAdmins(String privilege, String accountStatus);
 }

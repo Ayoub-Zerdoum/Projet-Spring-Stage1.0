@@ -15,6 +15,12 @@ export class ProfessorManagementTableComponent implements OnInit{
   searchOption: string = 'Username';
   searchInput = new FormControl('');
 
+  selectedDepartmentFilter: string | null = null;
+  selectedAccountStatusFilter: string | null = null;
+
+  activeFilters: number = 0;
+  filterChanged: boolean = false;
+
   constructor(private userService: UserManagementService) { }
 
   ngOnInit(): void {
@@ -50,5 +56,52 @@ export class ProfessorManagementTableComponent implements OnInit{
     } else {
       this.profs$ = this.userService.getAllStudents(); // Reset to all students if search query is empty
     }
+  }
+
+  applyFilters(): void {
+    // Create an object with filter values
+    const filters: any = {
+      Departement: this.selectedDepartmentFilter || null,
+      accountStatus: this.selectedAccountStatusFilter || null
+    };
+
+    this.filterChanged = false;
+
+    // Remove null parameters from the object
+    Object.keys(filters).forEach(key => filters[key] === null && delete filters[key]);
+
+    // Call the service method to apply the filters
+    this.profs$ = this.userService.filterProfessors(filters);
+  }
+
+  updateActiveFilters(): void {
+    // Reset count to 0 before counting active filters
+    this.activeFilters = 0;
+    this.filterChanged = true;
+
+    if (this.selectedDepartmentFilter !== null) {
+        this.activeFilters++;
+    }
+    if (this.selectedAccountStatusFilter !== null) {
+        this.activeFilters++;
+    }
+  }
+
+  toggleDepartmentFilter(department: string): void {
+    if (this.selectedDepartmentFilter === department) {
+      this.selectedDepartmentFilter = null; // Deselect if already selected
+    } else {
+      this.selectedDepartmentFilter = department; // Otherwise, select the status
+    }
+    this.updateActiveFilters();
+  }
+
+  toggleAccountStatusFilter(status: string): void {
+    if (this.selectedAccountStatusFilter === status) {
+      this.selectedAccountStatusFilter = null; // Deselect if already selected
+    } else {
+      this.selectedAccountStatusFilter = status; // Otherwise, select the status
+    }
+    this.updateActiveFilters();
   }
 }

@@ -11,4 +11,5 @@ public interface I_Service_Professor {
 	public List<Professor> searchProfessorsByUsername(String usernameQuery);
 	public List<Professor> searchProfessorsByEmail(String emailQuery);
 	public List<Professor> searchProfessorsByTelephone(String telephoneQuery);
+	public List<Professor> filterProfessors(String department, String accountStatus);
 }

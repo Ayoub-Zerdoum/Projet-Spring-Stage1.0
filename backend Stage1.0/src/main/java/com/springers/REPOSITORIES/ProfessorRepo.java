@@ -1,5 +1,7 @@
 package com.springers.REPOSITORIES;
 
+import com.springers.ENTITIES.AccountStatus;
+import com.springers.ENTITIES.Departement;
 import com.springers.ENTITIES.Professor;
 
 import java.util.List;
@@ -12,5 +14,9 @@ public interface ProfessorRepo extends CrudRepository<Professor, Long>{
 	public List<Professor> findByUsernameContainingIgnoreCase(String usernameQuery);
 	public List<Professor> findByEmailContainingIgnoreCase(String emailQuery);
 	public List<Professor> findByTelephoneContainingIgnoreCase(String telephoneQuery);
+	public List<Professor> findByDepartment(Departement department);
+	public List<Professor> findByAccountStatus(AccountStatus accountStatus);
+	public List<Professor> findByDepartmentAndAccountStatus(Departement department, AccountStatus accountStatus);
+	
 
 }

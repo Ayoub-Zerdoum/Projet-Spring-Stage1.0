@@ -3,6 +3,11 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+}
+
+.search-form{
+    height: 40px;
 }
 
 .dropdown-menu{
@@ -12,5 +17,49 @@
 }
 
 .search-btn{
-    min-width: 200px;
+    min-width: 210px;
+}
+
+.filter{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-family: "Roboto Mono", monospace;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: green;
+}
+
+.filter i{
+    font-size: 25px;
+}
+
+.filter:hover i{
+    transform: scale(1.05);
+}
+
+.spec-grid{
+    grid-template-columns: 1fr 1fr;
+}
+
+.last-element{
+    grid-column: 1/3;
+}
+
+
+.filter-circle{
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: var(--main-color-dark);
+    border-radius: 50%;
+}
+
+.filter.changed{
+    background-color: var(--main-color);
 }

@@ -59,4 +59,11 @@ public class ProfessorController {
         List<Professor> professors = professorService.searchProfessorsByTelephone(telephoneQuery);
         return ResponseEntity.ok(professors);
     }
+    
+    @GetMapping("/filter")
+    public ResponseEntity<List<Professor>> filterProfessors(@RequestParam(required = false) String department,
+                                                            @RequestParam(required = false) String accountStatus) {
+        List<Professor> filteredProfessors = professorService.filterProfessors(department, accountStatus);
+        return ResponseEntity.ok(filteredProfessors);
+    }
 }

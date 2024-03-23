@@ -32,8 +32,10 @@
     <fullyQualifiedTypeName name="org.springframework.data.repository.query.Param"/>
     <fullyQualifiedTypeName name="org.springframework.format.annotation.DateTimeFormat"/>
     <fullyQualifiedTypeName name="java.time.LocalDate"/>
-    <fullyQualifiedTypeName name="com.springers.ENTITIES.AccountStatus"/>
     <fullyQualifiedTypeName name="com.springers.ENTITIES.StudentStatus"/>
     <fullyQualifiedTypeName name="com.springers.ENTITIES.Specialization"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="com.springers.ENTITIES.Departement"/>
+    <fullyQualifiedTypeName name="com.springers.ENTITIES.Privilege"/>
+    <fullyQualifiedTypeName name="com.springers.ENTITIES.AccountStatus"/>
 </qualifiedTypeNameHistroy>

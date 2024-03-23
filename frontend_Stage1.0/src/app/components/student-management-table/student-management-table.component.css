@@ -3,9 +3,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: 80px;
+    align-items: center;
 }
-
 
 .dropdown-menu{
     width: fit-content;
@@ -15,6 +14,10 @@
 
 .search-btn{
     min-width: 210px;
+}
+
+.search-form{
+    height: 40px;
 }
 
 .filter{
@@ -37,9 +40,6 @@
     transform: scale(1.05);
 }
 
-.spec-grid{
-    grid-template-columns: 1fr 1fr;
-}
 
 .filter-circle{
     width: 28px;

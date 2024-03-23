@@ -41,7 +41,7 @@ export class UserManagementService {
     return this.http.get(`${this.baseUrl}/students/search-date-of-birth?dateOfBirth=${dateOfBirthQuery}`);
   }
 
-  applyFilters(filters: any): Observable<any> {
+  filterStudents(filters: any): Observable<any> {
     let params = new HttpParams();
     Object.keys(filters).forEach(key => {
       if (filters[key] !== undefined) {
@@ -63,6 +63,17 @@ export class UserManagementService {
     return this.http.get<any[]>(`${this.baseUrl}/admins/search-telephone?telephone=${telephoneQuery}`);
   }
 
+  filterAdmins(filters: any): Observable<any> {
+    let params = new HttpParams();
+    if (filters.privilege) {
+      params = params.set('privilege', filters.privilege);
+    }
+    if (filters.accountStatus) {
+      params = params.set('accountStatus', filters.accountStatus);
+    }
+    return this.http.get<any>(`${this.baseUrl}/admins/filter`, { params });
+  }
+
   searchProfessorsByUsername(usernameQuery: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/professors/search-username?username=${usernameQuery}`);
   }
@@ -73,6 +84,17 @@ export class UserManagementService {
 
   searchProfessorsByTelephone(telephoneQuery: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/professors/search-telephone?telephone=${telephoneQuery}`);
+  }
+
+  filterProfessors(filters: any): Observable<any> {
+    let params = new HttpParams();
+    if (filters.department) {
+      params = params.set('department', filters.department);
+    }
+    if (filters.accountStatus) {
+      params = params.set('accountStatus', filters.accountStatus);
+    }
+    return this.http.get<any>(`${this.baseUrl}/professors/filter`, { params });
   }
 
   addAdmin(admin: any): Observable<any> {
