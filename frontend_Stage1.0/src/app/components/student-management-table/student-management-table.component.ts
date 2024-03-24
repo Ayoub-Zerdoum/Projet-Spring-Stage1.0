@@ -27,6 +27,9 @@ export class StudentManagementTableComponent implements OnInit{
 
   showDateAlert = false;
 
+  addingActive: boolean = false; // Variable to indicate if adding new student is active
+  selectedNewStudentSpecialization: string | null = null; // Variable to store the selected specialization for the new student
+
   constructor(private userService: UserManagementService) { }
 
   ngOnInit(): void {
@@ -179,5 +182,13 @@ export class StudentManagementTableComponent implements OnInit{
       return true;
     }
     
+  }
+
+  selectNewStudentSpecialization(specialization: string): void {
+    this.selectedNewStudentSpecialization = specialization;
+  }
+
+  toggleAddingActive(): void {
+    this.addingActive = !this.addingActive;
   }
 }

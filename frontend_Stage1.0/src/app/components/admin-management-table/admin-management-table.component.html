@@ -19,11 +19,21 @@
           </ul>
         </div>
     </form>
-    <div class="filter" [ngClass]="{'changed': filterChanged}" data-bs-toggle="modal" data-bs-target="#AdminFilterModal">
-      <i class="fa-solid fa-filter"></i>
-      <span>filter</span>
-      <div class="filter-circle">{{ activeFilters }}</div>
-  </div>
+    <div class="right-side d-flex justify-content-between align-items-center gap-1">
+      <div class="btn-group add-buttons">
+        <button type="button" class="btn btn-primary">New</button>
+        <button type="button" class="btn btn-primary" (click)="toggleAddingActive()" data-bs-toggle="collapse" data-bs-target="#add-collapse" aria-expanded="false" aria-controls="add-collapse">
+          <i *ngIf="!addingActive" class="fa-solid fa-plus"></i>
+          <i *ngIf="addingActive" class="fa-solid fa-minus"></i>
+        </button>
+      </div>
+      <div class="filter" [ngClass]="{'changed': filterChanged}" data-bs-toggle="modal" data-bs-target="#AdminFilterModal">
+        <i class="fa-solid fa-filter"></i>
+        <span>filter</span>
+        <div class="filter-circle">{{ activeFilters }}</div>
+      </div>
+    </div>
+    
   <!-- Modal -->
   <div class="modal fade" id="AdminFilterModal" tabindex="-1" aria-labelledby="AdminFilterModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -71,6 +81,72 @@
     </div>
   </div>
      </div> 
+
+     <!-- add collapse -->
+    <div class="collapse add-collapse-container" id="add-collapse">
+      <div class="container d-flex justify-content-center gap-2">
+        <div class="add-btn d-flex flex-column justify-content-around align-items-center" (click)="selectNewAdminPrivilege('VIEW_ONLY')" data-bs-toggle="modal" data-bs-target="#new-admin-modal">
+          <img src="./assets/images/eye.svg" alt="view only" class="add-icon">
+          <h3>VIEW ONLY</h3>
+        </div>
+        <div class="add-btn d-flex flex-column justify-content-around align-items-center" (click)="selectNewAdminPrivilege('MANAGE_STAGE_DEMANDS')" data-bs-toggle="modal" data-bs-target="#new-admin-modal">
+          <img src="./assets/images/clipboard.svg" alt="manage stages demandes" class="add-icon">
+          <h3>MANAGE STAGE DEMANDS</h3>
+        </div>
+        <div class="add-btn d-flex flex-column justify-content-around align-items-center star" (click)="selectNewAdminPrivilege('SUPER')" data-bs-toggle="modal" data-bs-target="#new-admin-modal">
+          <img src="./assets/images/star-dark.svg" alt="super" class="add-icon">
+          <h3>SUPER</h3>
+        </div>
+        <div class="add-btn d-flex flex-column justify-content-around align-items-center" (click)="selectNewAdminPrivilege('MANAGE_POSTER_SESSIONS')" data-bs-toggle="modal" data-bs-target="#new-admin-modal">
+          <img src="./assets/images/calender-1.svg" alt="manage poster sessions" class="add-icon">
+          <h3>MANAGE POSTER SESSIONS</h3>
+        </div>
+        <div class="add-btn d-flex flex-column justify-content-around align-items-center" (click)="selectNewAdminPrivilege('POST_OFFERS')" data-bs-toggle="modal" data-bs-target="#new-admin-modal">
+          <img src="./assets/images/briefcase.svg" alt="post offers" class="add-icon">
+          <h3>POST OFFERS</h3>
+        </div>
+      </div>
+  </div>
+
+  <!-- Adding Modal -->
+  <div class="modal fade" id="new-admin-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="new-admin-modal-Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header adding-modal">
+          <div class="title-wrapper">
+            <div class="add-title d-flex align-items-center" *ngIf="selectedNewAdminPrivilege === 'VIEW_ONLY'">
+              <img src="./assets/images/eye.svg" alt="view only" class="add-icon">
+              <h5>VIEW ONLY</h5>
+            </div>
+            <div class="add-title d-flex align-items-center" *ngIf="selectedNewAdminPrivilege === 'MANAGE_STAGE_DEMANDS'">
+              <img src="./assets/images/clipboard.svg" alt="manage stage demandes" class="add-icon">
+              <h5>MANAGE STAGE DEMANDS</h5>
+            </div>
+            <div class="add-title d-flex align-items-center star" *ngIf="selectedNewAdminPrivilege === 'SUPER'">
+              <img src="./assets/images/star-dark.svg" alt="super" class="add-icon">
+              <h5>SUPER</h5>
+            </div>
+            <div class="add-title d-flex align-items-center" *ngIf="selectedNewAdminPrivilege === 'MANAGE_POSTER_SESSIONS'">
+              <img src="./assets/images/calender-1.svg" alt="manage poster sessions" class="add-icon">
+              <h5>MANAGE POSTER SESSIONS</h5>
+            </div>
+            <div class="add-title d-flex align-items-center" *ngIf="selectedNewAdminPrivilege === 'POST_OFFERS'">
+              <img src="./assets/images/briefcase.svg" alt="post offers" class="add-icon">
+              <h5>POST OFFERS</h5>
+            </div>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-primary">CREATE</button>
+        </div>
+      </div>
+    </div>
+  </div>
      <table class="table table-striped">
         <thead>
           <tr>

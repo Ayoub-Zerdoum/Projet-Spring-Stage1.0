@@ -22,13 +22,23 @@
               </ul>
             </div>
         </form>
-        <div class="filter" [ngClass]="{'changed': filterChanged}" data-bs-toggle="modal" data-bs-target="#StudentFilterModal">
+        <div class="right-side d-flex justify-content-between align-items-center gap-1">
+          <div class="btn-group add-buttons">
+            <button type="button" class="btn btn-primary">New</button>
+            <button type="button" class="btn btn-primary" (click)="toggleAddingActive()" data-bs-toggle="collapse" data-bs-target="#add-collapse" aria-expanded="false" aria-controls="add-collapse">
+              <i *ngIf="!addingActive" class="fa-solid fa-plus"></i>
+              <i *ngIf="addingActive" class="fa-solid fa-minus"></i>
+            </button>
+          </div>
+          <div class="filter" [ngClass]="{'changed': filterChanged}" data-bs-toggle="modal" data-bs-target="#StudentFilterModal">
             <i class="fa-solid fa-filter"></i>
             <span>filter</span>
             <div class="filter-circle">{{ activeFilters }}</div>
+          </div>
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="StudentFilterModal" tabindex="-1" aria-labelledby="StudentFilterModalLabel" aria-hidden="true">
+        
+        <!-- Filter Modal -->
+        <div class="modal fade" id="StudentFilterModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="StudentFilterModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
@@ -102,6 +112,64 @@
           </div>
         </div>
     </div> 
+    <!-- add collapse -->
+    <div class="collapse add-collapse-container" id="add-collapse">
+        <div class="container d-flex justify-content-center gap-2">
+          <div class="add-btn d-flex flex-column justify-content-around align-items-center" (click)="selectNewStudentSpecialization('INFORMATIQUE')" data-bs-toggle="modal" data-bs-target="#new-student-modal">
+            <img src="./assets/images/informatique-icon.svg" alt="informatique" class="add-icon">
+            <h3>INFORMATIQUE</h3>
+          </div>
+          <div class="add-btn d-flex flex-column justify-content-around align-items-center" (click)="selectNewStudentSpecialization('MECATRONIQUE')" data-bs-toggle="modal" data-bs-target="#new-student-modal">
+            <img src="./assets/images/robot-128.png" alt="mecatronique" class="add-icon">
+            <h3>MECATRONIQUE</h3>
+          </div>
+          <div class="add-btn d-flex flex-column justify-content-around align-items-center" (click)="selectNewStudentSpecialization('GENIE_INDUSTRIEL')" data-bs-toggle="modal" data-bs-target="#new-student-modal">
+            <img src="./assets/images/indus-icon.svg" alt="industruel" class="add-icon">
+            <h3>INDUSTRIEL</h3>
+          </div>
+          <div class="add-btn d-flex flex-column justify-content-around align-items-center" (click)="selectNewStudentSpecialization('GENIE_INFOTRONIQUE')" data-bs-toggle="modal" data-bs-target="#new-student-modal">
+            <img src="./assets/images/chip-icon1.svg" alt="infotronique" class="add-icon">
+            <h3>INFOTRONIQUE</h3>
+          </div>
+        </div>
+    </div>
+
+    <!-- Adding Modal -->
+    <div class="modal fade" id="new-student-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="new-student-modal-Label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header adding-modal">
+            <div class="title-wrapper">
+              <div class="add-title d-flex align-items-center" *ngIf="selectedNewStudentSpecialization === 'INFORMATIQUE'">
+                <img src="./assets/images/informatique-icon.svg" alt="informatique" class="add-icon">
+                <h5>INFORMATIQUE</h5>
+              </div>
+              <div class="add-title d-flex align-items-center" *ngIf="selectedNewStudentSpecialization === 'MECATRONIQUE'">
+                <img src="./assets/images/robot-128.png" alt="mecatronique" class="add-icon">
+                <h5>MECATRONIQUE</h5>
+              </div>
+              <div class="add-title d-flex align-items-center" *ngIf="selectedNewStudentSpecialization === 'GENIE_INDUSTRIEL'">
+                <img src="./assets/images/indus-icon.svg" alt="industruel" class="add-icon">
+                <h5>INDUSTRIEL</h5>
+              </div>
+              <div class="add-title d-flex align-items-center" *ngIf="selectedNewStudentSpecialization === 'GENIE_INFOTRONIQUE'">
+                <img src="./assets/images/chip-icon1.svg" alt="infotronique" class="add-icon">
+                <h5>INFOTRONIQUE</h5>
+              </div>
+            </div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-primary">CREATE</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <table class="table table-striped">
         <thead>
           <tr>

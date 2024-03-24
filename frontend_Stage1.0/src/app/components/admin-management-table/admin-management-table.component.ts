@@ -20,6 +20,9 @@ export class AdminManagementTableComponent implements OnInit{
   activeFilters: number = 0;
   filterChanged: boolean = false;
 
+  addingActive: boolean = false; // Variable to indicate if adding new student is active
+  selectedNewAdminPrivilege: string | null = null; // Variable to store the selected specialization for the new student
+
   constructor(private userService: UserManagementService) { }
 
   ngOnInit(): void {
@@ -103,4 +106,13 @@ export class AdminManagementTableComponent implements OnInit{
     }
     this.updateActiveFilters();
   }
+
+  selectNewAdminPrivilege(privilege: string): void {
+    this.selectedNewAdminPrivilege = privilege;
+  }
+
+  toggleAddingActive(): void {
+    this.addingActive = !this.addingActive;
+  }
+
 }

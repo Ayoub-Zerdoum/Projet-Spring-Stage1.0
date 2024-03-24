@@ -21,6 +21,9 @@ export class ProfessorManagementTableComponent implements OnInit{
   activeFilters: number = 0;
   filterChanged: boolean = false;
 
+  addingActive: boolean = false; // Variable to indicate if adding new student is active
+  selectedNewProfessorDepartment: string | null = null; // Variable to store the selected specialization for the new student
+
   constructor(private userService: UserManagementService) { }
 
   ngOnInit(): void {
@@ -103,5 +106,13 @@ export class ProfessorManagementTableComponent implements OnInit{
       this.selectedAccountStatusFilter = status; // Otherwise, select the status
     }
     this.updateActiveFilters();
+  }
+
+  selectNewProfessorDepartment(Department: string): void {
+    this.selectedNewProfessorDepartment = Department;
+  }
+
+  toggleAddingActive(): void {
+    this.addingActive = !this.addingActive;
   }
 }

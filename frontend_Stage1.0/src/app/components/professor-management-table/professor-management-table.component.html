@@ -19,11 +19,21 @@
               </ul>
             </div>
         </form>
-        <div class="filter" [ngClass]="{'changed': filterChanged}" data-bs-toggle="modal" data-bs-target="#StudentFilterModal">
-          <i class="fa-solid fa-filter"></i>
-          <span>filter</span>
-          <div class="filter-circle">{{ activeFilters }}</div>
-      </div>
+        <div class="right-side d-flex justify-content-between align-items-center gap-1">
+          <div class="btn-group add-buttons">
+            <button type="button" class="btn btn-primary">New</button>
+            <button type="button" class="btn btn-primary" (click)="toggleAddingActive()" data-bs-toggle="collapse" data-bs-target="#add-collapse" aria-expanded="false" aria-controls="add-collapse">
+              <i *ngIf="!addingActive" class="fa-solid fa-plus"></i>
+              <i *ngIf="addingActive" class="fa-solid fa-minus"></i>
+            </button>
+          </div>
+          <div class="filter" [ngClass]="{'changed': filterChanged}" data-bs-toggle="modal" data-bs-target="#StudentFilterModal">
+            <i class="fa-solid fa-filter"></i>
+            <span>filter</span>
+            <div class="filter-circle">{{ activeFilters }}</div>
+          </div>
+        </div>
+        
       <!-- Modal -->
       <div class="modal fade" id="StudentFilterModal" tabindex="-1" aria-labelledby="StudentFilterModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -65,6 +75,56 @@
         </div>
       </div>
      </div> 
+
+     <!-- add collapse -->
+    <div class="collapse add-collapse-container" id="add-collapse">
+      <div class="container d-flex justify-content-center gap-2">
+        <div class="add-btn d-flex flex-column justify-content-around align-items-center" (click)="selectNewProfessorDepartment('INFO')" data-bs-toggle="modal" data-bs-target="#new-professor-modal">
+          <img src="./assets/images/computer-binary.svg" alt="informatique" class="add-icon">
+          <h3>INFO</h3>
+        </div>
+        <div class="add-btn d-flex flex-column justify-content-around align-items-center" (click)="selectNewProfessorDepartment('ELEC')" data-bs-toggle="modal" data-bs-target="#new-professor-modal">
+          <img src="./assets/images/elec-1.svg" alt="mecatronique" class="add-icon">
+          <h3>ELEC</h3>
+        </div>
+        <div class="add-btn d-flex flex-column justify-content-around align-items-center" (click)="selectNewProfessorDepartment('INDUS')" data-bs-toggle="modal" data-bs-target="#new-professor-modal">
+          <img src="./assets/images/indus-icon.svg" alt="industruel" class="add-icon">
+          <h3>INDUS</h3>
+        </div>
+      </div>
+  </div>
+
+  <!-- Adding Modal -->
+  <div class="modal fade" id="new-professor-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="new-professor-modal-Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header adding-modal">
+          <div class="title-wrapper">
+            <div class="add-title d-flex align-items-center" *ngIf="selectedNewProfessorDepartment === 'INFO'">
+              <img src="./assets/images/computer-binary.svg" alt="info" class="add-icon">
+              <h5>INFO</h5>
+            </div>
+            <div class="add-title d-flex align-items-center" *ngIf="selectedNewProfessorDepartment === 'ELEC'">
+              <img src="./assets/images/elec-1.svg" alt="elec" class="add-icon">
+              <h5>ELEC</h5>
+            </div>
+            <div class="add-title d-flex align-items-center" *ngIf="selectedNewProfessorDepartment === 'INDUS'">
+              <img src="./assets/images/indus-icon.svg" alt="industruel" class="add-icon">
+              <h5>INDUS</h5>
+            </div>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-primary">CREATE</button>
+        </div>
+      </div>
+    </div>
+  </div>
     <table class="table table-striped">
         <thead>
         <tr>
