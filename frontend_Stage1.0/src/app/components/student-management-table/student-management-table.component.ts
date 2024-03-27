@@ -1,6 +1,6 @@
 import { Component , OnInit,OnChanges, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { FormControl ,FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 
@@ -16,6 +16,8 @@ export class StudentManagementTableComponent implements OnInit{
   searchOption: string = 'Username';
   searchInput = new FormControl('');
 
+  newUserForm!: FormGroup;
+
   selectedStatusFilter: string | null = null;
   selectedSpecialization: string | null = null;
   selectedAccountStatusFilter: string | null = null;
@@ -30,21 +32,52 @@ export class StudentManagementTableComponent implements OnInit{
   addingActive: boolean = false; // Variable to indicate if adding new student is active
   selectedNewStudentSpecialization: string | null = null; // Variable to store the selected specialization for the new student
 
-  constructor(private userService: UserManagementService) { }
+  incompleteNewUserSubmit = false;
+  NewUserCreatedSuccesfully = false;
+  NewUserCreatedError = false;
+  invalidNewUsername = false;
+  invalidNewUserEmail = false;
+  invalidNewUserTelephone = false;
+
+
+  studentToDelete: any | null = null;;
+  UserDeleteConfirmed: boolean = false;
+  DeleteIsPossible: boolean = false;
+  UserDeletedSuccessfully: boolean = false;
+  UserDeleteConcelled: boolean = false;
+
+  constructor(private userService: UserManagementService,private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.students$ = this.userService.getAllStudents();
+
+    this.newUserForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      telephone: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
+      dateOfBirth: ['', Validators.required],
+      enrolled: [true],
+      sendVerificationEmail: [true]
+    });
   }
-  /*
-  ngOnChanges(changes: SimpleChanges): void {
-    // Check if any of the filter variables have changed
-    if (changes['selectedStatusFilter'] || changes['selectedSpecialization'] || 
-          changes['selectedAccountStatusFilter'] || changes['minDOB'] || changes['maxDOB']) {
-      this.updateActiveFilters();
-      this.filterChanged = true;
-      console.log("filter changed :", this.filterChanged);
-    }
-  }*/
+
+  
+  getStudentById(studentId: number): any {
+    this.userService.getStudentById(studentId)
+      .subscribe(
+        (data: any) => {
+          console.log('Student details:', data);
+          return data;
+        },
+        error => {
+          console.error('Error fetching student:', error);
+          return null;
+        }
+      );
+  }
+  
+  
 
   updateSearchOption(option: string) {
     this.searchOption = option;
@@ -190,5 +223,114 @@ export class StudentManagementTableComponent implements OnInit{
 
   toggleAddingActive(): void {
     this.addingActive = !this.addingActive;
+  }
+
+  createUser(): void {
+    if (this.isFormComplete()) {
+      const formData = { ...this.newUserForm.value,
+                         specialization: this.selectedNewStudentSpecialization,
+                         accountStatus: 'ACTIVE' };
+      this.userService.createStudentViaForm(formData).subscribe(
+        response => {
+          console.log('Student added successfully:', response);
+          this.NewUserCreatedSuccesfully = true;
+          this.NewUserCreatedError = false;
+          this.incompleteNewUserSubmit = false;
+        },
+        error => {
+          console.error('Error adding student:', error);
+          this.NewUserCreatedError = true;
+          this.NewUserCreatedSuccesfully = false;
+        }
+      );
+    } else {
+      // Set flag to show incomplete form alert
+      this.incompleteNewUserSubmit = true;
+      this.NewUserCreatedSuccesfully = false; // Reset flag to prevent showing success alert
+      this.NewUserCreatedError = false;
+    }
+  }
+  
+  resetNewUserForm(): void {
+    this.newUserForm.reset(); // Reset the form
+    this.newUserForm.reset({
+      enrolled: true,
+      sendVerificationEmail: true
+    });
+    
+    this.incompleteNewUserSubmit = false;
+    this.invalidNewUsername = false;
+    this.invalidNewUserEmail = false;
+    this.invalidNewUserTelephone = false;
+    this.NewUserCreatedSuccesfully = false; // Reset the flag to indicate form is not submitted
+    this.NewUserCreatedError = false;
+  }
+
+  isFormComplete(): boolean {
+    return this.newUserForm.valid && !!this.selectedNewStudentSpecialization;
+  }
+
+  /*DELETE STUDENTS */
+  DeleteThisStudent(student: any): void {
+    this.studentToDelete = student;
+    this.UserDeleteConfirmed = false;
+    // Check if deletion is possible
+    if(student.requestStages.length === 0 && student.offerApplications.length === 0){
+      this.DeleteIsPossible = true;
+    } else {
+      this.DeleteIsPossible = false;
+    }
+  }
+
+  // Method to confirm the deletion
+confirmDelete(): void {
+  if (this.DeleteIsPossible) {
+      // Delete student
+      this.userService.deleteStudent(this.studentToDelete.userId).subscribe(
+        () => {
+            console.log('student deleted successfully');
+            this.UserDeletedSuccessfully = true;
+            this.UserDeleteConfirmed = true;
+        },
+        error => {
+            console.error('Error suspending account:', error);
+        }
+    );;
+  } else {
+      // Suspend account
+      this.suspendAccount(this.studentToDelete.userId);
+      this.UserDeleteConfirmed = true;
+  }
+}
+
+  // Method to suspend the account
+  suspendAccount(studentId: number): void {
+    // Call backend API to suspend the account
+    this.userService.suspendAccount(studentId).subscribe(
+        () => {
+            console.log('Account suspended successfully');
+            this.UserDeletedSuccessfully = true;
+        },
+        error => {
+            console.error('Error suspending account:', error);
+        }
+    );
+  }
+
+  resetDeleteParams(): void {
+    this.studentToDelete = null;
+    this.UserDeleteConfirmed = false;
+    this.DeleteIsPossible = false;
+    this.UserDeletedSuccessfully = false;
+    this.UserDeleteConcelled = false;
+  }
+  
+  abandonDeleting(): void {
+    this.resetDeleteParams();
+  }
+
+  cancelDeleting(): void {
+    this.resetDeleteParams();
+    this.UserDeleteConcelled = true;
   }
 }

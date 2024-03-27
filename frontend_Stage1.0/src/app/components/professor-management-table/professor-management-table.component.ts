@@ -1,6 +1,6 @@
 import { Component ,OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { FormControl ,FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 import { UserManagementService } from '../../services/user-management.service';
@@ -24,10 +24,26 @@ export class ProfessorManagementTableComponent implements OnInit{
   addingActive: boolean = false; // Variable to indicate if adding new student is active
   selectedNewProfessorDepartment: string | null = null; // Variable to store the selected specialization for the new student
 
-  constructor(private userService: UserManagementService) { }
+  newUserForm!: FormGroup;
+  incompleteNewUserSubmit = false;
+  NewUserCreatedSuccesfully = false;
+  NewUserCreatedError = false;
+  invalidNewUsername = false;
+  invalidNewUserEmail = false;
+  invalidNewUserTelephone = false;
+
+  constructor(private userService: UserManagementService,private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.profs$ = this.userService.getAllProfs();
+
+    this.newUserForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      telephone: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
+      sendVerificationEmail: [true]
+    });
   }
 
   updateSearchOption(option: string) {
@@ -114,5 +130,51 @@ export class ProfessorManagementTableComponent implements OnInit{
 
   toggleAddingActive(): void {
     this.addingActive = !this.addingActive;
+  }
+
+  createUser(): void {
+    if (this.isFormComplete()) {
+      const formData = { ...this.newUserForm.value,
+                         department: this.selectedNewProfessorDepartment,
+                         accountStatus: 'ACTIVE' };
+      this.userService.createProfessorViaForm(formData).subscribe(
+        response => {
+          console.log('Professor added successfully:', response);
+          this.NewUserCreatedSuccesfully = true;
+          this.NewUserCreatedError = false;
+          this.incompleteNewUserSubmit = false;
+        },
+        error => {
+          console.error('Error adding professor:', error);
+          this.NewUserCreatedError = true;
+          this.NewUserCreatedSuccesfully = false;
+
+        
+        }
+      );
+    } else {
+      // Set flag to show incomplete form alert
+      this.incompleteNewUserSubmit = true;
+      this.NewUserCreatedSuccesfully = false; // Reset flag to prevent showing success alert
+      this.NewUserCreatedError = false;
+    }
+  }
+  
+  resetNewUserForm(): void {
+    this.newUserForm.reset(); // Reset the form
+    this.newUserForm.reset({
+      sendVerificationEmail: true
+    });
+    
+    this.incompleteNewUserSubmit = false;
+    this.invalidNewUsername = false;
+    this.invalidNewUserEmail = false;
+    this.invalidNewUserTelephone = false;
+    this.NewUserCreatedSuccesfully = false; // Reset the flag to indicate form is not submitted
+    this.NewUserCreatedError = false;
+  }
+
+  isFormComplete(): boolean {
+    return this.newUserForm.valid && !!this.selectedNewProfessorDepartment;
   }
 }

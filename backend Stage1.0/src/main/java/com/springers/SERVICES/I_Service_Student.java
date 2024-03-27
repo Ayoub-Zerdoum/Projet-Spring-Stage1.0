@@ -15,5 +15,6 @@ public interface I_Service_Student {
 	public List<Student> searchStudentsByDateOfBirth(String dateOfBirthQuery);
 	
 	public List<Student> filterStudents(String status, String specialization, String accountStatus, LocalDate dobMin, LocalDate dobMax);
+	public Student getStudentById(Long id);
 
 }

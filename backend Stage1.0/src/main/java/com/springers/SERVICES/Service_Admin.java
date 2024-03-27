@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.springers.ENTITIES.AccountStatus;
 import com.springers.ENTITIES.Admin;
 import com.springers.ENTITIES.Privilege;
+import com.springers.ENTITIES.Professor;
 import com.springers.REPOSITORIES.AdminRepo;
 
 @Service
@@ -30,6 +31,12 @@ public class Service_Admin implements I_Service_Admin{
 		List<Admin> admins = (List<Admin>) AdRepo.findAll();
 		return admins;
 	};
+	
+	@Override
+	public Admin getAdminById(Long id) {
+        return AdRepo.findById(id).orElse(null);
+    }
+	
 	
 	@Override
 	public List<Admin> searchAdminsByUsername(String usernameQuery) {

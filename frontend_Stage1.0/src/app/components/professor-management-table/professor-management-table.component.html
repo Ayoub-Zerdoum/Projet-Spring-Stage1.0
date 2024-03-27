@@ -116,11 +116,73 @@
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          
+          <form [formGroup]="newUserForm" class="d-flex flex-column">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="username-label">Username</span>
+              <input type="text" class="form-control" placeholder="Username" formControlName="username" aria-label="Username" aria-describedby="username-label">
+            </div>
+            <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidNewUsername">
+              <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+              <div>
+                invalid username !
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="password-label">Generate Randomly</span>
+              <input type="password" class="form-control" placeholder="Password" formControlName="password" aria-label="Password" aria-describedby="password-label">
+            </div>
+
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="email-label">Email</span>
+              <input type="email" class="form-control" placeholder="Email" formControlName="email" aria-label="Email" aria-describedby="email-label">
+            </div>
+            <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidNewUserEmail">
+              <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+              <div>
+                invalid email !
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="telephone-label">Telephone</span>
+              <input type="text" formControlName="telephone" pattern="[0-9]*" inputmode="numeric" minlength="8" maxlength="8" class="form-control" placeholder="99999999" aria-label="Telephone" aria-describedby="telephone-label">
+            </div>
+            <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidNewUserTelephone">
+              <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+              <div>
+                invalid telephone !
+              </div>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" formControlName="sendVerificationEmail" id="sendEmailSwitch" checked>
+              <label class="form-check-label" for="sendEmailSwitch">Send verification email</label>
+            </div>
+            <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="incompleteNewUserSubmit">
+              <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+              <div>
+                il y a un champ incomplete !
+              </div>
+            </div>
+            <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="NewUserCreatedSuccesfully">
+              <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#check-circle-fill"/></svg>
+              <div>
+                student added succesfully
+              </div>
+            </div>
+            <div class="alert alert-danger d-flex align-items-center" role="alert" *ngIf="NewUserCreatedError">
+              <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+              <div>
+                error adding student to database ! 
+              </div>
+            </div>
+            
+            
+          </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-          <button type="button" class="btn btn-primary">CREATE</button>
+          <button *ngIf="!NewUserCreatedSuccesfully" type="button" class="btn btn-secondary" (click)="resetNewUserForm()">RESET</button>
+            <button *ngIf="NewUserCreatedSuccesfully" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetNewUserForm()">CLOSE</button>
+            <button *ngIf="!NewUserCreatedSuccesfully" type="button" class="btn btn-primary" (click)="createUser()">CREATE</button>
+            <button *ngIf="NewUserCreatedSuccesfully" type="button" class="btn btn-primary" (click)="resetNewUserForm()">ADD NEW</button>
         </div>
       </div>
     </div>
@@ -149,3 +211,11 @@
     </table>
  </div>
  
+ <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check-circle-fill" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+  </symbol>
+  <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
+    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+  </symbol>
+</svg>

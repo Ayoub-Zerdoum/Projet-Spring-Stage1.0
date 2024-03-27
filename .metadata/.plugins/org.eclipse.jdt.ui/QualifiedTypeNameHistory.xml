@@ -6,7 +6,6 @@
     <fullyQualifiedTypeName name="com.springers.SERVICES.AuthService"/>
     <fullyQualifiedTypeName name="com.springers.ENTITIES.User"/>
     <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
-    <fullyQualifiedTypeName name="java.util.Map"/>
     <fullyQualifiedTypeName name="com.springers.ENTITIES.Professor"/>
     <fullyQualifiedTypeName name="com.springers.REPOSITORIES.AdminRepo"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
@@ -31,11 +30,16 @@
     <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.Query"/>
     <fullyQualifiedTypeName name="org.springframework.data.repository.query.Param"/>
     <fullyQualifiedTypeName name="org.springframework.format.annotation.DateTimeFormat"/>
-    <fullyQualifiedTypeName name="java.time.LocalDate"/>
-    <fullyQualifiedTypeName name="com.springers.ENTITIES.StudentStatus"/>
-    <fullyQualifiedTypeName name="com.springers.ENTITIES.Specialization"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="com.springers.ENTITIES.StudentStatus"/>
+    <fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+    <fullyQualifiedTypeName name="com.springers.ENTITIES.Specialization"/>
+    <fullyQualifiedTypeName name="java.time.LocalDate"/>
     <fullyQualifiedTypeName name="com.springers.ENTITIES.Departement"/>
     <fullyQualifiedTypeName name="com.springers.ENTITIES.Privilege"/>
     <fullyQualifiedTypeName name="com.springers.ENTITIES.AccountStatus"/>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="java.util.Map"/>
+    <fullyQualifiedTypeName name="jakarta.transaction.Transactional"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.EntityNotFoundException"/>
 </qualifiedTypeNameHistroy>

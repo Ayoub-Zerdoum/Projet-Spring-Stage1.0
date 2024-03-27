@@ -1,6 +1,8 @@
 package com.springers.CONTROLLERS;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-
+import com.springers.ENTITIES.AccountStatus;
 import com.springers.ENTITIES.Admin;
+import com.springers.ENTITIES.Privilege;
+import com.springers.ENTITIES.Student;
 import com.springers.SERVICES.Service_Admin;
 
 @RestController
@@ -30,6 +34,44 @@ public class AdminController {
         adminService.ajouter_Admin(admin);
         return ResponseEntity.ok("Admin added successfully");
     }
+    
+    @PostMapping("/addv2")
+    public ResponseEntity<?> addAdmin(@RequestBody Map<String, Object> adminData) {
+        // Extract data from the map
+        String username = (String) adminData.get("username");
+        String password = (String) adminData.get("password");
+        String email = (String) adminData.get("email");
+        String telephone = (String) adminData.get("telephone");
+        // Extract other necessary fields...
+
+        // Convert the privilege string to enum
+        String privilegeStr = (String) adminData.get("privilege");
+        Privilege privilege = Privilege.valueOf(privilegeStr);
+
+        // Determine the account status
+        AccountStatus accountStatus = AccountStatus.ACTIVE;
+
+        // Create the Admin object using builder pattern
+        Admin admin = Admin.builder()
+                .username(username)
+                .password(password)
+                .email(email)
+                .telephone(telephone)
+                // Set other necessary fields...
+                .privilege(privilege)
+                .accountStatus(accountStatus)
+                .build();
+
+        // Call the service method to add the admin
+        adminService.ajouter_Admin(admin);
+
+        // Create a response map with a success message
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Admin added successfully");
+
+        // Return the response map as JSON
+        return ResponseEntity.ok(response);
+    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteAdmin(@PathVariable Long id) {
@@ -41,6 +83,16 @@ public class AdminController {
     public ResponseEntity<List<Admin>> getAllAdmins() {
         List<Admin> admins = adminService.afficher_Admins();
         return ResponseEntity.ok(admins);
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<Admin> getAdminById(@PathVariable("id") Long id) {
+        Admin admin = adminService.getAdminById(id);
+        if (admin != null) {
+            return ResponseEntity.ok(admin);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
     
     @GetMapping("/search-username")

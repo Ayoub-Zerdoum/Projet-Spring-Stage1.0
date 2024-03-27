@@ -2,6 +2,7 @@ package com.springers.ENTITIES;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,6 @@ class StudentTest {
 			    .accountStatus(AccountStatus.ACTIVE)
 			    .studentStatus(StudentStatus.ENROLLED)
 			    .specialization(Specialization.INFORMATIQUE)
-			    .dateOfBirth(new Date())
 			    .build();
 
 		// Check if the attributes are set correctly

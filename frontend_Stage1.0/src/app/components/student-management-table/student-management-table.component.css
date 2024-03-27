@@ -103,3 +103,9 @@
     background-color: var(--main-color);
     color: var(--text-color);
 }
+
+
+.action-container img{
+    width: 28px;
+    cursor: pointer;
+}

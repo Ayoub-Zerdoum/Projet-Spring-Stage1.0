@@ -102,7 +102,11 @@
     margin-bottom: 0;
 }
 
-.add-title{
+.add-title h5{
+    margin-bottom: 0;
+}
+
+.adding-modal{
     background-color: var(--main-color);
     color: var(--text-color);
 }

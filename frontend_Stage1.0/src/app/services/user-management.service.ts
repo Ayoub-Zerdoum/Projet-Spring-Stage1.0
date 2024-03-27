@@ -101,5 +101,38 @@ export class UserManagementService {
     return this.http.post<any>(`${this.baseUrl}/admins/add`, admin);
   }
 
-  
+  createStudentViaForm(stdFormData: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/students/addv2`, stdFormData);
+  }
+
+  createAdminViaForm(adFormData: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/admins/addv2`, adFormData);
+  }
+
+  createProfessorViaForm(profFormData: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/professors/addv2`, profFormData);
+  }
+
+  /*DELETE */
+  deleteStudent(studentId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/students/delete/${studentId}`);
+  }
+
+  deleteAdmin(adminId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/admins/delete/${adminId}`);
+  }
+
+  deleteProfessor(profId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/professors/delete/${profId}`);
+  }
+
+  /*GET*/
+  getStudentById(studentId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/students/${studentId}`);
+  }
+
+  /*changing states*/
+  suspendAccount(studentId: number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/students/suspend/${studentId}`, {});
+  }
 }

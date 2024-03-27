@@ -98,6 +98,15 @@
     margin-bottom: 20px;
 }
 
+.alert{
+    height: 50px;
+    margin-top: 10px;
+}
+.alert svg{
+    height: 20px;
+    width: 20px;
+}
+
 .add-title img{
     margin-right: 20px;
     width: 32px;

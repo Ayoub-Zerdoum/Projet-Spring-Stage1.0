@@ -1,0 +1,116 @@
+package com.springers.CONTROLLERS;
+
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.springers.ENTITIES.AccountStatus;
+import com.springers.ENTITIES.Student;
+import com.springers.ENTITIES.StudentStatus;
+import com.springers.SERVICES.Service_Student;
+
+@RestController
+@CrossOrigin
+@RequestMapping("/api/students")
+public class StudentController {
+	@Autowired
+    private Service_Student studentService;
+
+    @PostMapping("/add")
+    public ResponseEntity<String> addStudent(@RequestBody Student std) {
+    	studentService.ajouter_Student(std);
+        return ResponseEntity.ok("Student added successfully");
+    }
+    
+    @PostMapping("/addv2")
+    public ResponseEntity<String> addStudent(@RequestParam String username,
+								             @RequestParam String password,
+								             @RequestParam String email,
+								             @RequestParam String telephone,
+								             @RequestParam boolean enrolled,
+								             @RequestParam boolean sendVerificationEmail,
+								             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateOfBirth) {
+		
+		// Determine the StudentStatus based on the enrolled status
+		StudentStatus studentStatus = enrolled ? StudentStatus.ENROLLED : StudentStatus.GRADUATED;
+		
+		// Set the account status to ACTIVE for all newly added students
+		AccountStatus accountStatus = AccountStatus.ACTIVE;
+
+        //Create the Student object using builder pattern
+        Student student = Student.builder()
+                                .username(username)
+                                .password(password)
+                                .email(email)
+                                .telephone(telephone)
+                                .dateOfBirth(dateOfBirth)
+                                .studentStatus(studentStatus)
+                                .accountStatus(accountStatus)
+                                .build();
+
+        // Call the service method to add the student
+        studentService.ajouter_Student(student);
+
+        return ResponseEntity.ok("Student added successfully");
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteStudent(@PathVariable Long id) {
+    	studentService.supprimer_Student(id);
+        return ResponseEntity.ok("Student deleted successfully");
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Student>> getAllStudents() {
+        List<Student> students = studentService.afficher_Students();
+        return ResponseEntity.ok(students);
+    }
+    
+    @GetMapping("/search-username")
+    public ResponseEntity<List<Student>> searchStudentsByUsername(@RequestParam("username") String usernameQuery) {
+        List<Student> students = studentService.searchStudentsByUsername(usernameQuery);
+        return ResponseEntity.ok(students);
+    }
+    
+    @GetMapping("/search-email")
+    public ResponseEntity<List<Student>> searchStudentsByEmail(@RequestParam("email") String emailQuery) {
+        List<Student> students = studentService.searchStudentsByEmail(emailQuery);
+        return ResponseEntity.ok(students);
+    }
+
+    @GetMapping("/search-telephone")
+    public ResponseEntity<List<Student>> searchStudentsByTelephone(@RequestParam("telephone") String telephoneQuery) {
+        List<Student> students = studentService.searchStudentsByTelephone(telephoneQuery);
+        return ResponseEntity.ok(students);
+    }
+    
+    @GetMapping("/search-date-of-birth")
+    public ResponseEntity<List<Student>> searchStudentsByDateOfBirth(@RequestParam("dateOfBirth") String dateOfBirthQuery) {
+        List<Student> students = studentService.searchStudentsByDateOfBirth(dateOfBirthQuery);
+        return ResponseEntity.ok(students);
+    }
+    
+    @GetMapping("/filter")
+    public ResponseEntity<List<Student>> filterStudents(@RequestParam(required = false) String studentStatus,
+                                                         @RequestParam(required = false) String specialization,
+                                                         @RequestParam(required = false) String accountStatus,
+                                                         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dobMin,
+                                                         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dobMax) {
+        List<Student> filteredStudents = studentService.filterStudents(studentStatus, specialization, accountStatus, dobMin, dobMax);
+        return ResponseEntity.ok(filteredStudents);
+    }
+}

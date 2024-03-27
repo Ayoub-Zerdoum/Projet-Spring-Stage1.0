@@ -1,7 +1,11 @@
 package com.springers.CONTROLLERS;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springers.ENTITIES.AccountStatus;
+import com.springers.ENTITIES.Specialization;
 import com.springers.ENTITIES.Student;
+import com.springers.ENTITIES.StudentStatus;
 import com.springers.SERVICES.Service_Student;
 
 @RestController
@@ -27,15 +34,69 @@ public class StudentController {
     private Service_Student studentService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addAdmin(@RequestBody Student std) {
+    public ResponseEntity<String> addStudent(@RequestBody Student std) {
     	studentService.ajouter_Student(std);
         return ResponseEntity.ok("Student added successfully");
     }
+    
+    @PostMapping("/addv2")
+    public ResponseEntity<Map<String, String>> addStudentv2(@RequestBody Map<String, Object> studentData) {
+		
+    	// Extract data from the map
+        String username = (String) studentData.get("username");
+        String password = (String) studentData.get("password");
+        String email = (String) studentData.get("email");
+        String telephone = (String) studentData.get("telephone");
+        LocalDate dateOfBirth = LocalDate.parse((String) studentData.get("dateOfBirth"));
+        Boolean enrolled = (Boolean) studentData.get("enrolled");
+        Specialization specialization = Specialization.valueOf((String) studentData.get("specialization"));
+
+        // Determine the StudentStatus based on the enrolled status
+        StudentStatus studentStatus = enrolled ? StudentStatus.ENROLLED : StudentStatus.GRADUATED;
+
+        // Set the account status to ACTIVE for all newly added students
+        AccountStatus accountStatus = AccountStatus.ACTIVE;
+
+        //Create the Student object using builder pattern
+        Student student = Student.builder()
+                                .username(username)
+                                .password(password)
+                                .email(email)
+                                .telephone(telephone)
+                                .dateOfBirth(dateOfBirth)
+                                .studentStatus(studentStatus)
+                                .accountStatus(accountStatus)
+                                .specialization(specialization)
+                                .build();
+
+        // Call the service method to add the student
+        studentService.ajouter_Student(student);
+
+     // Create a response map with a success message
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Student added successfully");
+
+        // Return the response map as JSON
+        return ResponseEntity.ok(response);
+    }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteStudent(@PathVariable Long id) {
+    public ResponseEntity<Map<String, String>> deleteStudent(@PathVariable Long id) {
     	studentService.supprimer_Student(id);
-        return ResponseEntity.ok("Student deleted successfully");
+    	Map<String, String> response = new HashMap<>();
+        response.put("message", "Student deleted successfully");
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<Student> getStudentById(@PathVariable("id") Long id) {
+        Student student = studentService.getStudentById(id);
+        if (student != null) {
+            return ResponseEntity.ok(student);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/all")
@@ -77,4 +138,5 @@ public class StudentController {
         List<Student> filteredStudents = studentService.filterStudents(studentStatus, specialization, accountStatus, dobMin, dobMax);
         return ResponseEntity.ok(filteredStudents);
     }
+   
 }
