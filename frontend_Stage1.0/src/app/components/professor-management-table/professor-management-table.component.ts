@@ -4,6 +4,8 @@ import { FormControl ,FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 import { UserManagementService } from '../../services/user-management.service';
+import { AuthenticationService } from '../../services/authentication.service';
+
 
 @Component({
   selector: 'app-professor-management-table',
@@ -11,6 +13,8 @@ import { UserManagementService } from '../../services/user-management.service';
   styleUrls: ['./professor-management-table.component.css']
 })
 export class ProfessorManagementTableComponent implements OnInit{
+  currentUser: any | null = null;
+
   profs$!: Observable<any[]>;
   searchOption: string = 'Username';
   searchInput = new FormControl('');
@@ -20,6 +24,8 @@ export class ProfessorManagementTableComponent implements OnInit{
 
   activeFilters: number = 0;
   filterChanged: boolean = false;
+  PasswordVisibility: boolean = false;
+
 
   addingActive: boolean = false; // Variable to indicate if adding new student is active
   selectedNewProfessorDepartment: string | null = null; // Variable to store the selected specialization for the new student
@@ -32,10 +38,30 @@ export class ProfessorManagementTableComponent implements OnInit{
   invalidNewUserEmail = false;
   invalidNewUserTelephone = false;
 
-  constructor(private userService: UserManagementService,private formBuilder: FormBuilder) { }
+  professorToDelete: any | null = null;;
+  UserDeleteConfirmed: boolean = false;
+  DeleteIsPossible: boolean = false;
+  UserDeletedSuccessfully: boolean = false;
+  UserDeleteConcelled: boolean = false;
+
+  professorToView: any | null = null;
+
+/* Edit variables for professors */
+selectedEditDepartment: string = 'INFO'; // Default department
+professorToEdit: any;
+editProfessorForm!: FormGroup;
+incompleteEditUserSubmit = false;
+UserEditedSuccessfully = false;
+UserEditError = false;
+invalidEditUsername = false;
+invalidEditUserEmail = false;
+invalidEditUserTelephone = false;
+
+  constructor(private authService: AuthenticationService,private userService: UserManagementService,private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.profs$ = this.userService.getAllProfs();
+    this.currentUser = this.authService.getUserInfo();
 
     this.newUserForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -44,7 +70,29 @@ export class ProfessorManagementTableComponent implements OnInit{
       telephone: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
       sendVerificationEmail: [true]
     });
+
+    // Initialize the edit professor form
+    this.editProfessorForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      telephone: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8)]],
+      department: this.selectedEditDepartment // Assuming department is part of the edit form
+    });
   }
+
+  toggleVisibility() {
+    this.PasswordVisibility = !this.PasswordVisibility;
+  }
+
+  generateRandomPassword() {
+    // Generate random password
+    const randomPassword = this.authService.generateRandomString(10); // Change the length as needed
+    this.newUserForm.patchValue({ 
+      password: randomPassword
+     });
+  }
+
 
   updateSearchOption(option: string) {
     this.searchOption = option;
@@ -177,4 +225,143 @@ export class ProfessorManagementTableComponent implements OnInit{
   isFormComplete(): boolean {
     return this.newUserForm.valid && !!this.selectedNewProfessorDepartment;
   }
+
+  /*DELETE STUDENTS */
+  DeleteThisProfessor(prof: any): void {
+    this.professorToDelete = prof;
+    this.UserDeleteConfirmed = false;
+    // Check if deletion is possible
+    if(prof.sessionPosters.length === 0){
+      this.DeleteIsPossible = true;
+    } else {
+      this.DeleteIsPossible = false;
+    }
+  }
+
+  // Method to confirm the deletion
+confirmDelete(): void {
+  if (this.DeleteIsPossible) {
+      // Delete student
+      this.userService.deleteProfessor(this.professorToDelete.userId).subscribe(
+        () => {
+            console.log('student deleted successfully');
+            this.UserDeletedSuccessfully = true;
+            this.UserDeleteConfirmed = true;
+        },
+        error => {
+            console.error('Error suspending account:', error);
+        }
+    );;
+  } else {
+      // Suspend account
+      this.suspendAccount(this.professorToDelete.userId);
+      this.UserDeleteConfirmed = true;
+  }
+}
+
+  // Method to suspend the account
+  suspendAccount(prof: any): void {
+    // Call backend API to suspend the account
+    this.userService.suspendProfAccount(prof.userId).subscribe(
+        () => {
+            console.log('Account suspended successfully');
+            this.UserDeletedSuccessfully = true;
+            prof.accountStatus = "SUSPENDED";
+        },
+        error => {
+            console.error('Error suspending account:', error);
+        }
+    );
+  }
+
+// Method to activate the account
+activateAccount(prof: any): void {
+  // Call backend API to activate the account
+  this.userService.activateProfAccount(prof.userId).subscribe(
+    () => {
+      console.log('Account activated successfully');
+      prof.accountStatus = "ACTIVE";
+    },
+    error => {
+      console.error('Error activating account:', error);
+      // Optionally, handle the error by displaying an error message or performing other actions
+    }
+  );
+}
+
+  resetDeleteParams(): void {
+    this.professorToDelete = null;
+    this.UserDeleteConfirmed = false;
+    this.DeleteIsPossible = false;
+    this.UserDeletedSuccessfully = false;
+    this.UserDeleteConcelled = false;
+  }
+  
+  abandonDeleting(): void {
+    this.resetDeleteParams();
+  }
+
+  cancelDeleting(): void {
+    this.resetDeleteParams();
+    this.UserDeleteConcelled = true;
+  }
+
+  /*Editing */
+  // Method to reset the edit user form
+  resetEditUserForm(): void {
+    this.editProfessorForm.reset();
+  }
+  // Method to handle editing professor
+editProfessor(): void {
+  console.log('Form status:', this.editProfessorForm.status);
+  console.log('Form value:', this.editProfessorForm.value);
+  console.log('Username control validity:', this.editProfessorForm.get('username')?.valid);
+  console.log('email control validity:', this.editProfessorForm.get('email')?.valid);
+  console.log('telephone control validity:', this.editProfessorForm.get('telephone')?.valid);
+  console.log('password control validity:', this.editProfessorForm.get('password')?.valid);
+  console.log('Department control validity:', this.editProfessorForm.get('department')?.valid);
+  if (this.editProfessorForm.invalid) {
+    this.incompleteEditUserSubmit = true;
+    return;
+  }
+
+  this.editProfessorForm.patchValue({
+    department: this.selectedEditDepartment
+  });
+
+  // Call the service method to edit the professor
+  this.userService.editProfessor(this.professorToEdit.userId, this.editProfessorForm.value).subscribe(
+    () => {
+      console.log('Professor edited successfully');
+      this.UserEditedSuccessfully = true;
+      // Optionally, you can perform additional actions after successful edit
+    },
+    error => {
+      console.error('Error editing professor:', error);
+      this.UserEditError = true;
+      // Optionally, handle the error by displaying an error message or performing other actions
+    }
+  );
+}
+
+// Method to set the selected professor for editing
+setProfessorToEdit(professor: any): void {
+  this.professorToEdit = professor;
+  this.selectedEditDepartment = this.professorToEdit.department;
+  // Populate the form fields with the selected professor's data
+  this.editProfessorForm.patchValue({
+    username: professor.username,
+    email: professor.email,
+    telephone: professor.telephone,
+    password: professor.password,
+    department: professor.department // Assuming department is part of the edit form
+  });
+
+  this.incompleteEditUserSubmit = false;
+  this.UserEditedSuccessfully = false;
+  this.UserEditError = false;
+  this.invalidEditUsername = false;
+  this.invalidEditUserEmail = false;
+  this.invalidEditUserTelephone = false;
+}
 }

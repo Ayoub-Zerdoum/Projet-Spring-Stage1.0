@@ -1,0 +1,68 @@
+package com.springers.SERVICES;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.springers.ENTITIES.Offer;
+import com.springers.ENTITIES.Student;
+import com.springers.REPOSITORIES.OfferApplicationRepo;
+import com.springers.REPOSITORIES.OfferRepo;
+
+import jakarta.persistence.EntityNotFoundException;
+
+@Service
+public class Service_Offer {
+	@Autowired
+	OfferRepo offerRepo; 
+	
+	@Autowired
+	OfferApplicationRepo appRepo; 
+	
+	public void ajouter_Offer(Offer offre){
+		Offer offre2 = offerRepo.save(offre);
+	}
+
+	public void supprimer_Offer(Long id){
+		Optional<Offer> offer_op = offerRepo.findById(id);
+		if(offer_op.isPresent()) {
+			Offer offer=offer_op.get();
+			if(offer.getOfferApplications().size() == 0) {
+				offerRepo.deleteById(id);
+			} else {
+				offer
+			}
+		}
+		if(len(offerApplications)
+		StdRepo.deleteById(id);
+	}
+
+	public List<Student> afficher_Students(){
+		List<Student> students = (List<Student>) StdRepo.findAll();
+		return students;
+	}
+	
+	public Student getStudentById(Long id) {
+        return StdRepo.findById(id).orElse(null);
+    }
+	
+	public Student getStudentById(Long id) {
+        return StdRepo.findById(id).orElse(null);
+    }
+	
+	@Transactional
+    public void ChangeOfferStatus(Long offerId, Boolean NewStatus) {
+		// Retrieve the student entity from the database
+        Offer offer = offerRepo.findById(offerId)
+                .orElseThrow(() -> new EntityNotFoundException("Offer not found with id: " + offerId));
+        
+        offer.setStatus(NewStatus);
+        offerRepo.save(offer);
+	}
+	
+	
+}

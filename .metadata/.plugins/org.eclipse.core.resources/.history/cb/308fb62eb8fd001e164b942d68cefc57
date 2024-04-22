@@ -1,0 +1,14 @@
+package com.springers.SERVICES;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.springers.REPOSITORIES.OfferRepo;
+
+@Service
+public class Service_Offer {
+	@Autowired
+	OfferRepo offerRepo; 
+	
+	
+}

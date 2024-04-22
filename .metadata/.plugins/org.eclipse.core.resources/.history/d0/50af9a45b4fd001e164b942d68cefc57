@@ -1,0 +1,13 @@
+package com.springers.REPOSITORIES;
+
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.springers.ENTITIES.OfferApplication;
+import com.springers.ENTITIES.OfferApplication.OfferApplicationId;
+
+public interface OfferApplicationRepo extends CrudRepository<OfferApplication, OfferApplicationId>{
+	public List<OfferApplication> findByStudentOfferUserId(long id);
+	public List<OfferApplication> findByOfferApplicationId(long id);
+}

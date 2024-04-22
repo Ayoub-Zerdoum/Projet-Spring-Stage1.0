@@ -1,6 +1,7 @@
 package com.springers.SERVICES;
 
 import java.util.List;
+import java.util.Map;
 
 import com.springers.ENTITIES.Professor;
 
@@ -13,4 +14,7 @@ public interface I_Service_Professor {
 	public List<Professor> searchProfessorsByTelephone(String telephoneQuery);
 	public List<Professor> filterProfessors(String department, String accountStatus);
 	public Professor getProfessorById(Long id);
+	public void suspendAccount(Long Id);
+	public void activateAccount(Long Id);
+	public void editProfessor(Long professorId, Map<String, Object> professorData);
 }

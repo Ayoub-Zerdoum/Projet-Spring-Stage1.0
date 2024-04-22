@@ -1,0 +1,135 @@
+<h1 class="title">Stage Offers</h1>
+<div class="container-xxl">
+    <div class="menu">
+        <ul class="offers-type">
+            <li class="offer-type" (click)="showTable('All',0,3)" [class.active]="selectedType === 'All'">All offers</li>
+            <li class="offer-type" (click)="showTable('Mine',0,3)" [class.active]="selectedType === 'Mine'">My Offers</li>
+        </ul>
+    </div>
+    <div class="filter-options">
+        <form class="d-flex search-form" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [formControl]="searchInput">
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary search-btn" (click)="triggerSearch()">SEARCH BY {{ searchOption | uppercase }}</button>
+            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="visually-hidden">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+              <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
+                <input type="radio" class="btn-check" name="search-radio-admin" id="username-radio-admin" autocomplete="off" checked (change)="updateSearchOption('Title')">
+                <label class="btn btn-outline-success" for="username-radio-admin">Username</label>
+                <input type="radio" class="btn-check" name="search-radio-admin" id="email-radio-admin" autocomplete="off" (change)="updateSearchOption('NomSocieté')">
+                <label class="btn btn-outline-success" for="email-radio-admin">Email</label>
+              </div>
+            </ul>
+          </div>
+      </form>
+      <div class="right-side d-flex justify-content-between align-items-center gap-1">
+        <div class="btn-group add-buttons">
+          <button type="button" class="btn btn-primary">New</button>
+          <button type="button" class="btn btn-primary" (click)="toggleAddingActive()" data-bs-toggle="collapse" data-bs-target="#add-collapse" aria-expanded="false" aria-controls="add-collapse">
+            <i *ngIf="!addingActive" class="fa-solid fa-plus"></i>
+            <i *ngIf="addingActive" class="fa-solid fa-minus"></i>
+          </button>
+        </div>
+        <div class="filter" [ngClass]="{'changed': filterChanged}" data-bs-toggle="modal" data-bs-target="#AdminFilterModal">
+          <i class="fa-solid fa-filter"></i>
+          <span>filter</span>
+          <div class="filter-circle">{{ activeFilters }}</div>
+        </div>
+      </div>
+      
+    <!-- Filter Modal -->
+    <div class="modal fade" id="OfferFilterModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="offerFilterModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="OfferFilterModalLabel">Filter offers</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <label>Specialité:</label><br>
+                <div class="mb-3 d-grid justify-content-center spec-grid">
+                    <input type="radio" class="btn-check" name="filter-radio-specialization-offer" id="filter-offer-informatique" autocomplete="off" [checked]="selectedSpecialization === 'INFORMATIQUE'" (click)="toggleSpecialization('INFORMATIQUE')">
+                    <label class="btn btn-outline-success mx-1 my-1" for="filter-offer-informatique">INFORMATIQUE</label>
+                    <input type="radio" class="btn-check" name="filter-radio-specialization-offer" id="filter-offer-mecatronique" autocomplete="off" [checked]="selectedSpecialization === 'MECATRONIQUE'" (click)="toggleSpecialization('MECATRONIQUE')">
+                    <label class="btn btn-outline-success mx-1 my-1" for="filter-offer-mecatronique">MECATRONIQUE</label>
+                    <input type="radio" class="btn-check" name="filter-radio-specialization-offer" id="filter-offer-genie-industriel" autocomplete="off" [checked]="selectedSpecialization === 'GENIE_INDUSTRIEL'" (click)="toggleSpecialization('GENIE_INDUSTRIEL')">
+                    <label class="btn btn-outline-success mx-1 my-1" for="filter-offer-genie-industriel">GENIE INDUSTRIEL</label>
+                    <input type="radio" class="btn-check" name="filter-radio-specialization-offer" id="filter-offer-genie-infotronique" autocomplete="off" [checked]="selectedSpecialization === 'GENIE_INFOTRONIQUE'" (click)="toggleSpecialization('GENIE_INFOTRONIQUE')">
+                    <label class="btn btn-outline-success mx-1 my-1" for="filter-offer-genie-infotronique">GENIE INFOTRONIQUE</label>
+                </div> 
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <!-- <button type="button" class="btn btn-primary" (click)="applyFilters()">Apply Filters</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+       </div> 
+  
+       <!-- add collapse -->
+    <div class="collapse add-collapse-container" id="add-collapse">
+        <div class="container d-flex justify-content-center gap-2">
+          <div class="add-btn d-flex flex-column justify-content-around align-items-center" (click)="selectNewOfferSpecialization('INFORMATIQUE')" data-bs-toggle="modal" data-bs-target="#new-offer-modal">
+            <img src="./assets/images/informatique-icon.svg" alt="informatique" class="add-icon">
+            <h3>INFORMATIQUE</h3>
+          </div>
+          <div class="add-btn d-flex flex-column justify-content-around align-items-center" (click)="selectNewOfferSpecialization('MECATRONIQUE')" data-bs-toggle="modal" data-bs-target="#new-offer-modal">
+            <img src="./assets/images/robot-128.png" alt="mecatronique" class="add-icon">
+            <h3>MECATRONIQUE</h3>
+          </div>
+          <div class="add-btn d-flex flex-column justify-content-around align-items-center" (click)="selectNewOfferSpecialization('GENIE_INDUSTRIEL')" data-bs-toggle="modal" data-bs-target="#new-offer-modal">
+            <img src="./assets/images/indus-icon.svg" alt="industruel" class="add-icon">
+            <h3>INDUSTRIEL</h3>
+          </div>
+          <div class="add-btn d-flex flex-column justify-content-around align-items-center" (click)="selectNewOfferSpecialization('GENIE_INFOTRONIQUE')" data-bs-toggle="modal" data-bs-target="#new-offer-modal">
+            <img src="./assets/images/chip-icon1.svg" alt="infotronique" class="add-icon">
+            <h3>INFOTRONIQUE</h3>
+          </div>
+        </div>
+    </div>
+
+    <div class="offers-container">
+        <div class="offer" *ngFor="let offer of this.offers$ |async">
+            <div class="offer-header d-flex justify-content-between">
+                <h3 class="offer-title">Domaine :{{offer.title}}</h3>
+                <div class="nb-places">nombre de places: {{offer.offerApplications.length}}/{{offer.nbPlaces}}</div>
+            </div>
+            <div class="offer-body">
+                <h5 class="company">company {{offer.nomSociete}}</h5>
+                <p class="desc">{{offer.description}}</p>
+            </div>
+            <div class="offer-footer d-flex justify-content-between">
+                <div class="deadline-rank">
+                    <h5 class="deadline">deadline :{{offer.deadline}}</h5>
+                    <div class="rank" *ngIf="offer.rank > -1">
+                        <h6 class="rank" *ngIf="offer.rank <= offer.nbPlaces">tu est dans la premiere list , consulte les info de contact</h6>
+                        <h6 class="rank" *ngIf="offer.rank > offer.nbPlaces">tu est dans la list d'attent , votre rang dans la list d'attent est : {{offer.rank - offer.nbPlaces}}</h6>
+                    </div>
+                </div>
+                <div class="btns">
+                    <button type="button" class="btn btn-primary" *ngIf="offer.rank === -1" [disabled]="offer.rank === offer.nbPlaces">Apply</button>
+                    <button type="button" class="btn btn-primary" *ngIf="offer.rank > -1" [disabled]="offer.rank > offer.nbPlaces" (click)="this.offerToView = offer" data-bs-toggle="modal" data-bs-target="#view-offre-modal">Edit contact Info</button> 
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" (click)="showTable(selectedType,currentPage - 1)" [class.disabled]="currentPage === 0">Previous</a>
+          </li>
+          <li class="page-item" *ngFor="let page of totalPages">
+            <a class="page-link" (click)="showTable(selectedType,page)" [class.active]="currentPage === page">{{ page + 1 }}</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" (click)="showTable(selectedType,currentPage + 1)" [class.disabled]="currentPage >= (totalPages.length - 1)">Next</a>
+          </li>
+        </ul>
+      </nav>
+</div>

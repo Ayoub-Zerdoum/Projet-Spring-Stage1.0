@@ -1,0 +1,49 @@
+package com.springers.SERVICES;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class Service_OfferTest {
+
+	@Test
+	void testAjouter_Offer() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSupprimer_Offer() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testAfficher_Offers() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetOfferById() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testChangeOfferStatus() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSearchOffersByNomSociete() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSearchOffersByDomaine() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSearchOffersBySpecialization() {
+		fail("Not yet implemented");
+	}
+
+}

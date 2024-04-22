@@ -1,0 +1,17 @@
+package com.springers.SERVICES;
+
+import java.util.List;
+import java.util.Map;
+
+import com.springers.ENTITIES.Offer;
+
+public interface I_Service_Offer {
+
+	void ajouter_Offer(Offer offre);
+	Offer getOfferById(Long id);
+	List<Offer> searchOffersByNomSociete(String Query);
+	List<Offer> searchOffersByDomaine(String Query);
+	List<Offer> searchOffersBySpecialization(String Query);
+	void editOffer(Long offerId, Map<String, Object> offerData);
+
+}

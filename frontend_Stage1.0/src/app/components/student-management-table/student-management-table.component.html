@@ -128,170 +128,7 @@
         </div>
     </div>
 
-    <!-- Adding Modal -->
-    <div class="modal fade" id="new-student-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="new-student-modal-Label" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header adding-modal">
-            <div class="title-wrapper">
-              <div class="add-title d-flex align-items-center" *ngIf="selectedNewStudentSpecialization === 'INFORMATIQUE'">
-                <img src="./assets/images/informatique-icon.svg" alt="informatique" class="add-icon">
-                <h5>INFORMATIQUE</h5>
-              </div>
-              <div class="add-title d-flex align-items-center" *ngIf="selectedNewStudentSpecialization === 'MECATRONIQUE'">
-                <img src="./assets/images/robot-128.png" alt="mecatronique" class="add-icon">
-                <h5>MECATRONIQUE</h5>
-              </div>
-              <div class="add-title d-flex align-items-center" *ngIf="selectedNewStudentSpecialization === 'GENIE_INDUSTRIEL'">
-                <img src="./assets/images/indus-icon.svg" alt="industruel" class="add-icon">
-                <h5>INDUSTRIEL</h5>
-              </div>
-              <div class="add-title d-flex align-items-center" *ngIf="selectedNewStudentSpecialization === 'GENIE_INFOTRONIQUE'">
-                <img src="./assets/images/chip-icon1.svg" alt="infotronique" class="add-icon">
-                <h5>INFOTRONIQUE</h5>
-              </div>
-            </div>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="resetNewUserForm()"></button>
-          </div>
-          <div class="modal-body">
-            <form [formGroup]="newUserForm" class="d-flex flex-column">
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="username-label">Username</span>
-                <input type="text" class="form-control" placeholder="Username" formControlName="username" aria-label="Username" aria-describedby="username-label">
-              </div>
-              <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidNewUsername">
-                <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                <div>
-                  invalid username !
-                </div>
-              </div>
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="password-label">Generate Randomly</span>
-                <input type="password" class="form-control" placeholder="Password" formControlName="password" aria-label="Password" aria-describedby="password-label">
-              </div>
-
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="email-label">Email</span>
-                <input type="email" class="form-control" placeholder="Email" formControlName="email" aria-label="Email" aria-describedby="email-label">
-              </div>
-              <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidNewUserEmail">
-                <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                <div>
-                  invalid email !
-                </div>
-              </div>
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="telephone-label">Telephone</span>
-                <input type="text" formControlName="telephone" pattern="[0-9]*" inputmode="numeric" minlength="8" maxlength="8" class="form-control" placeholder="99999999" aria-label="Telephone" aria-describedby="telephone-label">
-              </div>
-              <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidNewUserTelephone">
-                <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                <div>
-                  invalid telephone !
-                </div>
-              </div>
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="telephone-label">Date de Naissance</span>
-                <input type="date" class="form-control" placeholder="99999999" formControlName="dateOfBirth" aria-label="Telephone" aria-describedby="telephone-label">
-              </div>
-              <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" formControlName="enrolled" id="enrolledSwitch" checked>
-                <label class="form-check-label" for="enrolledSwitch">Enrolled</label>
-              </div>
-              <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" formControlName="sendVerificationEmail" id="sendEmailSwitch" checked>
-                <label class="form-check-label" for="sendEmailSwitch">Send verification email</label>
-              </div>
-              <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="incompleteNewUserSubmit">
-                <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                <div>
-                  il y a un champ incomplete !
-                </div>
-              </div>
-              <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="NewUserCreatedSuccesfully">
-                <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#check-circle-fill"/></svg>
-                <div>
-                  student added succesfully
-                </div>
-              </div>
-              <div class="alert alert-danger d-flex align-items-center" role="alert" *ngIf="NewUserCreatedError">
-                <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                <div>
-                  error adding student to database ! 
-                </div>
-              </div>
-              
-              
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button *ngIf="!NewUserCreatedSuccesfully" type="button" class="btn btn-secondary" (click)="resetNewUserForm()">RESET</button>
-            <button *ngIf="NewUserCreatedSuccesfully" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetNewUserForm()">CLOSE</button>
-            <button *ngIf="!NewUserCreatedSuccesfully" type="button" class="btn btn-primary" (click)="createUser()">CREATE</button>
-            <button *ngIf="NewUserCreatedSuccesfully" type="button" class="btn btn-primary" (click)="resetNewUserForm()">ADD NEW</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Deleting Modal -->
-    <div class="modal fade" id="delete-student-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delete-student-modal-Label" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header adding-modal">
-            <h1>Deleting Student</h1>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="abandonDeleting()"></button>
-          </div>
-          <div class="modal-body">
-           <ul *ngIf="studentToDelete">
-            <li>Username: {{ studentToDelete.username }}</li>
-            <li>Email: {{ studentToDelete.email }}</li>
-            <li>Telephone: {{ studentToDelete.telephone }}</li>
-            <li>Status: {{ studentToDelete.studentStatus }}</li>
-            <li>Specialité: {{ studentToDelete.specialization }}</li>
-            <li>Date de Naissance: {{ studentToDelete.dateOfBirth | date: 'yyyy-MM-dd' }}</li>
-            <li>Account: {{ studentToDelete.accountStatus }}</li>
-           </ul>
-           <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="!UserDeleteConfirmed && DeleteIsPossible">
-              <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-              <div>
-                are you sure you want to delete this student ?
-              </div>
-            </div>
-            <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="!UserDeleteConfirmed && !DeleteIsPossible">
-              <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-              <div>
-                this student couldn't be deleted, do dou want to suspend the account instead ?
-              </div>
-            </div>
-            <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="UserDeleteConfirmed && DeleteIsPossible">
-              <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-              <div>
-                student deleted succesfully
-              </div>
-            </div>
-            <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="UserDeleteConfirmed && !DeleteIsPossible">
-              <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-              <div>
-                student account suspended 
-              </div>
-            </div>
-            <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="UserDeleteConcelled">
-              <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-              <div>
-                student preserved
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button *ngIf="UserDeletedSuccessfully" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="abandonDeleting()">CLOSE</button>
-            <button *ngIf="!UserDeletedSuccessfully" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelDeleting()">Annuler</button>
-            <button *ngIf="!UserDeletedSuccessfully" type="button" class="btn btn-primary" (click)="confirmDelete()">Confirm</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    
     <table class="table table-striped">
         <thead>
           <tr>
@@ -316,10 +153,10 @@
                 <td>{{ student.accountStatus }}</td>
                 <td>
                   <div class="action-container d-flex gap-2">
-                    <img *ngIf="student.accountStatus == 'ACTIVE'" src="./assets/images/locked-icon.svg" alt="lock">
-                    <img *ngIf="student.accountStatus == 'SUSPENDED'" src="./assets/images/unlocked-icon.svg" alt="unlock">
-                    <img src="./assets/images/eye-icon-dark.svg" alt="view">
-                    <img src="./assets/images/edit-icon-dark.svg" alt="edit">
+                    <img *ngIf="student.accountStatus == 'SUSPENDED'" (click)="activateAccount(student)" src="./assets/images/locked-icon.svg" alt="lock">
+                    <img *ngIf="student.accountStatus == 'ACTIVE'" (click)="suspendAccount(student)" src="./assets/images/unlocked-icon.svg" alt="unlock">
+                    <img src="./assets/images/eye-icon-dark.svg" alt="view" (click)="this.studentToView = student;" data-bs-toggle="modal" data-bs-target="#view-student-modal">
+                    <img src="./assets/images/edit-icon-dark.svg" alt="edit" data-bs-toggle="modal" data-bs-target="#edit-student-modal" (click)="setStudentToEdit(student)">
                     <img src="./assets/images/trash-icon.svg" alt="trash" (click)="DeleteThisStudent(student)" data-bs-toggle="modal" data-bs-target="#delete-student-modal">
                   </div>
                 </td>
@@ -327,6 +164,301 @@
         </tbody>
       </table>
 </div>
+
+<!-- Adding Modal -->
+<div class="modal fade" id="new-student-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="new-student-modal-Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header adding-modal">
+        <div class="title-wrapper">
+          <div class="add-title d-flex align-items-center" *ngIf="selectedNewStudentSpecialization === 'INFORMATIQUE'">
+            <img src="./assets/images/informatique-icon.svg" alt="informatique" class="add-icon">
+            <h5>INFORMATIQUE</h5>
+          </div>
+          <div class="add-title d-flex align-items-center" *ngIf="selectedNewStudentSpecialization === 'MECATRONIQUE'">
+            <img src="./assets/images/robot-128.png" alt="mecatronique" class="add-icon">
+            <h5>MECATRONIQUE</h5>
+          </div>
+          <div class="add-title d-flex align-items-center" *ngIf="selectedNewStudentSpecialization === 'GENIE_INDUSTRIEL'">
+            <img src="./assets/images/indus-icon.svg" alt="industruel" class="add-icon">
+            <h5>INDUSTRIEL</h5>
+          </div>
+          <div class="add-title d-flex align-items-center" *ngIf="selectedNewStudentSpecialization === 'GENIE_INFOTRONIQUE'">
+            <img src="./assets/images/chip-icon1.svg" alt="infotronique" class="add-icon">
+            <h5>INFOTRONIQUE</h5>
+          </div>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="resetNewUserForm()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="newUserForm" class="d-flex flex-column">
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="username-label">Username</span>
+            <input type="text" class="form-control" placeholder="Username" formControlName="username" aria-label="Username" aria-describedby="username-label">
+          </div>
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidNewUsername">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              invalid username !
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="password-label" (click)="generateRandomPassword()">Generate Randomly</span>
+            <input type="{{ PasswordVisibility ? 'text' : 'password' }}" class="form-control" placeholder="Password" formControlName="password" aria-label="Password" aria-describedby="password-label">
+            <span class="material-symbols-outlined visibilityIcon" (click)="toggleVisibility()">{{ PasswordVisibility ? 'visibility' : 'visibility_off' }}</span>
+          </div>
+
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="email-label">Email</span>
+            <input type="email" class="form-control" placeholder="Email" formControlName="email" aria-label="Email" aria-describedby="email-label">
+          </div>
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidNewUserEmail">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              invalid email !
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="telephone-label">Telephone</span>
+            <input type="text" formControlName="telephone" pattern="[0-9]*" inputmode="numeric" minlength="8" maxlength="8" class="form-control" placeholder="99999999" aria-label="Telephone" aria-describedby="telephone-label">
+          </div>
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidNewUserTelephone">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              invalid telephone !
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="telephone-label">Date de Naissance</span>
+            <input type="date" class="form-control" placeholder="99999999" formControlName="dateOfBirth" aria-label="Telephone" aria-describedby="telephone-label">
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" formControlName="enrolled" id="enrolledSwitch" checked>
+            <label class="form-check-label" for="enrolledSwitch">Enrolled</label>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" formControlName="sendVerificationEmail" id="sendEmailSwitch" checked>
+            <label class="form-check-label" for="sendEmailSwitch">Send verification email</label>
+          </div>
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="incompleteNewUserSubmit">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              il y a un champ incomplete !
+            </div>
+          </div>
+          <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="NewUserCreatedSuccesfully">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#check-circle-fill"/></svg>
+            <div>
+              student added succesfully
+            </div>
+          </div>
+          <div class="alert alert-danger d-flex align-items-center" role="alert" *ngIf="NewUserCreatedError">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              error adding student to database ! 
+            </div>
+          </div>
+          
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="!NewUserCreatedSuccesfully" type="button" class="btn btn-secondary" (click)="resetNewUserForm()">RESET</button>
+        <button *ngIf="NewUserCreatedSuccesfully" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetNewUserForm()">CLOSE</button>
+        <button *ngIf="!NewUserCreatedSuccesfully" type="button" class="btn btn-primary" (click)="createUser()">CREATE</button>
+        <button *ngIf="NewUserCreatedSuccesfully" type="button" class="btn btn-primary" (click)="resetNewUserForm()">ADD NEW</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Deleting Modal -->
+<div class="modal fade" id="delete-student-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delete-student-modal-Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header adding-modal">
+        <h1>Deleting Student</h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="abandonDeleting()"></button>
+      </div>
+      <div class="modal-body">
+       <ul *ngIf="studentToDelete">
+        <li>Username: {{ studentToDelete.username }}</li>
+        <li>Email: {{ studentToDelete.email }}</li>
+        <li>Telephone: {{ studentToDelete.telephone }}</li>
+        <li>Status: {{ studentToDelete.studentStatus }}</li>
+        <li>Specialité: {{ studentToDelete.specialization }}</li>
+        <li>Date de Naissance: {{ studentToDelete.dateOfBirth | date: 'yyyy-MM-dd' }}</li>
+        <li>Account: {{ studentToDelete.accountStatus }}</li>
+       </ul>
+       <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="!UserDeleteConfirmed && DeleteIsPossible">
+          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+          <div>
+            are you sure you want to delete this student ?
+          </div>
+        </div>
+        <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="!UserDeleteConfirmed && !DeleteIsPossible">
+          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+          <div>
+            this student couldn't be deleted, do dou want to suspend the account instead ?
+          </div>
+        </div>
+        <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="UserDeleteConfirmed && DeleteIsPossible">
+          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+          <div>
+            student deleted succesfully
+          </div>
+        </div>
+        <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="UserDeleteConfirmed && !DeleteIsPossible">
+          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+          <div>
+            student account suspended 
+          </div>
+        </div>
+        <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="UserDeleteConcelled">
+          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+          <div>
+            student preserved
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="UserDeletedSuccessfully" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="abandonDeleting()">CLOSE</button>
+        <button *ngIf="!UserDeletedSuccessfully" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelDeleting()">Annuler</button>
+        <button *ngIf="!UserDeletedSuccessfully" type="button" class="btn btn-primary" (click)="confirmDelete()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Modal -->
+<div class="modal fade" id="view-student-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="view-student-modal-Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header adding-modal">
+        <h1>View Student</h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="studentToView = null"></button>
+      </div>
+      <div class="modal-body">
+       <ul *ngIf="studentToView">
+        <li>Username: {{ studentToView.username }}</li>
+        <li>Password: {{ studentToView.password }}</li>
+        <li>Email: {{ studentToView.email }}</li>
+        <li>Telephone: {{ studentToView.telephone }}</li>
+        <li>Status: {{ studentToView.studentStatus }}</li>
+        <li>Specialité: {{ studentToView.specialization }}</li>
+        <li>Date de Naissance: {{ studentToView.dateOfBirth | date: 'yyyy-MM-dd' }}</li>
+        <li>Account: {{ studentToView.accountStatus }}</li>
+       </ul>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="studentToView = null">CLOSE</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Editing Modal -->
+<div class="modal fade" id="edit-student-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="edit-student-modal-Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header adding-modal">
+        <h1>Edit Student</h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="resetEditUserForm()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editStudentForm" class="d-flex flex-column">
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="username-label">Username</span>
+            <input type="text" class="form-control" placeholder="Username" formControlName="username" aria-label="Username" aria-describedby="username-label">
+          </div>
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidEditUsername">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              invalid username !
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="password-label" (click)="generateRandomPassword()">Generate Randomly</span>
+            <input type="{{ PasswordVisibility ? 'text' : 'password' }}" class="form-control" placeholder="Password" formControlName="password" aria-label="Password" aria-describedby="password-label">
+            <span class="material-symbols-outlined visibilityIcon" (click)="toggleVisibility()">{{ PasswordVisibility ? 'visibility' : 'visibility_off' }}</span>
+          </div>
+
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="email-label">Email</span>
+            <input type="email" class="form-control" placeholder="Email" formControlName="email" aria-label="Email" aria-describedby="email-label">
+          </div>
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidEditUserEmail">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              invalid email !
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="telephone-label">Telephone</span>
+            <input type="text" formControlName="telephone" pattern="[0-9]*" inputmode="numeric" minlength="8" maxlength="8" class="form-control" placeholder="99999999" aria-label="Telephone" aria-describedby="telephone-label">
+          </div>
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidEditUserTelephone">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              invalid telephone !
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="telephone-label">Date de Naissance</span>
+            <input type="date" class="form-control" placeholder="99999999" formControlName="dateOfBirth" aria-label="Telephone" aria-describedby="telephone-label">
+          </div>
+          <label>Status:</label><br>
+          <div class="mb-3 d-flex justify-content-center">
+            <input type="radio" class="btn-check" name="edit-radio-status-student" id="edit-student-enrolled" autocomplete="off" [checked]="selectedEditStatus === 'ENROLLED'" (click)="selectedEditStatus = 'ENROLLED'">
+            <label class="btn btn-outline-success mx-1" for="edit-student-enrolled">ENROllED</label>
+            <input type="radio" class="btn-check" name="edit-radio-status-student" id="edit-student-gradue" autocomplete="off" [checked]="selectedEditStatus === 'GRADUATED'" (click)="selectedEditStatus = 'GRADUATED'">
+            <label class="btn btn-outline-success mx-1" for="edit-student-gradue">GRADUATED</label>
+          </div>
+          <label>Specialité:</label><br>
+          <div class="mb-3 d-grid justify-content-center spec-grid">
+              <input type="radio" class="btn-check" name="-radio-specialization-student" id="edit-student-informatique" autocomplete="off" [checked]="selectedEditSpecialization === 'INFORMATIQUE'" (click)="selectedEditSpecialization = 'INFORMATIQUE'">
+              <label class="btn btn-outline-success mx-1 my-1" for="edit-student-informatique">INFORMATIQUE</label>
+              <input type="radio" class="btn-check" name="edit-radio-specialization-student" id="edit-student-mecatronique" autocomplete="off" [checked]="selectedEditSpecialization === 'MECATRONIQUE'" (click)="selectedEditSpecialization = 'MECATRONIQUE'">
+              <label class="btn btn-outline-success mx-1 my-1" for="edit-student-mecatronique">MECATRONIQUE</label>
+              <input type="radio" class="btn-check" name="edit-radio-specialization-student" id="edit-student-genie-industriel" autocomplete="off" [checked]="selectedEditSpecialization === 'GENIE_INDUSTRIEL'" (click)="selectedEditSpecialization = 'GENIE_INDUSTRIEL'">
+              <label class="btn btn-outline-success mx-1 my-1" for="edit-student-genie-industriel">GENIE INDUSTRIEL</label>
+              <input type="radio" class="btn-check" name="edit-radio-specialization-student" id="edit-student-genie-infotronique" autocomplete="off" [checked]="selectedEditSpecialization === 'GENIE_INFOTRONIQUE'" (click)="selectedEditSpecialization = 'GENIE_INFOTRONIQUE'">
+              <label class="btn btn-outline-success mx-1 my-1" for="edit-student-genie-infotronique">GENIE INFOTRONIQUE</label>
+          </div>
+          
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="incompleteEditUserSubmit">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              il y a un champ incomplete !
+            </div>
+          </div>
+          <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="UserEditedSuccessfully">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#check-circle-fill"/></svg>
+            <div>
+              student edited succesfully
+            </div>
+          </div>
+          <div class="alert alert-danger d-flex align-items-center" role="alert" *ngIf="UserEditError">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              error editing student , database ! 
+            </div>
+          </div>
+          
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="!UserEditedSuccessfully" type="button" class="btn btn-secondary" (click)="resetEditUserForm()">RESET</button>
+        <button *ngIf="UserEditedSuccessfully" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetEditUserForm()">CLOSE</button>
+        <button *ngIf="!UserEditedSuccessfully" type="button" class="btn btn-primary" (click)="editStudent()">Edit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="check-circle-fill" viewBox="0 0 16 16">
     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>

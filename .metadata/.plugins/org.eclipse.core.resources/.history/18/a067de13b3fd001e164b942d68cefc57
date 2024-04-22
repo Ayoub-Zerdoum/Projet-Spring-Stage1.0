@@ -1,0 +1,9 @@
+package com.springers.REPOSITORIES;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.springers.ENTITIES.Offer;
+
+public interface OfferRepo extends CrudRepository<Offer, Long>{
+
+}

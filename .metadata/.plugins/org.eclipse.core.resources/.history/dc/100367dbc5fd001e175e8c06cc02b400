@@ -1,0 +1,10 @@
+package com.springers.SERVICES;
+
+import com.springers.ENTITIES.Offer;
+
+public interface I_Service_Offer {
+
+	void ajouter_Offer(Offer offre);
+	Offer getOfferById(Long id);
+
+}

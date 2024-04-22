@@ -9,8 +9,13 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
@@ -18,7 +23,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @SuperBuilder
 @DiscriminatorValue("STUDENT")
 public class Student extends User {
@@ -37,5 +41,7 @@ public class Student extends User {
     private List<RequestStage> requestStages;
     
     @OneToMany(mappedBy = "studentOffer")
-    private List<OfferApplication> offerApplications;
+    @JsonIgnoreProperties("studentOffer")
+    private List<OfferApplication> std_offerApplications;
+
 }

@@ -1,0 +1,52 @@
+package controllrer;
+
+
+import Modules.Etudiant;
+import services.EtudiantService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@CrossOrigin
+@RequestMapping("/etudiants")
+public class EtudiantController {
+
+    @Autowired
+    private EtudiantService etudiantService;
+
+
+    
+    @GetMapping("/all")
+    public ResponseEntity<List<Etudiant>> getAllStudents() {
+        List<Etudiant> students = etudiantService.getAllEtudiants();
+        return ResponseEntity.ok(students);
+    }
+    
+
+    @GetMapping("/get/{id}")
+    public Etudiant getEtudiantById(@PathVariable Long id) {
+        return etudiantService.getEtudiantById(id);
+    }
+
+  
+
+    @PutMapping("/{id}")
+    public Etudiant updateEtudiant(@PathVariable Long id, @RequestBody Etudiant etudiant) {
+        return etudiantService.updateEtudiant(id, etudiant);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteEtudiant(@PathVariable Long id) {
+        etudiantService.deleteEtudiant(id);
+    }
+    
+    @PostMapping("/add")
+    public Etudiant createEtudiant(@RequestBody Etudiant etudiant) {
+        return etudiantService.createEtudiant(etudiant);
+    }
+
+}

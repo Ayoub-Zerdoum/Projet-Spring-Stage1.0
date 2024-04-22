@@ -132,7 +132,42 @@ export class UserManagementService {
   }
 
   /*changing states*/
-  suspendAccount(studentId: number): Observable<any> {
+  suspendStudentAccount(studentId: number): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/students/suspend/${studentId}`, {});
   }
+
+  suspendProfAccount(profId: number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/professors/suspend/${profId}`, {});
+  }
+
+  suspendAdminAccount(adminId: number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/admins/suspend/${adminId}`, {});
+  }
+
+  activateStudentAccount(studentId: number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/students/activate/${studentId}`, {});
+  }
+
+  activateProfAccount(profId: number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/professors/activate/${profId}`, {});
+  }
+
+  activateAdminAccount(adminId: number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/admins/activate/${adminId}`, {});
+  }
+
+  /*Edit */
+  // Method to edit user
+  editStudent(studentId: number ,studentData: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/students/edit/${studentId}`, studentData);
+  }
+
+  editProfessor(profId: number ,profData: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/professors/edit/${profId}`, profData);
+  }
+
+  editAdmin(adminId: number ,adminData: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/admins/edit/${adminId}`, adminData);
+  }
+
 }

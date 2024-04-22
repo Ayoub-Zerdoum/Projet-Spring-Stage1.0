@@ -1,0 +1,18 @@
+package com.springers.CONTROLLERS;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.springers.SERVICES.Service_Offer;
+
+@RestController
+@CrossOrigin
+@RequestMapping("/api/offers")
+public class OfferController {
+	@Autowired
+	Service_Offer offerService;
+	
+	
+}

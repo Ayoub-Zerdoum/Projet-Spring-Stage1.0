@@ -54,7 +54,7 @@
     padding: 3px;
     font-size: 16px;
     color: rgba(var(--main-color-rgb), 0.7);
-    top: -5px;
+    top: -14px;
     left: 20px;
 }
 
@@ -126,4 +126,5 @@
     -webkit-transform: scale(1.05);
     transform: scale(1.05);
 }
+
 

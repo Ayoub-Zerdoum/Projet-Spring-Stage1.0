@@ -1,8 +1,12 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; 
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+
+import { GoogleMapsModule } from '@angular/google-maps'
+
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +20,8 @@ import { UserManagementComponent } from './components/user-management/user-manag
 import { StudentManagementTableComponent } from './components/student-management-table/student-management-table.component';
 import { AdminManagementTableComponent } from './components/admin-management-table/admin-management-table.component';
 import { ProfessorManagementTableComponent } from './components/professor-management-table/professor-management-table.component';
+import { OffersStudentComponentComponent } from './components/offers-student-component/offers-student-component.component';
+import { OffersAdminComponent } from './components/offers-admin/offers-admin.component';
 
 
 @NgModule({
@@ -28,15 +34,19 @@ import { ProfessorManagementTableComponent } from './components/professor-manage
     StudentManagementTableComponent,
     AdminManagementTableComponent,
     ProfessorManagementTableComponent,
+    OffersStudentComponentComponent,
+    OffersAdminComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    GoogleMapsModule
   ],
   providers: [AuthenticationService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

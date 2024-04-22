@@ -1,0 +1,5 @@
+package com.springers.ASPECTS;
+
+public class LoggingAspect {
+
+}

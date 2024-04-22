@@ -13,6 +13,7 @@ public class AuthService implements Interface_authService{
 	@Autowired
     private UserRepo userRepository;
 
+	
     @Override
     public User authenticate(String username, String password) {
         // Find user by username
@@ -25,5 +26,11 @@ public class AuthService implements Interface_authService{
             }
         }
         return null; // Authentication failed
+    }
+    
+    
+    @Override
+    public String getUserTypeById(Long userId) {
+        return userRepository.findUserTypeById(userId);
     }
 }

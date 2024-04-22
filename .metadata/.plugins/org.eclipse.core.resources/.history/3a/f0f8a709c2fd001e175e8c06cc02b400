@@ -1,0 +1,5 @@
+package com.springers.SERVICES;
+
+public interface I_Service_Offer {
+
+}

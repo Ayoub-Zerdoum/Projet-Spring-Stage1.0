@@ -2,6 +2,7 @@ package com.springers.SERVICES;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import com.springers.ENTITIES.Student;
 
@@ -16,5 +17,9 @@ public interface I_Service_Student {
 	
 	public List<Student> filterStudents(String status, String specialization, String accountStatus, LocalDate dobMin, LocalDate dobMax);
 	public Student getStudentById(Long id);
+	public void suspendAccount(Long Id);
+	public void activateAccount(Long Id);
+	public void editStudent(Long studentId, Map<String, Object> studentData);
+	void ReserveOffer(Long offerId, Long studentId);
 
 }

@@ -34,7 +34,7 @@
       </div>
     </div>
     
-  <!-- Modal -->
+  <!--Filter Modal -->
   <div class="modal fade" id="AdminFilterModal" tabindex="-1" aria-labelledby="AdminFilterModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -150,8 +150,9 @@
               </div>
             </div>
             <div class="input-group mb-3">
-              <span class="input-group-text" id="password-label">Generate Randomly</span>
-              <input type="password" class="form-control" placeholder="Password" formControlName="password" aria-label="Password" aria-describedby="password-label">
+              <span class="input-group-text" id="password-label" (click)="generateRandomPassword()">Generate Randomly</span>
+              <input type="{{ PasswordVisibility ? 'text' : 'password' }}" class="form-control" placeholder="Password" formControlName="password" aria-label="Password" aria-describedby="password-label">
+              <span class="material-symbols-outlined visibilityIcon" (click)="toggleVisibility()">{{ PasswordVisibility ? 'visibility' : 'visibility_off' }}</span>
             </div>
 
             <div class="input-group mb-3">
@@ -227,12 +228,197 @@
             <td>{{ admin.telephone }}</td>
             <td>{{ admin.privilege }}</td>
             <td>{{ admin.accountStatus }}</td>
-            <td> actions</td>
+            <td>
+              <div class="action-container d-flex gap-2">
+                <img *ngIf="admin.accountStatus == 'SUSPENDED'" (click)="activateAccount(admin)" src="./assets/images/locked-icon.svg" alt="lock">
+                <img *ngIf="admin.accountStatus == 'ACTIVE'" (click)="suspendAccount(admin)" src="./assets/images/unlocked-icon.svg" alt="unlock">
+                <img src="./assets/images/eye-icon-dark.svg" alt="view" (click)="this.adminToView = admin" data-bs-toggle="modal" data-bs-target="#view-admin-modal">
+                <img src="./assets/images/edit-icon-dark.svg" alt="edit" (click)="setAdminToEdit(admin)" data-bs-toggle="modal" data-bs-target="#edit-admin-modal">
+                <img src="./assets/images/trash-icon.svg" alt="trash" (click)="DeleteThisAdmin(admin)" data-bs-toggle="modal" data-bs-target="#delete-admin-modal">
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
  </div>
  
+ <!-- Deleting Modal -->
+ <div class="modal fade" id="delete-admin-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delete-admin-modal-Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header adding-modal">
+        <h1>Deleting Admin</h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="abandonDeleting()"></button>
+      </div>
+      <div class="modal-body">
+       <ul *ngIf="adminToDelete">
+        <li>Username: {{ adminToDelete.username }}</li>
+        <li>Email: {{ adminToDelete.email }}</li>
+        <li>Telephone: {{ adminToDelete.telephone }}</li>
+        <li>Status: {{ adminToDelete.privilege }}</li>
+        <li>Account: {{ adminToDelete.accountStatus }}</li>
+       </ul>
+       <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="!UserDeleteConfirmed && DeleteIsPossible">
+          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+          <div>
+            are you sure you want to delete this admin ?
+          </div>
+        </div>
+        <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="!UserDeleteConfirmed && !DeleteIsPossible">
+          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+          <div>
+            this admin couldn't be deleted, do dou want to suspend the account instead ?
+          </div>
+        </div>
+        <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="UserDeleteConfirmed && DeleteIsPossible">
+          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+          <div>
+            admin deleted succesfully
+          </div>
+        </div>
+        <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="UserDeleteConfirmed && !DeleteIsPossible">
+          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+          <div>
+            admin account suspended 
+          </div>
+        </div>
+        <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="UserDeleteConcelled">
+          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+          <div>
+            admin preserved
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="UserDeletedSuccessfully" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="abandonDeleting()">CLOSE</button>
+        <button *ngIf="!UserDeletedSuccessfully" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelDeleting()">Annuler</button>
+        <button *ngIf="!UserDeletedSuccessfully" type="button" class="btn btn-primary" (click)="confirmDelete()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Modal -->
+<div class="modal fade" id="view-admin-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="view-admin-modal-Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header adding-modal">
+        <h1>View Admin</h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="this.adminToView = null"></button>
+      </div>
+      <div class="modal-body">
+       <ul *ngIf="adminToView">
+        <li>Username: {{ adminToView.username }}</li>
+        <li>Password: {{ adminToView.password }}</li>
+        <li>Email: {{ adminToView.email }}</li>
+        <li>Telephone: {{ adminToView.telephone }}</li>
+        <li>Status: {{ adminToView.privilege }}</li>
+        <li>Account: {{ adminToView.accountStatus }}</li>
+       </ul>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="UserDeletedSuccessfully" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="this.adminToView = null">CLOSE</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Editing Modal -->
+<div class="modal fade" id="edit-admin-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="edit-admin-modal-Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header adding-modal">
+        <h1>Edit Admin</h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editUserForm" class="d-flex flex-column">
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="username-label">Username</span>
+            <input type="text" class="form-control" placeholder="Username" formControlName="username" aria-label="Username" aria-describedby="username-label">
+          </div>
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidEditUsername">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              invalid username !
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="password-label" (click)="generateRandomPassword()">Generate Randomly</span>
+            <input type="{{ PasswordVisibility ? 'text' : 'password' }}" class="form-control" placeholder="Password" formControlName="password" aria-label="Password" aria-describedby="password-label">
+            <span class="material-symbols-outlined visibilityIcon" (click)="toggleVisibility()">{{ PasswordVisibility ? 'visibility' : 'visibility_off' }}</span>
+          </div>
+
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="email-label">Email</span>
+            <input type="email" class="form-control" placeholder="Email" formControlName="email" aria-label="Email" aria-describedby="email-label">
+          </div>
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidEditUserEmail">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              invalid email !
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="telephone-label">Telephone</span>
+            <input type="text" formControlName="telephone" pattern="[0-9]*" inputmode="numeric" minlength="8" maxlength="8" class="form-control" placeholder="99999999" aria-label="Telephone" aria-describedby="telephone-label">
+          </div>
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidEditUserTelephone">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              invalid telephone !
+            </div>
+          </div>
+          <label>Privilege:</label><br>
+            <div class="mb-3 d-grid justify-content-center spec-grid">
+              <input type="radio" class="btn-check" name="edit-radio-privilege" id="edit-admin-MANAGE_POSTER_SESSIONS" autocomplete="off" [checked]="selectedEditPrivilege === 'MANAGE_POSTER_SESSIONS'" (click)="selectedEditPrivilege = 'MANAGE_POSTER_SESSIONS'">
+              <label class="btn btn-outline-success mx-1 my-1" for="edit-admin-MANAGE_POSTER_SESSIONS">MANAGE_POSTER_SESSIONS</label>
+
+              <input type="radio" class="btn-check" name="edit-radio-privilege" id="edit-admin-MANAGE_STAGE_DEMANDS" autocomplete="off" [checked]="selectedEditPrivilege === 'MANAGE_STAGE_DEMANDS'" (click)="selectedEditPrivilege = 'MANAGE_STAGE_DEMANDS'">
+              <label class="btn btn-outline-success mx-1 my-1" for="edit-admin-MANAGE_STAGE_DEMANDS">MANAGE_STAGE_DEMANDS</label>
+
+              <input type="radio" class="btn-check" name="edit-radio-privilege" id="edit-admin-POST_OFFERS" autocomplete="off" [checked]="selectedEditPrivilege === 'POST_OFFERS'" (click)="selectedEditPrivilege = 'POST_OFFERS'">
+              <label class="btn btn-outline-success mx-1 my-1" for="edit-admin-POST_OFFERS">POST_OFFERS</label>
+
+              <input type="radio" class="btn-check" name="edit-radio-privilege" id="edit-admin-VIEW_ONLY" autocomplete="off" [checked]="selectedEditPrivilege === 'VIEW_ONLY'" (click)="selectedEditPrivilege = 'VIEW_ONLY'">
+              <label class="btn btn-outline-success mx-1 my-1" for="edit-admin-VIEW_ONLY">VIEW_ONLY</label>
+
+              <input type="radio" class="btn-check" name="edit-radio-privilege" id="edit-admin-SUPER" autocomplete="off" [checked]="selectedEditPrivilege === 'SUPER'" (click)="selectedEditPrivilege = 'SUPER'">
+              <label class="btn btn-outline-danger mx-1 my-1 last-element" for="edit-admin-SUPER">SUPER</label>
+
+            </div>
+          
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="incompleteEditUserSubmit">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              il y a un champ incomplete !
+            </div>
+          </div>
+          <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="UserEditedSuccessfully">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#check-circle-fill"/></svg>
+            <div>
+              student added succesfully
+            </div>
+          </div>
+          <div class="alert alert-danger d-flex align-items-center" role="alert" *ngIf="UserEditError">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              error adding student to database ! 
+            </div>
+          </div>
+          
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="!UserEditedSuccessfully" type="button" class="btn btn-secondary" (click)="resetEditUserForm()">RESET</button>
+        <button *ngIf="UserEditedSuccessfully" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetEditUserForm()">CLOSE</button>
+        <button *ngIf="!UserEditedSuccessfully" type="button" class="btn btn-primary" (click)="editAdmin()">Edit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="check-circle-fill" viewBox="0 0 16 16">
     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>

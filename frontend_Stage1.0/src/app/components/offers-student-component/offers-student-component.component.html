@@ -1,0 +1,76 @@
+<h1 class="title">Stage Offers</h1>
+<div class="container-xxl">
+    <div class="menu">
+        <ul class="offers-type">
+            <li class="offer-type" (click)="showTable('All',0,3)" [class.active]="selectedType === 'All'">All offers</li>
+            <li class="offer-type" (click)="showTable('Mine',0,3)" [class.active]="selectedType === 'Mine'">My Offers</li>
+        </ul>
+    </div>
+
+    <div class="offers-container">
+        <div class="offer" *ngFor="let offer of this.offers$ |async">
+            <div class="offer-header d-flex justify-content-between">
+                <h3 class="offer-title">Domaine :{{offer.title}}</h3>
+                <div class="nb-places">nombre de places: {{offer.offerApplications.length}}/{{offer.nbPlaces}}</div>
+            </div>
+            <div class="offer-body">
+                <h5 class="company">company {{offer.nomSociete}}</h5>
+                <p class="desc">{{offer.description}}</p>
+            </div>
+            <div class="offer-footer d-flex justify-content-between">
+                <div class="deadline-rank">
+                    <h5 class="deadline">deadline :{{offer.deadline}}</h5>
+                    <div class="rank" *ngIf="offer.rank > -1">
+                        <h6 class="rank" *ngIf="offer.rank <= offer.nbPlaces">tu est dans la premiere list , consulte les info de contact</h6>
+                        <h6 class="rank" *ngIf="offer.rank > offer.nbPlaces">tu est dans la list d'attent , votre rang dans la list d'attent est : {{offer.rank - offer.nbPlaces}}</h6>
+                    </div>
+                </div>
+                <div class="btns">
+                    <button type="button" class="btn btn-primary" *ngIf="offer.rank === -1" [disabled]="offer.rank === offer.nbPlaces" (click)="addOffer(offer.id, this.currentUser.userId)">Apply</button>
+                    <button type="button" class="btn btn-primary" *ngIf="offer.rank > -1" [disabled]="offer.rank > offer.nbPlaces" (click)="this.offerToView = offer" data-bs-toggle="modal" data-bs-target="#view-offre-modal">Check contact Info</button> 
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" (click)="showTable(selectedType,currentPage - 1)" [class.disabled]="currentPage === 0">Previous</a>
+          </li>
+          <li class="page-item" *ngFor="let page of totalPages">
+            <a class="page-link" (click)="showTable(selectedType,page)" [class.active]="currentPage === page">{{ page + 1 }}</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" (click)="showTable(selectedType,currentPage + 1)" [class.disabled]="currentPage >= (totalPages.length - 1)">Next</a>
+          </li>
+        </ul>
+      </nav>
+</div>
+
+<!-- View Modal -->
+<div class="modal fade" id="view-offre-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="view-offre-modal-Label" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header adding-modal">
+          <h1>Contact</h1>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="this.offerToView = null"></button>
+        </div>
+        <div class="modal-body">
+            <ul *ngIf="offerToView">
+            <li>Email du societé: {{ offerToView.mailRH }}</li>
+            </ul>
+            <google-map style="margin: auto;"
+                [center]="center" 
+                [zoom]="zoom" 
+                [options]="options"
+                >
+                <map-marker [position]="markerPosition"></map-marker>
+            </google-map>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="this.offerToView = null">CLOSE</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration xmlns:log4j ="http://jakarta.apache.org/log4j/">
+<appender name="console" class="org.apache.log4j.ConsoleAppender">
+<layout class="org.apache.log4j.PatternLayout">
+ <param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss} [%p] %l:%L - %m%n" />
+</layout>
+</appender>
+<appender name="fichierDebug" class="org.apache.log4j.RollingFileAppender">
+    <param name="maxFileSize" value="10MB" />
+    <param name="maxBackupIndex" value="2" />
+    <param name="File" value="C:\\DebugLog.log" />
+    <layout class="org.apache.log4j.PatternLayout">
+        <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-8p [%t]:%C - %m%n" />
+    </layout>
+    <filter class="org.apache.log4j.varia.LevelMatchFilter">
+        <param name="levelToMatch" value="DEBUG" />
+    </filter>
+    <filter class="org.apache.log4j.varia.DenyAllFilter"/>
+</appender>
+
+<appender name="fichierLog" class="org.apache.log4j.RollingFileAppender">
+    <param name="maxFileSize" value="1024KB" />
+    <param name="maxBackupIndex" value="5" />
+    <param name="File" value="C:\\MyLog.log" />
+    <layout class="org.apache.log4j.PatternLayout">
+        <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-8p [%t]:%C - %m%n" />
+    </layout>
+</appender>
+
+<root>
+    <priority value="debug" />
+    <appender-ref ref="fichierLog" />
+    <appender-ref ref="fichierDebug" />
+    <appender-ref ref="console" />
+</root>
+</log4j:configuration>

@@ -2,6 +2,9 @@ package com.springers.SERVICES;
 
 import org.springframework.transaction.annotation.Transactional;
 import com.springers.ENTITIES.AccountStatus;
+import com.springers.ENTITIES.Offer;
+import com.springers.ENTITIES.OfferApplication;
+import com.springers.ENTITIES.OfferApplication.OfferApplicationId;
 import com.springers.ENTITIES.Specialization;
 import com.springers.ENTITIES.Student;
 import com.springers.ENTITIES.StudentStatus;
@@ -9,23 +12,41 @@ import com.springers.REPOSITORIES.*;
 
 import jakarta.persistence.EntityNotFoundException;
 
+import java.beans.Encoder;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.PageRequest;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class Service_Student implements I_Service_Student{
 	@Autowired
 	StudentRepo StdRepo;
+	
+	@Autowired
+	OfferRepo offerRepo;
+	
+	@Autowired
+	OfferApplicationRepo offerAppRepo;
 
 	@Override
 	public void ajouter_Student(Student std){
-		Student std2 = StdRepo.save(std);
+	//PasswordEncoder passwordEncode=encoder();
+		//String rawPassword = std.getPassword();
+	    //String encodedPassword = passwordEncode.encode(rawPassword);
+	    //std.setPassword(encodedPassword);
+	
+	    Student std2 = StdRepo.save(std);
+	    System.out.println(std2);
 	}
 
 	@Override
@@ -90,6 +111,7 @@ public class Service_Student implements I_Service_Student{
 	    return StdRepo.filterStudents(studentStatusEnum, specializationEnum, accountStatusEnum, dobMin, dobMax);
 	}
     
+	@Override
 	@Transactional
     public void suspendAccount(Long studentId) {
         // Retrieve the student entity from the database
@@ -100,8 +122,126 @@ public class Service_Student implements I_Service_Student{
         // Set the account status to SUSPENDED
         student.setAccountStatus(AccountStatus.SUSPENDED);
 
-        // Save the updated student entity
+    }
+	
+	@Override
+	@Transactional
+	public void activateAccount(Long studentId) {
+	    Student student = StdRepo.findById(studentId)
+	            .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + studentId));
+	    student.setAccountStatus(AccountStatus.ACTIVE);
+	}
+	
+	@Override
+	@Transactional
+    public void editStudent(Long studentId, Map<String, Object> studentData) {
+        // Retrieve the student entity from the database
+        Student student = StdRepo.findById(studentId)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + studentId));
+
+     // Update the student entity with the new data
+        if (studentData.containsKey("username")) {
+            student.setUsername((String) studentData.get("username"));
+        }
+        if (studentData.containsKey("email")) {
+            student.setEmail((String) studentData.get("email"));
+        }
+        if (studentData.containsKey("telephone")) {
+            student.setTelephone((String) studentData.get("telephone"));
+        }
+        if (studentData.containsKey("password")) {
+            student.setPassword((String) studentData.get("password"));
+        }
+        if (studentData.containsKey("dateOfBirth")) {
+            // Assuming the dateOfBirth is sent as a String in the format "yyyy-MM-dd"
+            LocalDate dateOfBirth = LocalDate.parse((String) studentData.get("dateOfBirth"));
+            student.setDateOfBirth(dateOfBirth);
+        }
+        if (studentData.containsKey("studentStatus")) {
+            // Convert String to StudentStatus enum
+            StudentStatus studentStatus = StudentStatus.valueOf((String) studentData.get("studentStatus"));
+            student.setStudentStatus(studentStatus);
+        }
+        if (studentData.containsKey("specialization")) {
+            // Convert String to Specialization enum
+            Specialization specialization = Specialization.valueOf((String) studentData.get("specialization"));
+            student.setSpecialization(specialization);
+        }
         StdRepo.save(student);
     }
+	
+	@Override
+	public void ReserveOffer(Long offerId,Long studentId) {
+		Offer offer = offerRepo.findById(offerId)
+                .orElseThrow(() -> new EntityNotFoundException("offer not found with id: " + offerId));
+		Student std = StdRepo.findById(studentId)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + studentId));
+		
+        OfferApplicationId appId = new OfferApplicationId();
+        appId.setOfferId(offerId);
+        appId.setStudentId(studentId);
+       
+        Integer NbLimite = 5;
+		
+        if(!(offer.getSpecialization().equals(std.getSpecialization()))) {
+			System.out.printf(" les specialité <>" + studentId +"\n");
+			return;
+		}
+		if(offerAppRepo.findById(appId).isPresent()) {
+			System.out.printf("L'offre id exist deja " + offerId+"\n");
+			return;
+		} 
+		if(!offer.getIsActive()) {
+			System.out.printf("l'offre n'est pas disponible pour le moment " + offerId +"\n");
+			return;
+		}
+		if(offer.getDeadline().isBefore(LocalDate.now())) {
+			System.out.printf("Date limite a eté passé " + offerId +"\n");
+			return;
+		}
+		if(offerAppRepo.findByStudentOfferUserId(studentId,PageRequest.of(0, 5)).size() > NbLimite) {
+			System.out.printf("Nombre d'offre a depasser la limite pour student " + studentId +"\n");
+			return;
+		}
+		if(offer.getOfferApplications().size() > offer.getNbPlaces()) {
+			System.out.printf("vous ete dans la list d'attent pour cette offre \n");
+		}
+		OfferApplication newOfferApp = new OfferApplication();
+		newOfferApp.setId(appId);
+		newOfferApp.setApplicationDate(LocalDate.now());
+		newOfferApp.setApplicationTime(LocalTime.now());
+		
+		offerAppRepo.save(newOfferApp);
+		System.out.printf("offer ajouté avec success \n");
+		
+	}
+	
+	public List<Offer> AfficherListOffre(Long studentId,int page,int size) {
+		List<OfferApplication> applications = offerAppRepo.findByStudentOfferUserId(studentId,PageRequest.of(page, size));
+		List<Offer> offers =new ArrayList<>();
+		applications.forEach(p -> {offers.add(p.getOfferApplication());});
+		return offers;	
+	}
+	
+	public List<Offer> AfficherListOffre(Long studentId) {
+		List<OfferApplication> applications = offerAppRepo.findByStudentOfferUserId(studentId);
+		List<Offer> offers =new ArrayList<>();
+		applications.forEach(p -> {offers.add(p.getOfferApplication());});
+		return offers;
+	}
+	
+	public Integer calculateRankInOffer(Long studentId,Long offerId) {
+		OfferApplicationId appId = new OfferApplicationId(offerId,studentId);
+		
+		OfferApplication application = offerAppRepo.findById(appId).orElse(null);
+		if(application != null) {
+			List<OfferApplication> applications = offerAppRepo.findByOfferApplicationId(offerId);
+	        return applications.indexOf(application);
+		}else {
+			return -1;
+		}
+	}
+	
+	
 }
 

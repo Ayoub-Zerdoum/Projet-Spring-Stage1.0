@@ -1,11 +1,16 @@
 <div class="container-fluid">
     <div class="row">
-      <div class="col-2">
-        <app-sidebar></app-sidebar>
+      <div class="col-2" style="height:100%">
+        <app-sidebar (sidebarOption)="handleSidebarOptionClicked($event)"></app-sidebar>
       </div>
       <div class="col-10">
-        <app-user-management></app-user-management>
-
+        <app-user-management *ngIf="selectedOption === 'User Management'"></app-user-management>
+        <h1 *ngIf="selectedOption === 'Posters'">Posters</h1>
+        <h1 *ngIf="selectedOption === 'Poster Sessions'">Poster Sessions</h1>
+        <app-offers-student-component *ngIf="selectedOption === 'Stage Offers' && userType === 'STUDENT'"></app-offers-student-component>
+        <app-offers-admin *ngIf="selectedOption === 'Stage Offers' && userType === 'ADMIN'"></app-offers-admin>
+        <h1 *ngIf="selectedOption === 'Demandes Stages'">Demandes Stages</h1>
+        <h1 *ngIf="selectedOption === 'Logout'">Logout</h1>
       </div>
     </div>
   </div>

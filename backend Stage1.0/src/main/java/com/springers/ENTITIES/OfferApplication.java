@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -13,8 +16,6 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
 @FieldDefaults(level=AccessLevel.PRIVATE)
 @Builder
 @Table(name = "offer_application")
@@ -24,10 +25,13 @@ public class OfferApplication {
 
 	@ManyToOne
     @JoinColumn(name = "offer_id", insertable = false, updatable = false)
+	@JsonIgnoreProperties("offerApplications")
     private Offer offerApplication;
 
     @ManyToOne
     @JoinColumn(name = "student_id", insertable = false, updatable = false)
+    @JsonIgnoreProperties("std_offerApplications")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Student studentOffer;
 
     @Column(name = "application_date")
@@ -37,6 +41,9 @@ public class OfferApplication {
     private LocalTime applicationTime;
     
     @Embeddable
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class OfferApplicationId implements Serializable {
 		private static final long serialVersionUID = 1L;
 

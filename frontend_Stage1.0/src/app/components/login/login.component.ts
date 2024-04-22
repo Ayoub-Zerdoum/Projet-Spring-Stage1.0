@@ -10,10 +10,15 @@ import { AuthenticationService } from '../../services/authentication.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  currentUser: any | null = null;
+  userType : string ='';
   username = '';
   password = '';
   isValid: boolean = false;
   formSubmitted: boolean = false;
+  PasswordVisibility: boolean = false;
+
+  
 
   constructor(private authService: AuthenticationService,private router: Router) {}
 
@@ -22,13 +27,18 @@ export class LoginComponent {
     this.formSubmitted = true;
   } 
 
+  toggleVisibility() {
+    this.PasswordVisibility = !this.PasswordVisibility;
+  }
+
   login() {
     this.authService.login(this.username, this.password).subscribe(
       response => {
         // Handle successful login
         console.log('Login successful');
-        // Navigate to the desired route (e.g., '/admin')
-        this.router.navigate(['/admin']);
+        this.isValid = true;
+        this.currentUser = this.authService.getUserInfo();
+        this.userType = this.fetchUserType();
       },
       error => {
         // Handle login error
@@ -36,5 +46,34 @@ export class LoginComponent {
         this.isValid = false;
       }
     );
+  }
+
+  fetchUserType(): any {
+    this.authService.getUserTypeById(this.currentUser.userId).subscribe(
+      (userType: string) => {
+        console.log("user type obtained");
+        console.log("user type: " ,userType);
+        this.userType = userType;
+        this.redirectUser(this.userType);
+      },
+      (error: any) => {
+        console.log("user not type obtained !!!");
+        console.error('Error fetching user type:', error);
+      }
+    );
+  }
+
+  private redirectUser(usertype: any) {
+    console.log("user type in redrecting:" ,usertype);
+    if (usertype === 'ADMIN') {
+      console.log("starting navigation to admin dashboard");
+      this.router.navigate(['/admin']);
+    } else if (usertype === 'PROFESSOR') {
+      this.router.navigate(['/login']);
+    } else if (usertype === 'STUDENT') {
+      this.router.navigate(['/admin']);
+    } else {
+      this.router.navigate(['/admin']);
+    }
   }
 }

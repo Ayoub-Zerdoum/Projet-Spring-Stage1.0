@@ -15,3 +15,53 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.form-group,.input-group{
+  position: relative !important;
+}
+
+.form-group span.visibilityIcon{
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.input-group span.visibilityIcon{
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.alert{
+  height: 50px;
+  margin-top: 10px;
+}
+.alert svg{
+  height: 20px;
+  width: 20px;
+}
+
+.add-title img{
+  margin-right: 20px;
+  width: 32px;
+}
+
+.add-title h5{
+  margin-bottom: 0;
+}
+
+.adding-modal:has(.star) {
+  background-color: gold;
+  color: var(--main-color);
+}
+
+.adding-modal{
+  background-color: var(--main-color);
+  color: var(--text-color);
+}

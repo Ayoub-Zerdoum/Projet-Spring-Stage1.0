@@ -1,0 +1,13 @@
+package com.springers.REPOSITORIES;
+
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.springers.ENTITIES.Offer;
+
+public interface OfferRepo extends CrudRepository<Offer, Long>{
+	public List<Offer> findByNomSocieteContainingIgnoreCase(String nom);
+	public List<Offer> findByTitleContainingIgnoreCase(String title);
+	public List<Offer> findBySpecializationContainingIgnoreCase(String spec);
+}

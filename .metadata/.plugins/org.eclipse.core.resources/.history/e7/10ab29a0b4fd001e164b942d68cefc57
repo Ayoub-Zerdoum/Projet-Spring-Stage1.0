@@ -1,0 +1,8 @@
+package com.springers.SERVICES;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class Service_Offer {
+	
+}

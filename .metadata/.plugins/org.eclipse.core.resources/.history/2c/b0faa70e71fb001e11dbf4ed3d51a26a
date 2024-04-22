@@ -1,0 +1,18 @@
+
+spring.application.name=Hhhhhhhhh
+# Spring Datasource configuration
+spring.datasource.url=jdbc:mysql://localhost:3306/hhhhhh?autoReconnect=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+spring.datasource.username=ghazi
+spring.datasource.password=123
+
+# JPA / Hibernate
+spring.jpa.show-sql=true
+
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
+spring.jpa.hibernate.ddl-auto=create-drop
+
+# H2 Console
+spring.h2.console.enabled=true
+server.port=8880

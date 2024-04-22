@@ -128,8 +128,9 @@
               </div>
             </div>
             <div class="input-group mb-3">
-              <span class="input-group-text" id="password-label">Generate Randomly</span>
-              <input type="password" class="form-control" placeholder="Password" formControlName="password" aria-label="Password" aria-describedby="password-label">
+              <span class="input-group-text" id="password-label" (click)="generateRandomPassword()">Generate Randomly</span>
+              <input type="{{ PasswordVisibility ? 'text' : 'password' }}" class="form-control" placeholder="Password" formControlName="password" aria-label="Password" aria-describedby="password-label">
+              <span class="material-symbols-outlined visibilityIcon" (click)="toggleVisibility()">{{ PasswordVisibility ? 'visibility' : 'visibility_off' }}</span>
             </div>
 
             <div class="input-group mb-3">
@@ -205,11 +206,189 @@
             <td>{{ professor.telephone }}</td>
             <td>{{ professor.department }}</td>
             <td>{{ professor.accountStatus }}</td>
-            <td> <!-- Actions column content --> </td>
+            <td>
+              <div class="action-container d-flex gap-2">
+                <img *ngIf="professor.accountStatus == 'SUSPENDED'" (click)="activateAccount(professor)" src="./assets/images/locked-icon.svg" alt="lock">
+                <img *ngIf="professor.accountStatus == 'ACTIVE'" (click)="suspendAccount(professor)"src="./assets/images/unlocked-icon.svg" alt="unlock">
+                <img src="./assets/images/eye-icon-dark.svg" alt="view" (click)="this.professorToView = professor" data-bs-toggle="modal" data-bs-target="#view-professor-modal">
+                <img src="./assets/images/edit-icon-dark.svg" alt="edit" (click)="setProfessorToEdit(professor)" data-bs-toggle="modal" data-bs-target="#edit-professor-modal">
+                <img src="./assets/images/trash-icon.svg" alt="trash" (click)="DeleteThisProfessor(professor)" data-bs-toggle="modal" data-bs-target="#delete-professor-modal">
+              </div> 
+            </td>
         </tr>
         </tbody>
     </table>
  </div>
+
+ <!-- Deleting Modal -->
+ <div class="modal fade" id="delete-professor-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delete-professor-modal-Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header adding-modal">
+        <h1>Deleting Student</h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="abandonDeleting()"></button>
+      </div>
+      <div class="modal-body">
+       <ul *ngIf="professorToDelete">
+        <li>Username: {{ professorToDelete.username }}</li>
+        <li>Email: {{ professorToDelete.email }}</li>
+        <li>Telephone: {{ professorToDelete.telephone }}</li>
+        <li>Status: {{ professorToDelete.department }}</li>
+        <li>Account: {{ professorToDelete.accountStatus }}</li>
+       </ul>
+       <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="!UserDeleteConfirmed && DeleteIsPossible">
+          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+          <div>
+            are you sure you want to delete this professor ?
+          </div>
+        </div>
+        <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="!UserDeleteConfirmed && !DeleteIsPossible">
+          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+          <div>
+            this professor couldn't be deleted, do dou want to suspend the account instead ?
+          </div>
+        </div>
+        <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="UserDeleteConfirmed && DeleteIsPossible">
+          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+          <div>
+            professor deleted succesfully
+          </div>
+        </div>
+        <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="UserDeleteConfirmed && !DeleteIsPossible">
+          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+          <div>
+            professor account suspended 
+          </div>
+        </div>
+        <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="UserDeleteConcelled">
+          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+          <div>
+            professor preserved
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="UserDeletedSuccessfully" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="abandonDeleting()">CLOSE</button>
+        <button *ngIf="!UserDeletedSuccessfully" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelDeleting()">Annuler</button>
+        <button *ngIf="!UserDeletedSuccessfully" type="button" class="btn btn-primary" (click)="confirmDelete()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Modal -->
+<div class="modal fade" id="view-professor-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="view-professor-modal-Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header adding-modal">
+        <h1>Deleting Student</h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="this.professorToView = null"></button>
+      </div>
+      <div class="modal-body">
+       <ul *ngIf="professorToView">
+        <li>Username: {{ professorToView.username }}</li>
+        <li>Username: {{ professorToView.password }}</li>
+        <li>Email: {{ professorToView.email }}</li>
+        <li>Telephone: {{ professorToView.telephone }}</li>
+        <li>Status: {{ professorToView.department }}</li>
+        <li>Account: {{ professorToView.accountStatus }}</li>
+       </ul>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="UserDeletedSuccessfully" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="this.professorToView = null">CLOSE</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Editing Modal -->
+<div class="modal fade" id="edit-professor-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="edit-professor-modal-Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header editing-modal">
+        <h1>Edit Professor</h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editProfessorForm" class="d-flex flex-column">
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="username-label">Username</span>
+            <input type="text" class="form-control" placeholder="Username" formControlName="username" aria-label="Username" aria-describedby="username-label">
+          </div>
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidEditUsername">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              invalid username !
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="password-label" (click)="generateRandomPassword()">Generate Randomly</span>
+            <input type="{{ PasswordVisibility ? 'text' : 'password' }}" class="form-control" placeholder="Password" formControlName="password" aria-label="Password" aria-describedby="password-label">
+            <span class="material-symbols-outlined visibilityIcon" (click)="toggleVisibility()">{{ PasswordVisibility ? 'visibility' : 'visibility_off' }}</span>
+          </div>
+
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="email-label">Email</span>
+            <input type="email" class="form-control" placeholder="Email" formControlName="email" aria-label="Email" aria-describedby="email-label">
+          </div>
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidEditUserEmail">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              invalid email !
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="telephone-label">Telephone</span>
+            <input type="text" formControlName="telephone" pattern="[0-9]*" inputmode="numeric" minlength="8" maxlength="8" class="form-control" placeholder="99999999" aria-label="Telephone" aria-describedby="telephone-label">
+          </div>
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="invalidEditUserTelephone">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              invalid telephone !
+            </div>
+          </div>
+          <label>Privilege:</label><br>
+          <div class="mb-3 d-flex justify-content-center">
+            <input type="radio" class="btn-check" name="edit-radio-department" id="edit-professor-INFO" autocomplete="off" [checked]="selectedEditDepartment === 'INFO'" (click)="selectedEditDepartment = 'INFO'" >
+            <label class="btn btn-outline-success mx-1 my-1" for="edit-professor-INFO">INFO</label>
+
+            <input type="radio" class="btn-check" name="edit-radio-department" id="edit-professor-ELEC" autocomplete="off" [checked]="selectedEditDepartment === 'ELEC'" (click)="selectedEditDepartment = 'ELEC'">
+            <label class="btn btn-outline-success mx-1 my-1" for="edit-professor-ELEC">ELEC</label>
+
+            <input type="radio" class="btn-check" name="edit-radio-department" id="edit-professor-INDUS" autocomplete="off" [checked]="selectedEditDepartment === 'INDUS'" (click)="selectedEditDepartment = 'INDUS'">
+            <label class="btn btn-outline-success mx-1 my-1" for="edit-professor-INDUS">INDUS</label>
+
+          </div>
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="incompleteEditUserSubmit">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              il y a un champ incomplete !
+            </div>
+          </div>
+          <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="UserEditedSuccessfully">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#check-circle-fill"/></svg>
+            <div>
+              student added succesfully
+            </div>
+          </div>
+          <div class="alert alert-danger d-flex align-items-center" role="alert" *ngIf="UserEditError">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              error adding student to database ! 
+            </div>
+          </div>
+          
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="!UserEditedSuccessfully" type="button" class="btn btn-secondary" (click)="resetEditUserForm()">RESET</button>
+        <button *ngIf="UserEditedSuccessfully" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetEditUserForm()">CLOSE</button>
+        <button *ngIf="!UserEditedSuccessfully" type="button" class="btn btn-primary" (click)="editProfessor()">Edit</button>
+      </div>
+    </div>
+  </div>
+</div>
  
  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="check-circle-fill" viewBox="0 0 16 16">
@@ -219,3 +398,4 @@
     <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
   </symbol>
 </svg>
+

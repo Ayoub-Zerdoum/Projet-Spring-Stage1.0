@@ -5,32 +5,147 @@
     
     <div class="user-info">
       <i class="fa-regular fa-user"></i>
-      <span class="username">Username (Role)</span>
+      <span class="username">{{this.currentUser.username}} ({{this.userType}})</span>
     </div>
     <div class="break"></div>
     <ul class="user-actions">
-        <li class="active"><a href="#">
+        <li [class.active]="activeOption === 'User Management'" *ngIf="verifyOption('User Management')"><a (click)="handleOptionClick('User Management')">
             <i class="fa-solid fa-users"></i>
             <span>User Management</span>
         </a></li>
-        <li><a href="#">
+        <li [class.active]="activeOption === 'Posters'" *ngIf="verifyOption('Posters')"><a (click)="handleOptionClick('Posters')">
             <i class="fa-solid fa-file-invoice"></i>
             <span>Posters</span>
         </a></li>
-        <li><a href="#">
+        <li [class.active]="activeOption === 'Poster Sessions'" *ngIf="verifyOption('Poster Sessions')"><a (click)="handleOptionClick('Poster Sessions')">
             <i class="fa-regular fa-calendar-days"></i>
             <span>Poster Session</span>
         </a></li>
-        <li><a href="#">
+        <li [class.active]="activeOption === 'Demandes Stages'" *ngIf="verifyOption('Demandes Stages')"><a (click)="handleOptionClick('Demandes Stages')">
+            <i class="fa-solid fa-briefcase"></i>
+            <span>Demandes Stages</span>
+        </a></li>
+        <li [class.active]="activeOption === 'Stage Offers'" *ngIf="verifyOption('Stage Offers')"><a  (click)="handleOptionClick('Stage Offers')">
             <i class="fa-solid fa-briefcase"></i>
             <span>stage offers</span>
         </a></li>
     </ul>
     <div class="break"></div>
     <ul class="user-actions">
-        <li><a href="#">
+        <li *ngIf="verifyOption('Parametres')"><a href="#" data-bs-toggle="modal" data-bs-target="#parametres-modal">
+            <i class="fa-solid fa-gear"></i>
+            <span>Parametres</span>
+        </a></li>
+        <li *ngIf="verifyOption('Logout')"><a href="#" (click)="handleOptionClick('Logout')">
             <i class="fa-solid fa-arrow-right-from-bracket"></i>
             <span>Logout</span>
         </a></li>
     </ul>
+  </div>
+
+ <!-- View Modal -->
+<div class="modal fade" id="parametres-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="view-student-modal-Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header adding-modal">
+          <div class="title-wrapper">
+                <div class="add-title d-flex align-items-center" *ngIf="verifyTitle('VIEW_ONLY')">
+                  <img src="./assets/images/eye.svg" alt="view only" class="add-icon">
+                  <h5>VIEW ONLY</h5>
+                </div>
+                <div class="add-title d-flex align-items-center" *ngIf="verifyTitle('MANAGE_STAGE_DEMANDS')">
+                  <img src="./assets/images/clipboard.svg" alt="manage stage demandes" class="add-icon">
+                  <h5>MANAGE STAGE DEMANDS</h5>
+                </div>
+                <div class="add-title d-flex align-items-center star" *ngIf="verifyTitle('SUPER')">
+                  <img src="./assets/images/star-dark.svg" alt="super" class="add-icon">
+                  <h5>SUPER</h5>
+                </div>
+                <div class="add-title d-flex align-items-center" *ngIf="verifyTitle('MANAGE_POSTER_SESSIONS')">
+                  <img src="./assets/images/calender-1.svg" alt="manage poster sessions" class="add-icon">
+                  <h5>MANAGE POSTER SESSIONS</h5>
+                </div>
+                <div class="add-title d-flex align-items-center" *ngIf="verifyTitle('POST_OFFERS')">
+                  <img src="./assets/images/briefcase.svg" alt="post offers" class="add-icon">
+                  <h5>POST OFFERS</h5>
+                </div>
+                <div class="add-title d-flex align-items-center" *ngIf="verifyTitle('INFORMATIQUE')">
+                    <img src="./assets/images/informatique-icon.svg" alt="informatique" class="add-icon">
+                    <h5>INFORMATIQUE</h5>
+                  </div>
+                  <div class="add-title d-flex align-items-center" *ngIf="verifyTitle('MECATRONIQUE')">
+                    <img src="./assets/images/robot-128.png" alt="mecatronique" class="add-icon">
+                    <h5>MECATRONIQUE</h5>
+                  </div>
+                  <div class="add-title d-flex align-items-center" *ngIf="verifyTitle('INDUSTRIEL')">
+                    <img src="./assets/images/indus-icon.svg" alt="industruel" class="add-icon">
+                    <h5>INDUSTRIEL</h5>
+                  </div>
+                  <div class="add-title d-flex align-items-center" *ngIf="verifyTitle('INFOTRONIQUE')">
+                    <img src="./assets/images/chip-icon1.svg" alt="infotronique" class="add-icon">
+                    <h5>INFOTRONIQUE</h5>
+                  </div>
+                  <div class="add-title d-flex align-items-center" *ngIf="verifyTitle('INFO')">
+              <img src="./assets/images/computer-binary.svg" alt="info" class="add-icon">
+              <h5>INFO</h5>
+            </div>
+            <div class="add-title d-flex align-items-center" *ngIf="verifyTitle('ELEC')">
+              <img src="./assets/images/elec-1.svg" alt="elec" class="add-icon">
+              <h5>ELEC</h5>
+            </div>
+            <div class="add-title d-flex align-items-center" *ngIf="verifyTitle('INDUS')">
+              <img src="./assets/images/indus-icon.svg" alt="industruel" class="add-icon">
+              <h5>INDUS</h5>
+            </div>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+         <ul *ngIf="currentUser">
+          <li>Username: {{ currentUser.username }}</li>
+          <li>Email: {{ currentUser.email }}</li>
+          <li>Telephone: {{ currentUser.telephone }}</li>
+          <li *ngIf="userType === 'STUDENT'">Status: {{ currentUser.studentStatus }}</li>
+          <li *ngIf="userType === 'STUDENT'">Specialité: {{ currentUser.specialization }}</li>
+          <li *ngIf="userType === 'STUDENT'">Date de Naissance: {{ currentUser.dateOfBirth | date: 'yyyy-MM-dd' }}</li>
+          <li *ngIf="userType === 'PROFESSOR'">Department: {{ currentUser.department }}</li>
+          <li *ngIf="userType === 'ADMIN'">Privilege: {{ currentUser.privilege }}</li>
+          <li>Account: {{ currentUser.accountStatus }}</li>
+         </ul>
+
+         <button *ngIf="!changingPassword" type="button" class="btn btn-primary" (click)="changePassword()">Change Password</button>
+         <div [formGroup]="passwordForm">
+            <div class="input-group mb-3" *ngIf="changingPassword" style="position: relative;">
+                <span class="input-group-text" id="password-label" (click)="generateRandomPassword()">Generate Randomly ?</span>
+                <input type="{{ passwordVisibility ? 'text' : 'password' }}" class="form-control" placeholder="Password" formControlName="password" aria-label="Password" aria-describedby="password-label">
+                <span class="material-symbols-outlined visibilityIcon" (click)="toggleVisibility()">{{ passwordVisibility ? 'visibility' : 'visibility_off' }}</span>
+              </div>
+              <div class="input-group mb-3" *ngIf="changingPassword" style="position: relative;">
+                <span class="input-group-text" id="Confirm-label">Confirm</span>
+                <input type="{{ passwordConfirmVisibility ? 'text' : 'password' }}" class="form-control" placeholder="Password" formControlName="confirmPassword" aria-label="Password" aria-describedby="password-label">
+                <span class="material-symbols-outlined visibilityIcon" (click)="toggleVisibility2()">{{ passwordConfirmVisibility ? 'visibility' : 'visibility_off' }}</span>
+              </div>
+         </div>
+         
+         
+          <div class="alert alert-warning d-flex align-items-center" role="alert" *ngIf="passwordConfirme != passwordChoisi">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              mot de pass differents !
+            </div>
+          </div>
+          <div class="alert alert-success d-flex align-items-center" role="alert" *ngIf="passwordChangeSuccess">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#check-circle-fill"/></svg>
+            <div>
+              mot de pass changé avec succée
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button *ngIf="changingPassword && !passwordChangeSuccess" type="button" class="btn btn-secondary" (click)="resetPassword()">RESET</button>
+        <button *ngIf="!changingPassword" type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetPassword()">CLOSE</button>
+        <button *ngIf="changingPassword && !passwordChangeSuccess" type="button" class="btn btn-primary" (click)="confirmPassword()">Confirm</button>
+        </div>
+      </div>
+    </div>
   </div>

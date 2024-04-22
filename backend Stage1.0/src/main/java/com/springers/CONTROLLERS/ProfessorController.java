@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.springers.ENTITIES.AccountStatus;
 import com.springers.ENTITIES.Departement;
 import com.springers.ENTITIES.Professor;
-import com.springers.ENTITIES.Student;
 import com.springers.SERVICES.Service_Professor;
 
 @RestController
@@ -36,9 +36,12 @@ public class ProfessorController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteProf(@PathVariable Long id) {
+    public ResponseEntity<Map<String, String>> deleteProfessor(@PathVariable Long id) {
     	professorService.supprimer_Prof(id);
-        return ResponseEntity.ok("Professor deleted successfully");
+    	Map<String, String> response = new HashMap<>();
+        response.put("message", "Professor deleted successfully");
+        
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/all")
@@ -118,4 +121,33 @@ public class ProfessorController {
         // Return the response map as JSON
         return ResponseEntity.ok(response);
     }
+    
+    @PutMapping("/suspend/{id}")
+    public ResponseEntity<Map<String,String>> suspendAccount(@PathVariable Long id) {
+        professorService.suspendAccount(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Professor account suspended successfully");
+
+        // Return the response map as JSON
+        return ResponseEntity.ok(response);
+    }
+    
+    @PutMapping("/activate/{id}")
+    public ResponseEntity<Map<String, String>> activateAccount(@PathVariable Long id) {
+        professorService.activateAccount(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Student account activated successfully");
+        return ResponseEntity.ok(response);
+    }
+    
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Map<String,String>> editStudent(@PathVariable Long id, @RequestBody Map<String, Object> profData) {
+        professorService.editProfessor(id, profData);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Professor edited successfully");
+
+        // Return the response map as JSON
+        return ResponseEntity.ok(response);
+    }
+    
 }

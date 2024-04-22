@@ -56,6 +56,10 @@
     background-color: var(--main-color);
 }
 
+.spec-grid{
+    grid-template-columns: 1fr 1fr;
+}
+
 .alert{
     height: 50px;
     margin-top: 10px;

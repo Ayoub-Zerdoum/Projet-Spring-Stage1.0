@@ -1,0 +1,153 @@
+package com.springers.SERVICES;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.springers.ENTITIES.AccountStatus;
+import com.springers.ENTITIES.Offer;
+import com.springers.ENTITIES.OfferApplication;
+import com.springers.ENTITIES.OfferApplication.OfferApplicationId;
+import com.springers.ENTITIES.Specialization;
+import com.springers.ENTITIES.Student;
+import com.springers.ENTITIES.StudentStatus;
+import com.springers.REPOSITORIES.OfferApplicationRepo;
+import com.springers.REPOSITORIES.OfferRepo;
+import com.springers.REPOSITORIES.StudentRepo;
+
+import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
+public class Service_Offer implements I_Service_Offer{
+	@Autowired
+	OfferRepo offerRepo; 
+	
+	@Autowired
+	OfferApplicationRepo appRepo; 
+	
+	@Autowired
+	Service_EmailSender S_Email;
+	
+	@Autowired
+	StudentRepo stdRepo;
+	
+	@Override
+	public void ajouter_Offer(Offer offre){
+		Offer offre2 = offerRepo.save(offre);
+	}
+
+	public void supprimer_Offer(Long id){
+		// Retrieve the student entity from the database
+        Offer offer = offerRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Offer not found with id: " + id));
+        
+		if(offer.getOfferApplications().size() == 0) {
+			offerRepo.deleteById(id);
+		} else {
+			ChangeOfferStatus(id,false);
+		}
+	}
+
+	
+	public List<Offer> afficher_Offers(){
+		List<Offer> offers = (List<Offer>) offerRepo.findAll();
+		return offers;
+	}
+	
+	@Override
+	public Offer getOfferById(Long id) {
+        return offerRepo.findById(id).orElse(null);
+    }
+	
+	@Transactional
+    public void ChangeOfferStatus(Long offerId, Boolean NewStatus) {
+		// Retrieve the student entity from the database
+        Offer offer = offerRepo.findById(offerId)
+                .orElseThrow(() -> new EntityNotFoundException("Offer not found with id: " + offerId));
+        
+        offer.setIsActive(NewStatus);
+        offerRepo.save(offer);
+	}
+	
+	@Override
+	public List<Offer> searchOffersByNomSociete(String Query) {
+		List<Offer> offers = (List<Offer>) offerRepo.findByNomSocieteContainingIgnoreCase(Query);
+		return offers;
+    }
+	
+	@Override
+	public List<Offer> searchOffersByDomaine(String Query) {
+		List<Offer> offers = (List<Offer>) offerRepo.findByTitleContainingIgnoreCase(Query);
+		return offers;
+    }
+	
+	@Override
+	public List<Offer> searchOffersBySpecialization(String Query) {
+		List<Offer> offers = (List<Offer>) offerRepo.findBySpecializationContaining(Query);
+		return offers;
+    }
+	
+	public void AnnulerApplicationSP(OfferApplicationId id){
+		appRepo.deleteById(id);
+		 Student student = stdRepo.findById(id.getStudentId())
+	                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + id.getStudentId()));
+		//S_Email.sendemail(null, null, null);
+		 System.out.println("offre applicatiob supprimé ");
+		
+	}
+	
+	@Transactional
+    public void editOffer(Long offreId, Map<String, Object> offerData) {
+        // Retrieve the student entity from the database
+        Offer offre = offerRepo.findById(offreId)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + offreId));
+
+        // Update the student entity with the new data
+        if(offerData.containsKey("specialization")) {
+        	Specialization specialization = Specialization.valueOf((String) offerData.get("specialization"));
+        	if(!offre.getSpecialization().equals(specialization)) {
+        		offre.setSpecialization(specialization);
+        		if(appRepo.findByOfferApplicationId(offreId).size() != 0) {
+        			List<OfferApplication> applications = appRepo.findByOfferApplicationId(offreId);
+        			applications.forEach(p -> {AnnulerApplicationSP(p.getId());});
+        		}
+        	}else {
+        		System.out.println("pas de changement de specialisation");
+        	}
+        	
+        }
+        
+        if(offerData.containsKey("Title")) {
+        	offre.setTitle((String) offerData.get("Title"));
+        }
+        
+        if(offerData.containsKey("Description"))
+        offre.setDescription((String) offerData.get("Description"));
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        if(offerData.containsKey("deadline")) {
+	        LocalDate deadline = LocalDate.parse((String) offerData.get("deadline"), formatter);
+	        offre.setDeadline(deadline);
+        }
+        if(offerData.containsKey("NomSociete")) {
+        offre.setNomSociete((String) offerData.get("NomSociete"));}
+        if(offerData.containsKey("NbPlaces")) {
+        offre.setNbPlaces((Integer) offerData.get("NbPlaces"));}
+        if(offerData.containsKey("localisation")) {
+        offre.setLocalisation((String) offerData.get("localisation"));}
+        if(offerData.containsKey("MailRH")) {
+        offre.setMailRH((String) offerData.get("MailRH"));}
+        
+        offerRepo.save(offre);
+    }
+        
+	
+}

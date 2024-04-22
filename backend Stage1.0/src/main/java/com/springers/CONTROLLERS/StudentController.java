@@ -2,6 +2,7 @@ package com.springers.CONTROLLERS;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,15 +16,19 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springers.ENTITIES.AccountStatus;
+import com.springers.ENTITIES.Offer;
 import com.springers.ENTITIES.Specialization;
 import com.springers.ENTITIES.Student;
 import com.springers.ENTITIES.StudentStatus;
+import com.springers.SERVICES.Service_EmailSender;
+import com.springers.SERVICES.Service_Offer;
 import com.springers.SERVICES.Service_Student;
 
 @RestController
@@ -32,6 +37,12 @@ import com.springers.SERVICES.Service_Student;
 public class StudentController {
 	@Autowired
     private Service_Student studentService;
+	
+	@Autowired
+	private Service_EmailSender ServiceEmail;
+	
+	@Autowired
+	private Service_Offer offerService;
 
     @PostMapping("/add")
     public ResponseEntity<String> addStudent(@RequestBody Student std) {
@@ -49,6 +60,7 @@ public class StudentController {
         String telephone = (String) studentData.get("telephone");
         LocalDate dateOfBirth = LocalDate.parse((String) studentData.get("dateOfBirth"));
         Boolean enrolled = (Boolean) studentData.get("enrolled");
+        Boolean sendVerificationEmail = (Boolean) studentData.get("sendVerificationEmail");
         Specialization specialization = Specialization.valueOf((String) studentData.get("specialization"));
 
         // Determine the StudentStatus based on the enrolled status
@@ -71,6 +83,17 @@ public class StudentController {
 
         // Call the service method to add the student
         studentService.ajouter_Student(student);
+        
+        if(sendVerificationEmail == true) {
+        	ServiceEmail.sendemail(email, "Invitation a rejoindre l'application Stage1.0",
+        		"L'administration de l'Enicar vous a inviter pour rejoindre l'application Stage1.0\n "
+        		+ "Votre nom d'utilisateur est :" + student.getUsername() + "\nVotre Mot de passe  est :" + student.getPassword());
+        	System.out.print("email sent succesfully to :" + student.getUsername());
+        }
+        
+        
+        
+        
 
      // Create a response map with a success message
         Map<String, String> response = new HashMap<>();
@@ -138,5 +161,96 @@ public class StudentController {
         List<Student> filteredStudents = studentService.filterStudents(studentStatus, specialization, accountStatus, dobMin, dobMax);
         return ResponseEntity.ok(filteredStudents);
     }
-   
+    
+    @PutMapping("/suspend/{id}")
+    public ResponseEntity<Map<String,String>> suspendAccount(@PathVariable Long id) {
+        studentService.suspendAccount(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Student account suspended successfully");
+
+        // Return the response map as JSON
+        return ResponseEntity.ok(response);
+    }
+    
+    @PutMapping("/activate/{id}")
+    public ResponseEntity<Map<String, String>> activateAccount(@PathVariable Long id) {
+        studentService.activateAccount(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Student account activated successfully");
+        return ResponseEntity.ok(response);
+    }
+    
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Map<String, String>> editStudent(@PathVariable Long id, @RequestBody Map<String, Object> studentData) {
+        studentService.editStudent(id, studentData);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Student edited successfully");
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/offre/all")
+    public ResponseEntity<List<Map<String, Object>>> getOfferApplications(@RequestParam Long studentId,
+												    		@RequestParam(defaultValue = "0") int page,
+												            @RequestParam(defaultValue = "5") int size) {
+        Student student = studentService.getStudentById(studentId);
+        if (student != null) {
+        	List<Offer> offers = studentService.AfficherListOffre(studentId,page,size);
+        	List<Map<String, Object>> offersWithRanks = new ArrayList<>();
+    	    
+    	    for (Offer offer : offers) {
+    	        Integer rank = studentService.calculateRankInOffer(studentId, offer.getId());
+    	        Map<String, Object> offerMap = new HashMap<>();
+    	     // Add offer properties to the map
+    	        offerMap.put("id", offer.getId());
+    	        offerMap.put("specialization", offer.getSpecialization());
+    	        offerMap.put("title", offer.getTitle());
+    	        offerMap.put("description", offer.getDescription());
+    	        offerMap.put("deadline", offer.getDeadline());
+    	        offerMap.put("nomSociete", offer.getNomSociete());
+    	        offerMap.put("isActive", offer.getIsActive());
+    	        offerMap.put("mailRH", offer.getMailRH());
+    	        offerMap.put("nbPlaces", offer.getNbPlaces());
+    	        offerMap.put("localisation", offer.getLocalisation());
+    	        offerMap.put("offerApplications", offer.getOfferApplications());
+    	        offerMap.put("rank", rank);
+    	        offersWithRanks.add(offerMap);
+    	    }
+            return ResponseEntity.ok(offersWithRanks);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    @GetMapping("/offre/all/taille/{studentId}")
+	public ResponseEntity<Integer> getAllOffersSize(@PathVariable Long studentId){
+		Integer taille = studentService.AfficherListOffre(studentId).size();
+
+        return ResponseEntity.ok(taille);
+	}
+    
+    @PostMapping("/offre/add")
+    public ResponseEntity<Map<String, String>> addOffer(@RequestParam Long offerId,@RequestParam Long studentId) {
+    	studentService.ReserveOffer(offerId, studentId);
+    	
+    	Map<String, String> response = new HashMap<>();
+        response.put("message", "Student added successfully");
+
+        // Return the response map as JSON
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/offre/rank")
+    public ResponseEntity<Map<String, Integer>> getRankOffer(@RequestParam Long studentId,
+    														 @RequestParam Long offerId) {
+        Student student = studentService.getStudentById(studentId);
+        if (student != null) {
+        	int rank = studentService.calculateRankInOffer(studentId,offerId);
+            Map<String, Integer> response = new HashMap<>();
+            response.put("rank", rank);
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
 }

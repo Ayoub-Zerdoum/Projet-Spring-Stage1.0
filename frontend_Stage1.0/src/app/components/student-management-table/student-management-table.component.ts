@@ -5,6 +5,8 @@ import { FormControl ,FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 import { UserManagementService } from '../../services/user-management.service';
+import { AuthenticationService } from '../../services/authentication.service';
+
 
 @Component({
   selector: 'app-student-management-table',
@@ -12,11 +14,14 @@ import { UserManagementService } from '../../services/user-management.service';
   styleUrls: ['./student-management-table.component.css']
 })
 export class StudentManagementTableComponent implements OnInit{
+  currentUser: any | null = null;
   students$!: Observable<any[]>;
   searchOption: string = 'Username';
   searchInput = new FormControl('');
 
   newUserForm!: FormGroup;
+
+  PasswordVisibility: boolean = false;
 
   selectedStatusFilter: string | null = null;
   selectedSpecialization: string | null = null;
@@ -40,16 +45,31 @@ export class StudentManagementTableComponent implements OnInit{
   invalidNewUserTelephone = false;
 
 
-  studentToDelete: any | null = null;;
+  studentToDelete: any | null = null;
   UserDeleteConfirmed: boolean = false;
   DeleteIsPossible: boolean = false;
   UserDeletedSuccessfully: boolean = false;
   UserDeleteConcelled: boolean = false;
 
-  constructor(private userService: UserManagementService,private formBuilder: FormBuilder) { }
+  studentToView: any | null = null;
+
+  /*Edit variables*/
+  selectedEditStatus: string = 'ENROLLED'; // Default status
+  selectedEditSpecialization: string = 'INFORMATIQUE'; // Default specialization
+  studentToEdit: any; 
+  editStudentForm!: FormGroup;
+  incompleteEditUserSubmit = false;
+  UserEditedSuccessfully = false;
+  UserEditError = false;
+  invalidEditUsername = false;
+  invalidEditUserEmail = false;
+  invalidEditUserTelephone = false;
+
+  constructor(private authService: AuthenticationService,private userService: UserManagementService,private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.students$ = this.userService.getAllStudents();
+    this.currentUser = this.authService.getUserInfo();
 
     this.newUserForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -60,8 +80,29 @@ export class StudentManagementTableComponent implements OnInit{
       enrolled: [true],
       sendVerificationEmail: [true]
     });
+
+    this.editStudentForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      telephone: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8)]],
+      dateOfBirth: [''],
+      studentStatus: this.selectedEditStatus,
+      specialization: this.selectedEditSpecialization
+    });
   }
 
+  toggleVisibility() {
+    this.PasswordVisibility = !this.PasswordVisibility;
+  }
+
+  generateRandomPassword() {
+    // Generate random password
+    const randomPassword = this.authService.generateRandomString(10); // Change the length as needed
+    this.newUserForm.patchValue({ 
+      password: randomPassword
+     });
+  }
   
   getStudentById(studentId: number): any {
     this.userService.getStudentById(studentId)
@@ -298,24 +339,40 @@ confirmDelete(): void {
     );;
   } else {
       // Suspend account
-      this.suspendAccount(this.studentToDelete.userId);
+      this.suspendAccount(this.studentToDelete);
       this.UserDeleteConfirmed = true;
   }
 }
 
   // Method to suspend the account
-  suspendAccount(studentId: number): void {
+  suspendAccount(student: any): void {
     // Call backend API to suspend the account
-    this.userService.suspendAccount(studentId).subscribe(
+    this.userService.suspendStudentAccount(student.userId).subscribe(
         () => {
             console.log('Account suspended successfully');
             this.UserDeletedSuccessfully = true;
+            student.accountStatus = "SUSPENDED";
         },
         error => {
             console.error('Error suspending account:', error);
         }
     );
   }
+
+  // Method to activate the account
+activateAccount(student: any): void {
+  // Call backend API to activate the account
+  this.userService.activateStudentAccount(student.userId).subscribe(
+    () => {
+      console.log('Account activated successfully');
+      student.accountStatus = "ACTIVE"
+    },
+    error => {
+      console.error('Error activating account:', error);
+      // Optionally, handle the error by displaying an error message or performing other actions
+    }
+  );
+}
 
   resetDeleteParams(): void {
     this.studentToDelete = null;
@@ -333,4 +390,60 @@ confirmDelete(): void {
     this.resetDeleteParams();
     this.UserDeleteConcelled = true;
   }
+
+  /*Edit */
+  // Method to reset the edit user form
+  resetEditUserForm(): void {
+    this.editStudentForm.reset();
+  }
+
+  // Method to handle editing user
+  editStudent(): void {
+    if (this.editStudentForm.invalid) {
+      this.incompleteEditUserSubmit = true;
+      return;
+    }
+
+    this.editStudentForm.patchValue({
+      studentStatus: this.selectedEditStatus,
+      specialization: this.selectedEditSpecialization
+    });
+
+    // Call the service method to edit the user
+    this.userService.editStudent(this.studentToEdit.userId,this.editStudentForm.value).subscribe(
+      () => {
+        console.log('Student edited successfully');
+        console.log(this.editStudentForm.value);
+        this.UserEditedSuccessfully = true;
+        // Optionally, you can perform additional actions after successful edit
+      },
+      error => {
+        console.error('Error editing student:', error);
+        this.UserEditError = true;
+        // Optionally, handle the error by displaying an error message or performing other actions
+      }
+    );
+  }
+
+  // Method to set the selected student for editing
+  setStudentToEdit(student: any): void {
+    this.studentToEdit = student;
+    this.selectedEditSpecialization = this.studentToEdit.specialization;
+    this.selectedEditStatus = this.studentToEdit.studentStatus;
+    // Populate the form fields with the selected student's data
+    this.editStudentForm.patchValue({
+      username: student.username,
+      email: student.email,
+      telephone: student.telephone,
+      dateOfBirth: student.dateOfBirth,
+      password: student.password
+    });
+    this.incompleteEditUserSubmit = false;
+    this.UserEditedSuccessfully = false;
+    this.UserEditError = false;
+    this.invalidEditUsername = false;
+    this.invalidEditUserEmail = false;
+    this.invalidEditUserTelephone = false;
+  }
+
 }

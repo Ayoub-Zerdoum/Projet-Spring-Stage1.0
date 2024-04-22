@@ -1,7 +1,14 @@
 package com.springers.ENTITIES;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,8 +19,6 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
 @FieldDefaults(level=AccessLevel.PRIVATE)
 @Builder
 @Table(name = "offer")
@@ -35,12 +40,26 @@ public class Offer {
 
     @Column(name = "deadline")
     private LocalDate deadline;
-
+    
+    private String nomSociete;
+    
+    private int NbPlaces;
+    
+    private Boolean isActive;
+    
+    private String Localisation;
+    
+    private String mailRH;
+    
     @ManyToOne
     @JoinColumn(name = "admin_id")
-    private Admin admin;
+    @JsonIgnoreProperties("offers")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Admin adminoffer;
     
-    @OneToMany(mappedBy = "offerApplication")
-    private List<OfferApplication> offerApplications;
+    
+    @OneToMany(mappedBy = "offerApplication",fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("offerApplication")
+    private Set<OfferApplication> offerApplications = new HashSet<OfferApplication>();
 
 }

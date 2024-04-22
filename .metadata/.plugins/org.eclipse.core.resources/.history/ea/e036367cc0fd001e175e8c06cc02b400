@@ -1,0 +1,84 @@
+package com.springers.SERVICES;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.LocalDate;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.springers.ENTITIES.Admin;
+import com.springers.ENTITIES.Offer;
+import com.springers.ENTITIES.Specialization;
+import com.springers.REPOSITORIES.AdminRepo;
+
+import jakarta.persistence.EntityNotFoundException;
+
+class Service_OfferTest {
+	
+	@Autowired
+	Service_Offer S_Offer;
+	
+	@Autowired
+	AdminRepo AdRepo;;
+	
+	@Test
+	public void testAjouter_Offer() {
+        // Given
+        Offer offre = new Offer();
+        offre.setSpecialization(Specialization.INFORMATIQUE);
+        offre.setTitle("Title");
+        offre.setDescription("Description");
+        offre.setDeadline(LocalDate.now());
+        offre.setNomSociete("Company Name");
+        offre.setNbPlaces(5);
+        offre.setIsActive(true);
+        Long adminId = 6L;
+        // Set properties of adminOffer as needed for the test
+        Admin admin = AdRepo.findById(adminId)
+                .orElseThrow(() -> new EntityNotFoundException("Admin not found with id: " + adminId));
+        offre.setAdminoffer(admin);
+
+
+        
+        S_Offer.ajouter_Offer(offre);
+
+    }
+
+
+	@Test
+	void testSupprimer_Offer() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testAfficher_Offers() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetOfferById() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testChangeOfferStatus() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSearchOffersByNomSociete() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSearchOffersByDomaine() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSearchOffersBySpecialization() {
+		fail("Not yet implemented");
+	}
+
+}

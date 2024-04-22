@@ -1,0 +1,10 @@
+package com.springers.REPOSITORIES;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.springers.ENTITIES.OfferApplication;
+import com.springers.ENTITIES.OfferApplication.OfferApplicationId;
+
+public interface OfferApplicationRepo extends CrudRepository<OfferApplication, OfferApplicationId>{
+
+}

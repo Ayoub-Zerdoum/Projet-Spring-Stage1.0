@@ -1,0 +1,76 @@
+package com.springers.SERVICES;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.LocalDate;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.springers.ENTITIES.Offer;
+import com.springers.ENTITIES.Specialization;
+
+class Service_OfferTest {
+	
+	@Autowired
+	Service_Offer S_Offer;
+	
+	@Test
+	public void testAjouter_Offer() {
+        // Given
+        Offer offre = new Offer();
+        offre.setSpecialization(Specialization.INFORMATIQUE);
+        offre.setTitle("Title");
+        offre.setDescription("Description");
+        offre.setDeadline(LocalDate.now());
+        offre.setNomSociete("Company Name");
+        offre.setNbPlaces(5);
+        offre.setIsActive(true);
+        // Set properties of adminOffer as needed for the test
+        offre.setAdminofferId(6L);
+
+
+        
+        S_Offer.ajouter_Offer(offre);
+
+        // Then
+        verify(offerRepo, times(1)).save(offre);
+    }
+}
+
+	@Test
+	void testSupprimer_Offer() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testAfficher_Offers() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetOfferById() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testChangeOfferStatus() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSearchOffersByNomSociete() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSearchOffersByDomaine() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSearchOffersBySpecialization() {
+		fail("Not yet implemented");
+	}
+
+}

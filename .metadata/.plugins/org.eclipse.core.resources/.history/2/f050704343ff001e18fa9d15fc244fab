@@ -1,0 +1,228 @@
+package com.springers.CONTROLLERS;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.springers.ENTITIES.AccountStatus;
+import com.springers.ENTITIES.Offer;
+import com.springers.ENTITIES.Specialization;
+import com.springers.ENTITIES.Student;
+import com.springers.ENTITIES.StudentStatus;
+import com.springers.SERVICES.Service_EmailSender;
+import com.springers.SERVICES.Service_Offer;
+import com.springers.SERVICES.Service_Student;
+
+@RestController
+@CrossOrigin
+@RequestMapping("/api/students")
+public class StudentController {
+	@Autowired
+    private Service_Student studentService;
+	
+	@Autowired
+	private Service_EmailSender ServiceEmail;
+	
+	@Autowired
+	private Service_Offer offerService;
+
+    @PostMapping("/add")
+    public ResponseEntity<String> addStudent(@RequestBody Student std) {
+    	studentService.ajouter_Student(std);
+        return ResponseEntity.ok("Student added successfully");
+    }
+    
+    @PostMapping("/addv2")
+    public ResponseEntity<Map<String, String>> addStudentv2(@RequestBody Map<String, Object> studentData) {
+		
+    	// Extract data from the map
+        String username = (String) studentData.get("username");
+        String password = (String) studentData.get("password");
+        String email = (String) studentData.get("email");
+        String telephone = (String) studentData.get("telephone");
+        LocalDate dateOfBirth = LocalDate.parse((String) studentData.get("dateOfBirth"));
+        Boolean enrolled = (Boolean) studentData.get("enrolled");
+        Boolean sendVerificationEmail = (Boolean) studentData.get("sendVerificationEmail");
+        Specialization specialization = Specialization.valueOf((String) studentData.get("specialization"));
+
+        // Determine the StudentStatus based on the enrolled status
+        StudentStatus studentStatus = enrolled ? StudentStatus.ENROLLED : StudentStatus.GRADUATED;
+
+        // Set the account status to ACTIVE for all newly added students
+        AccountStatus accountStatus = AccountStatus.ACTIVE;
+
+        //Create the Student object using builder pattern
+        Student student = Student.builder()
+                                .username(username)
+                                .password(password)
+                                .email(email)
+                                .telephone(telephone)
+                                .dateOfBirth(dateOfBirth)
+                                .studentStatus(studentStatus)
+                                .accountStatus(accountStatus)
+                                .specialization(specialization)
+                                .build();
+
+        // Call the service method to add the student
+        studentService.ajouter_Student(student);
+        
+        if(sendVerificationEmail == true) {
+        	ServiceEmail.sendemail(email, "Invitation a rejoindre l'application Stage1.0",
+        		"L'administration de l'Enicar vous a inviter pour rejoindre l'application Stage1.0\n "
+        		+ "Votre nom d'utilisateur est :" + student.getUsername() + "\nVotre Mot de passe  est :" + student.getPassword());
+        	System.out.print("email sent succesfully to :" + student.getUsername());
+        }
+        
+        
+        
+        
+
+     // Create a response map with a success message
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Student added successfully");
+
+        // Return the response map as JSON
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Map<String, String>> deleteStudent(@PathVariable Long id) {
+    	studentService.supprimer_Student(id);
+    	Map<String, String> response = new HashMap<>();
+        response.put("message", "Student deleted successfully");
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<Student> getStudentById(@PathVariable("id") Long id) {
+        Student student = studentService.getStudentById(id);
+        if (student != null) {
+            return ResponseEntity.ok(student);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Student>> getAllStudents() {
+        List<Student> students = studentService.afficher_Students();
+        return ResponseEntity.ok(students);
+    }
+    
+    @GetMapping("/search-username")
+    public ResponseEntity<List<Student>> searchStudentsByUsername(@RequestParam("username") String usernameQuery) {
+        List<Student> students = studentService.searchStudentsByUsername(usernameQuery);
+        return ResponseEntity.ok(students);
+    }
+    
+    @GetMapping("/search-email")
+    public ResponseEntity<List<Student>> searchStudentsByEmail(@RequestParam("email") String emailQuery) {
+        List<Student> students = studentService.searchStudentsByEmail(emailQuery);
+        return ResponseEntity.ok(students);
+    }
+
+    @GetMapping("/search-telephone")
+    public ResponseEntity<List<Student>> searchStudentsByTelephone(@RequestParam("telephone") String telephoneQuery) {
+        List<Student> students = studentService.searchStudentsByTelephone(telephoneQuery);
+        return ResponseEntity.ok(students);
+    }
+    
+    @GetMapping("/search-date-of-birth")
+    public ResponseEntity<List<Student>> searchStudentsByDateOfBirth(@RequestParam("dateOfBirth") String dateOfBirthQuery) {
+        List<Student> students = studentService.searchStudentsByDateOfBirth(dateOfBirthQuery);
+        return ResponseEntity.ok(students);
+    }
+    
+    @GetMapping("/filter")
+    public ResponseEntity<List<Student>> filterStudents(@RequestParam(required = false) String studentStatus,
+                                                         @RequestParam(required = false) String specialization,
+                                                         @RequestParam(required = false) String accountStatus,
+                                                         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dobMin,
+                                                         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dobMax) {
+        List<Student> filteredStudents = studentService.filterStudents(studentStatus, specialization, accountStatus, dobMin, dobMax);
+        return ResponseEntity.ok(filteredStudents);
+    }
+    
+    @PutMapping("/suspend/{id}")
+    public ResponseEntity<Map<String,String>> suspendAccount(@PathVariable Long id) {
+        studentService.suspendAccount(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Student account suspended successfully");
+
+        // Return the response map as JSON
+        return ResponseEntity.ok(response);
+    }
+    
+    @PutMapping("/activate/{id}")
+    public ResponseEntity<Map<String, String>> activateAccount(@PathVariable Long id) {
+        studentService.activateAccount(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Student account activated successfully");
+        return ResponseEntity.ok(response);
+    }
+    
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Map<String, String>> editStudent(@PathVariable Long id, @RequestBody Map<String, Object> studentData) {
+        studentService.editStudent(id, studentData);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Student edited successfully");
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/offre/all")
+    public ResponseEntity<List<Offer>> getOfferApplications(@RequestParam Long studentId,
+												    		@RequestParam(defaultValue = "0") int page,
+												            @RequestParam(defaultValue = "5") int size) {
+        Student student = studentService.getStudentById(studentId);
+        if (student != null) {
+        	List<Offer> offers = studentService.AfficherListOffre(studentId,page,size);
+            return ResponseEntity.ok(offers);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    @PostMapping("/offre/add")
+    public ResponseEntity<Map<String, String>> addOffer(@RequestParam Long offerId,@RequestParam Long studentId) {
+    	studentService.ReserveOffer(offerId, studentId);
+    	
+    	Map<String, String> response = new HashMap<>();
+        response.put("message", "Student added successfully");
+
+        // Return the response map as JSON
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/offre/rank")
+    public ResponseEntity<Map<String, Integer>> getRankOffer(@RequestParam Long studentId,
+    														 @RequestParam Long offerId) {
+        Student student = studentService.getStudentById(studentId);
+        Offer offer = offerService.getOfferById(studentId);
+        if (student != null) {
+        	int rank = offerService.calculateRankInOffer(student);
+            Map<String, Integer> response = new HashMap<>();
+            response.put("rank", rank);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+}

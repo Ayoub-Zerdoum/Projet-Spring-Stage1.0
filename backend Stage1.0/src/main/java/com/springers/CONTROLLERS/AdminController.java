@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.springers.ENTITIES.AccountStatus;
 import com.springers.ENTITIES.Admin;
+import com.springers.ENTITIES.Offer;
 import com.springers.ENTITIES.Privilege;
 import com.springers.ENTITIES.Student;
 import com.springers.SERVICES.Service_Admin;
+import com.springers.SERVICES.Service_Offer;
 
 @RestController
 @CrossOrigin
@@ -28,6 +31,9 @@ import com.springers.SERVICES.Service_Admin;
 public class AdminController {
 	@Autowired
     private Service_Admin adminService;
+	
+	@Autowired
+	private Service_Offer offreService;
 
     @PostMapping("/add")
     public ResponseEntity<String> addAdmin(@RequestBody Admin admin) {
@@ -74,9 +80,12 @@ public class AdminController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteAdmin(@PathVariable Long id) {
+    public ResponseEntity<Map<String,String>> deleteAdmin(@PathVariable Long id) {
         adminService.supprimer_Admin(id);
-        return ResponseEntity.ok("Admin deleted successfully");
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Professor deleted successfully");
+        
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/all")
@@ -119,4 +128,55 @@ public class AdminController {
         List<Admin> filteredAdmins = adminService.filterAdmins(privilege, accountStatus);
         return ResponseEntity.ok(filteredAdmins);
     }
+    
+    @PutMapping("/suspend/{id}")
+    public ResponseEntity<Map<String,String>> suspendAccount(@PathVariable Long id) {
+        adminService.suspendAccount(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Admin account suspended successfully");
+
+        // Return the response map as JSON
+        return ResponseEntity.ok(response);
+    }
+    
+    @PutMapping("/activate/{id}")
+    public ResponseEntity<Map<String, String>> activateAccount(@PathVariable Long id) {
+        adminService.activateAccount(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Student account activated successfully");
+        return ResponseEntity.ok(response);
+    }
+    
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Map<String, String>> editAdmin(@PathVariable Long id, @RequestBody Map<String, Object> adminData) {
+        adminService.editAdmin(id, adminData);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Admin edited successfully");
+        return ResponseEntity.ok(response);
+    }
+    
+    @PutMapping("/offre/edit/{offreId}")
+    public ResponseEntity<Map<String, String>> editOffre(@PathVariable Long offreId, @RequestBody Map<String, Object> offreData) {
+        offreService.editOffer(offreId, offreData);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Offre edited successfully");
+        return ResponseEntity.ok(response);
+    }
+    
+    @PostMapping("/offre/add")
+    public ResponseEntity<Map<String, String>> ajouterOffre(@PathVariable Long adminId,@RequestBody Map<String, Object> offreData){
+    	adminService.ajouter_Offer(adminId, offreData);
+    	
+    	Map<String, String> response = new HashMap<>();
+        response.put("message", "Offre ajouter successfully");
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/offre/all")
+    public ResponseEntity<List<Offer>> afficherOffres(@RequestParam(defaultValue = "0") int page,
+												              @RequestParam(defaultValue = "5") int size){
+    	List<Offer> offers = offreService.afficher_Offers(page, size);
+        return ResponseEntity.ok(offers);
+    }
+    
 }

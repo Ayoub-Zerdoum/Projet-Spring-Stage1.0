@@ -1,0 +1,15 @@
+package com.springers.REPOSITORIES;
+
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.springers.ENTITIES.Offer;
+
+public interface OfferRepo extends JpaRepository<Offer, Long>{
+	public List<Offer> findByNomSocieteContainingIgnoreCase(String nom);
+	public List<Offer> findByTitleContainingIgnoreCase(String title);
+	public List<Offer> findBySpecializationContaining(String spec,Pageable page);
+	public List<Offer> findBySpecializationContaining(String spec);
+}

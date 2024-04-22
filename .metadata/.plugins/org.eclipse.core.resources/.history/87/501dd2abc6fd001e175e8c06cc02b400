@@ -1,0 +1,81 @@
+package com.springers;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import com.springers.ENTITIES.Admin;
+import com.springers.ENTITIES.Offer;
+import com.springers.ENTITIES.Specialization;
+import com.springers.REPOSITORIES.AdminRepo;
+import com.springers.REPOSITORIES.OfferRepo;
+import com.springers.SERVICES.I_Service_Offer;
+
+import jakarta.persistence.EntityNotFoundException;
+
+@SpringBootApplication
+public class Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
+
+	@Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("http://localhost:4200"); // Replace this with the origin of your Angular app
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+	@Bean
+	CommandLineRunner start (I_Service_Offer S_Offer,AdminRepo AdRepo) {
+		return args ->{
+			/*
+			Offer offre = new Offer();
+	        offre.setSpecialization(Specialization.INFORMATIQUE);
+	        offre.setTitle("Title");
+	        offre.setDescription("Description");
+	        offre.setDeadline(LocalDate.now());
+	        offre.setNomSociete("Company Name");
+	        offre.setNbPlaces(5);
+	        offre.setIsActive(true);
+	        */
+	        Long adminId = 6L;
+	        // Set properties of adminOffer as needed for the test
+	        Admin admin = AdRepo.findById(adminId)
+	                .orElseThrow(() -> new EntityNotFoundException("Admin not found with id: " + adminId));
+	        //offre.setAdminoffer(admin);
+
+
+	        
+	        //S_Offer.ajouter_Offer(offre);
+	        
+	        List<Offer> offers = admin.getOffers();
+	        offers.forEach(p -> {System.out.println(p.getDescription());});
+	        System.out.println("x");
+	        
+	        offers = S_Offer.searchOffersByNomSociete("Comp");
+	        offers.forEach(p -> {System.out.println(p.getId());});
+	        
+	        offers = S_Offer.searchOffersByDomaine("T");
+	        offers.forEach(p -> {System.out.println(p.getId());});
+	        
+	        offers = S_Offer.searchOffersBySpecialization("INFORMATIQUE");
+	        offers.forEach(p -> {System.out.println(p.getId());});
+	       
+	        
+		};
+		
+		
+	}
+}
