@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -34,6 +35,8 @@ import jakarta.persistence.EntityNotFoundException;
 public class Application {
 
 	public static void main(String[] args) {
+		
+		
 		SpringApplication.run(Application.class, args);
 	}
 
@@ -49,7 +52,7 @@ public class Application {
     }
 	
 	
-	//@Bean
+	@Bean
 	CommandLineRunner start (I_Service_Offer S_Offer,AdminRepo AdRepo,I_Service_Admin S_Admin,OfferApplicationRepo offerAppRepo,I_Service_Student S_Student) {
 		return args ->{
 			/*
@@ -121,7 +124,10 @@ public class Application {
 	        stdoffre2.forEach(p -> {System.out.println(p.getId());});
 	        */
 	        //S_Student.ReserveOffer(4L,18L);
-	        	        
+			
+			BCryptPasswordEncoder Bcrypt = new BCryptPasswordEncoder();
+			String mdp = Bcrypt.encode("pass1");
+			System.out.println(mdp);
 		};
 		
 		

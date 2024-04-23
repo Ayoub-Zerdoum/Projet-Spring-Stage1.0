@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,9 @@ import jakarta.persistence.EntityNotFoundException;
 public class Service_Professor implements I_Service_Professor{
 	@Autowired
 	ProfessorRepo ProfRepo;
+	
+	@Autowired
+	Service_EmailSender ServiceEmail;
 
 	@Override
 	public void ajouter_Prof(Professor prof){
@@ -111,8 +115,14 @@ public class Service_Professor implements I_Service_Professor{
         if (profData.containsKey("telephone")) {
         	prof.setTelephone((String) profData.get("telephone"));
         }
-        if (profData.containsKey("password")) {
-        	prof.setPassword((String) profData.get("password"));
+        if (profData.containsKey("password") && !profData.get("password").equals("")) {
+        	BCryptPasswordEncoder Bcrypt = new BCryptPasswordEncoder();
+        	String password = (String) profData.get("password");
+        	prof.setPassword(Bcrypt.encode(password));
+        	ServiceEmail.sendemail(prof.getEmail(), "Modification de mot de passe de l'application Stage1.0 ",
+            		"votre mot de pass a été modifé par un administrateur\n "
+            		+ "Votre nom d'utilisateur est :" + prof.getUsername() + "\nVotre Mot de passe  est :" + password);
+            	System.out.print("email sent succesfully to :" + prof.getUsername());
         }
         if (profData.containsKey("department")) {
             // Convert String to StudentStatus enum

@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig  /*extends WebSecurityConfigurerAdapter*/{
 
 	private final JwtAuthentification jwtAuthentification;
@@ -26,14 +26,38 @@ public class SecurityConfig  /*extends WebSecurityConfigurerAdapter*/{
 		this.jwtAuthentification = jwtAuthentification;
 		this.ap = ap;
 	}
-	
+	/*
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		System.out.println("checking filter");
         http
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("api/auth/**")
+                .requestMatchers("/api/auth/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authenticationProvider(ap)
+                .addFilterBefore(jwtAuthentification, UsernamePasswordAuthenticationFilter.class);
+		
+        
+
+        return http.build();
+    }*/
+	
+	@Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		System.out.println("checking filter");
+        http
+                .csrf()
+                .disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/api/auth/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

@@ -74,7 +74,7 @@ invalidEditUserTelephone = false;
     // Initialize the edit professor form
     this.editProfessorForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
+      password: [''],
       email: ['', [Validators.required, Validators.email]],
       telephone: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8)]],
       department: this.selectedEditDepartment // Assuming department is part of the edit form
@@ -313,13 +313,7 @@ activateAccount(prof: any): void {
   }
   // Method to handle editing professor
 editProfessor(): void {
-  console.log('Form status:', this.editProfessorForm.status);
-  console.log('Form value:', this.editProfessorForm.value);
-  console.log('Username control validity:', this.editProfessorForm.get('username')?.valid);
-  console.log('email control validity:', this.editProfessorForm.get('email')?.valid);
-  console.log('telephone control validity:', this.editProfessorForm.get('telephone')?.valid);
-  console.log('password control validity:', this.editProfessorForm.get('password')?.valid);
-  console.log('Department control validity:', this.editProfessorForm.get('department')?.valid);
+  
   if (this.editProfessorForm.invalid) {
     this.incompleteEditUserSubmit = true;
     return;
@@ -353,7 +347,7 @@ setProfessorToEdit(professor: any): void {
     username: professor.username,
     email: professor.email,
     telephone: professor.telephone,
-    password: professor.password,
+    password: '',
     department: professor.department // Assuming department is part of the edit form
   });
 

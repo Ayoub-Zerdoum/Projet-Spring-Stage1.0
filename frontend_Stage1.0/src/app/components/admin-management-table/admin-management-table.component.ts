@@ -74,7 +74,7 @@ export class AdminManagementTableComponent implements OnInit{
     // Initialize the edit admin form
     this.editUserForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
+      password: [''],
       email: ['', [Validators.required, Validators.email]],
       telephone: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8)]],
       privilege: this.selectedEditPrivilege 
@@ -346,7 +346,7 @@ activateAccount(admin: any): void {
       username: admin.username,
       email: admin.email,
       telephone: admin.telephone,
-      password: admin.password,
+      password: '',
       privilege: admin.privilege // Assuming privilege is part of the edit form
     });
 

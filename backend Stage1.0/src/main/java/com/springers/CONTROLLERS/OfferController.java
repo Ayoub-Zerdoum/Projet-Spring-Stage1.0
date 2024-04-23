@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ public class OfferController {
 	@Autowired
 	Service_Student studentService;
 	
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/all")
     public ResponseEntity<List<Offer>> getAllOffers(@RequestParam(defaultValue = "0") int page,
 												    @RequestParam(defaultValue = "5") int size) {
@@ -35,16 +37,16 @@ public class OfferController {
 	    return ResponseEntity.ok(offers);
     }
 	
-	/*
-	@GetMapping("/specialisation/all/{studentId}")
-    public ResponseEntity<List<Offer>> getAllOffersBySpecialisation(@PathVariable Long studentId,
-				    												@RequestParam(defaultValue = "0") int page,
-																    @RequestParam(defaultValue = "5") int size) {
-		List<Offer> offers = offerService.afficher_Offers(studentId,page,size);
-	    return ResponseEntity.ok(offers);
+	@Secured("ROLE_ADMIN")
+	@GetMapping("/all/taille")
+    public ResponseEntity<Integer> getAllOffersSize(@RequestParam(defaultValue = "0") int page,
+												    @RequestParam(defaultValue = "5") int size) {
+		Integer taille = offerService.afficher_Offers().size();
+	    return ResponseEntity.ok(taille);
     }
-	*/
 	
+	
+	@Secured({"ROLE_ADMIN","ROLE_STUDENT"})
 	@GetMapping("/specialization/all/{studentId}")
     public ResponseEntity<List<Map<String, Object>>> getAllOffersBySpecialisation(@PathVariable Long studentId,
 				    												@RequestParam(defaultValue = "0") int page,
@@ -74,6 +76,7 @@ public class OfferController {
 	    return ResponseEntity.ok(offersWithRanks);
     }
 	
+	@Secured({"ROLE_ADMIN","ROLE_STUDENT"})
 	@GetMapping("/specialization/all/taille/{studentId}")
 	public ResponseEntity<Integer> getAllOffersBySpecialisationSize(@PathVariable Long studentId){
 		Integer taille = offerService.afficher_Offers(studentId).size();

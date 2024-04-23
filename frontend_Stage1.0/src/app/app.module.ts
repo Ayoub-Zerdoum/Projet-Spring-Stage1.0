@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; 
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { TokenInterceptor } from './services/token.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 
 import { GoogleMapsModule } from '@angular/google-maps'
 
@@ -45,7 +48,14 @@ import { OffersAdminComponent } from './components/offers-admin/offers-admin.com
     HttpClientModule,
     GoogleMapsModule
   ],
-  providers: [AuthenticationService],
+  providers: [
+    AuthenticationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

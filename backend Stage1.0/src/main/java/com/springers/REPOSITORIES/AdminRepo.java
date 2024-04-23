@@ -19,5 +19,4 @@ public interface AdminRepo extends JpaRepository<Admin, Long>{
 	public List<Admin> findByPrivilegeAndAccountStatus(Privilege privilege, AccountStatus accountStatus);
 	public List<Admin> findByPrivilege(Privilege privilege);
 	public List<Admin> findByAccountStatus(AccountStatus accountStatus);
-
 }

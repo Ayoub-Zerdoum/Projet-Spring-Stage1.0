@@ -37,7 +37,27 @@ export class OffersStudentComponentComponent {
     minZoom: 8
   };
 
-  markerPosition: google.maps.LatLngLiteral = { lat: -34.397, lng: 150.644 };
+  markerPosition: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
+
+
+  setMarker(offersPosition: string): void {
+    // Split the offersPosition string into latitude and longitude components
+    const [latStr, lngStr] = offersPosition.split(',');
+
+    // Convert the latitude and longitude strings to numbers
+    const latVal = parseFloat(latStr);
+    const lngVal = parseFloat(lngStr);
+
+    // Create the markerPosition object
+    this.markerPosition = { lat: latVal, lng: lngVal };
+
+  }
+  
+ 
+
+  
+
+  //markerPosition: google.maps.LatLngLiteral = { lat: -34.397, lng: 150.644 };
   
 
   constructor(private authService: AuthenticationService,private offerService: OfferManagementService) { 

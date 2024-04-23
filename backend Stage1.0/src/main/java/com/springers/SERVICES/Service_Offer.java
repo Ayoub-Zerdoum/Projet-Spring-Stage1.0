@@ -66,6 +66,11 @@ public class Service_Offer implements I_Service_Offer{
 		return offers;
 	}
 	
+	public List<Offer> afficher_Offers(){
+		List<Offer> offers = (List<Offer>) offerRepo.findAll();
+		return offers;
+	}
+	
 	public List<Offer> afficher_Offers(Long studentId, int page, int size){
 		Pageable pageable = PageRequest.of(page, size);
 		Student std = stdRepo.findById(studentId)

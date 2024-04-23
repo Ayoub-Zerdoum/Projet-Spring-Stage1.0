@@ -19,15 +19,35 @@ export class AuthenticationService {
     console.log('Attempting login...');
     return this.http.post<any>(`${environment.apiUrl}/auth/login`, { username, password })
       .pipe(
-        tap(user => {
+        tap(response => {
           // Store user information in local storage
-          localStorage.setItem('currentUser', JSON.stringify(user));
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('currentUser', JSON.stringify(response.user));
         }),
         catchError(error => {
           console.error('Login failed:', error);
           return throwError(error);
         })
       );
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  getUser(): any {
+    const userString = localStorage.getItem('user');
+    return userString ? JSON.parse(userString) : null;
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
+  logout() {
+    // Clear the token and user information from local storage
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 
   getUserTypeById(userId: number): Observable<string> {
@@ -56,6 +76,8 @@ export class AuthenticationService {
     return result;
   }
 
-  
+  sendPasswordVerificationEmail(email: string, code: string): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/user/sendPasswordVerificationEmail`, { email, code });
+  }
 
 }

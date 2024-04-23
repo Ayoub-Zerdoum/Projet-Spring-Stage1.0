@@ -11,6 +11,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springers.ENTITIES.AccountStatus;
 import com.springers.ENTITIES.Offer;
+import com.springers.ENTITIES.Role;
 import com.springers.ENTITIES.Specialization;
 import com.springers.ENTITIES.Student;
 import com.springers.ENTITIES.StudentStatus;
@@ -44,12 +47,14 @@ public class StudentController {
 	@Autowired
 	private Service_Offer offerService;
 
+	@Secured("ROLE_ADMIN")
     @PostMapping("/add")
     public ResponseEntity<String> addStudent(@RequestBody Student std) {
     	studentService.ajouter_Student(std);
         return ResponseEntity.ok("Student added successfully");
     }
     
+	@Secured("ROLE_ADMIN")
     @PostMapping("/addv2")
     public ResponseEntity<Map<String, String>> addStudentv2(@RequestBody Map<String, Object> studentData) {
 		
@@ -69,10 +74,12 @@ public class StudentController {
         // Set the account status to ACTIVE for all newly added students
         AccountStatus accountStatus = AccountStatus.ACTIVE;
 
+        BCryptPasswordEncoder Bcrypt = new BCryptPasswordEncoder();
         //Create the Student object using builder pattern
         Student student = Student.builder()
                                 .username(username)
-                                .password(password)
+                                .password(Bcrypt.encode(password))
+                                .role(Role.STUDENT)
                                 .email(email)
                                 .telephone(telephone)
                                 .dateOfBirth(dateOfBirth)
@@ -87,7 +94,7 @@ public class StudentController {
         if(sendVerificationEmail == true) {
         	ServiceEmail.sendemail(email, "Invitation a rejoindre l'application Stage1.0",
         		"L'administration de l'Enicar vous a inviter pour rejoindre l'application Stage1.0\n "
-        		+ "Votre nom d'utilisateur est :" + student.getUsername() + "\nVotre Mot de passe  est :" + student.getPassword());
+        		+ "Votre nom d'utilisateur est :" + student.getUsername() + "\nVotre Mot de passe  est :" + password);
         	System.out.print("email sent succesfully to :" + student.getUsername());
         }
         
@@ -103,6 +110,7 @@ public class StudentController {
         return ResponseEntity.ok(response);
     }
 
+	@Secured("ROLE_ADMIN")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Map<String, String>> deleteStudent(@PathVariable Long id) {
     	studentService.supprimer_Student(id);
@@ -112,6 +120,7 @@ public class StudentController {
         return ResponseEntity.ok(response);
     }
     
+	@Secured({"ROLE_ADMIN","ROLE_STUDENT"})
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable("id") Long id) {
         Student student = studentService.getStudentById(id);
@@ -122,36 +131,42 @@ public class StudentController {
         }
     }
 
+	@Secured("ROLE_ADMIN")
     @GetMapping("/all")
     public ResponseEntity<List<Student>> getAllStudents() {
         List<Student> students = studentService.afficher_Students();
         return ResponseEntity.ok(students);
     }
     
+	@Secured("ROLE_ADMIN")
     @GetMapping("/search-username")
     public ResponseEntity<List<Student>> searchStudentsByUsername(@RequestParam("username") String usernameQuery) {
         List<Student> students = studentService.searchStudentsByUsername(usernameQuery);
         return ResponseEntity.ok(students);
     }
     
+	@Secured("ROLE_ADMIN")
     @GetMapping("/search-email")
     public ResponseEntity<List<Student>> searchStudentsByEmail(@RequestParam("email") String emailQuery) {
         List<Student> students = studentService.searchStudentsByEmail(emailQuery);
         return ResponseEntity.ok(students);
     }
 
+	@Secured("ROLE_ADMIN")
     @GetMapping("/search-telephone")
     public ResponseEntity<List<Student>> searchStudentsByTelephone(@RequestParam("telephone") String telephoneQuery) {
         List<Student> students = studentService.searchStudentsByTelephone(telephoneQuery);
         return ResponseEntity.ok(students);
     }
     
+	@Secured("ROLE_ADMIN")
     @GetMapping("/search-date-of-birth")
     public ResponseEntity<List<Student>> searchStudentsByDateOfBirth(@RequestParam("dateOfBirth") String dateOfBirthQuery) {
         List<Student> students = studentService.searchStudentsByDateOfBirth(dateOfBirthQuery);
         return ResponseEntity.ok(students);
     }
     
+	@Secured("ROLE_ADMIN")
     @GetMapping("/filter")
     public ResponseEntity<List<Student>> filterStudents(@RequestParam(required = false) String studentStatus,
                                                          @RequestParam(required = false) String specialization,
@@ -161,7 +176,8 @@ public class StudentController {
         List<Student> filteredStudents = studentService.filterStudents(studentStatus, specialization, accountStatus, dobMin, dobMax);
         return ResponseEntity.ok(filteredStudents);
     }
-    
+	
+	@Secured("ROLE_ADMIN")
     @PutMapping("/suspend/{id}")
     public ResponseEntity<Map<String,String>> suspendAccount(@PathVariable Long id) {
         studentService.suspendAccount(id);
@@ -172,6 +188,7 @@ public class StudentController {
         return ResponseEntity.ok(response);
     }
     
+	@Secured("ROLE_ADMIN")
     @PutMapping("/activate/{id}")
     public ResponseEntity<Map<String, String>> activateAccount(@PathVariable Long id) {
         studentService.activateAccount(id);
@@ -180,6 +197,7 @@ public class StudentController {
         return ResponseEntity.ok(response);
     }
     
+	@Secured({"ROLE_ADMIN","ROLE_STUDENT"})
     @PutMapping("/edit/{id}")
     public ResponseEntity<Map<String, String>> editStudent(@PathVariable Long id, @RequestBody Map<String, Object> studentData) {
         studentService.editStudent(id, studentData);
@@ -188,6 +206,7 @@ public class StudentController {
         return ResponseEntity.ok(response);
     }
     
+	@Secured({"ROLE_ADMIN","ROLE_STUDENT"})
     @GetMapping("/offre/all")
     public ResponseEntity<List<Map<String, Object>>> getOfferApplications(@RequestParam Long studentId,
 												    		@RequestParam(defaultValue = "0") int page,
@@ -221,6 +240,7 @@ public class StudentController {
         }
     }
     
+	@Secured({"ROLE_ADMIN","ROLE_STUDENT"})
     @GetMapping("/offre/all/taille/{studentId}")
 	public ResponseEntity<Integer> getAllOffersSize(@PathVariable Long studentId){
 		Integer taille = studentService.AfficherListOffre(studentId).size();
@@ -228,6 +248,7 @@ public class StudentController {
         return ResponseEntity.ok(taille);
 	}
     
+	@Secured({"ROLE_ADMIN","ROLE_STUDENT"})
     @PostMapping("/offre/add")
     public ResponseEntity<Map<String, String>> addOffer(@RequestParam Long offerId,@RequestParam Long studentId) {
     	studentService.ReserveOffer(offerId, studentId);
@@ -239,6 +260,7 @@ public class StudentController {
         return ResponseEntity.ok(response);
     }
     
+	@Secured({"ROLE_ADMIN","ROLE_STUDENT"})
     @GetMapping("/offre/rank")
     public ResponseEntity<Map<String, Integer>> getRankOffer(@RequestParam Long studentId,
     														 @RequestParam Long offerId) {

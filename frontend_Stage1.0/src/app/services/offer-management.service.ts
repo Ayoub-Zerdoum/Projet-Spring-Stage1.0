@@ -38,8 +38,13 @@ export class OfferManagementService {
   }
 
   // Function to fetch all offers with pagination
-  getAllOffers(page: number = 0, size: number = 5): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/offers/all?page=${page}&size=${size}`);
+  getAllOffers(page: number = 0, size: number = 5): Observable<[any[], number]> {
+    const offers$ = this.http.get<any[]>(`${this.baseUrl}/offers/all?page=${page}&size=${size}`);
+    const totalOffers$ = this.http.get<number>(`${this.baseUrl}/offers/all/taille`);
+    // Combine both observables and emit the result as a tuple
+    return forkJoin([offers$, totalOffers$]).pipe(
+      map(([offers, totalOffers]) => [offers, totalOffers] as [any[], number])
+    );
   }
 
   // Function to add an offer for a student

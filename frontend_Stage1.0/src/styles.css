@@ -22,9 +22,9 @@
 
 .form-group span.visibilityIcon{
   position: absolute;
-  top: 50%;
+  bottom: 48%;
   right: 10px;
-  transform: translateY(-50%);
+  /*transform: translateY(-50%);*/
   font-size: 30px;
   cursor: pointer;
 }

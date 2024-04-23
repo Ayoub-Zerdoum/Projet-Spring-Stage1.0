@@ -4,17 +4,38 @@
           <img src="assets/images/Logo_ENICarthage.jpg" alt="ENICARTHAGE">
         </div>
         <h1>Login</h1>
-        <div class="form-group" name="username/email">
-          <input type="text" id="username" name="username" placeholder="username or email" onFocus="this.placeholder=''" onBlur="this.placeholder='Username'" class="form-control" [(ngModel)]="username">
+        <div class="form-group" name="username" *ngIf="this.LoginActive">
+          <input type="text" id="username" name="username" placeholder="username" onFocus="this.placeholder=''" onBlur="this.placeholder='Username'" class="form-control" [(ngModel)]="username">
         </div>
-        <div class="form-group" name="password">
+        <div class="form-group" name="password" *ngIf="this.LoginActive">
           <input type="{{ PasswordVisibility ? 'text' : 'password' }}" id="password" name="password" placeholder="password" onFocus="this.placeholder=''" onBlur="this.placeholder='Password'" class="form-control" [(ngModel)]="password">
           <span class="material-symbols-outlined visibilityIcon" (click)="toggleVisibility()">{{ PasswordVisibility ? 'visibility' : 'visibility_off' }}</span>
-          <a href="#" target="_blank">Forgot password</a>
+          <a (click)="ForgotenPasswordStart()">Forgot password</a>
         </div>
-        <p class="error-message" *ngIf="formSubmitted && !isValid">email or password invalide</p>
-        <div class="btn-container">
+        <p class="error-message" *ngIf="formSubmitted && !isValid && this.LoginActive">email or password invalide</p>
+        <div class="btn-container" *ngIf="this.LoginActive">
           <button type="submit" class="btn btn-primary" (click)="login()">Login</button>
+        </div>
+
+        <!-- froget password form  -->
+        <p class="message" *ngIf="!this.LoginActive">taper votre email</p>
+        <div class="form-group" name="email" *ngIf="!this.LoginActive">
+          <input type="email" id="email" name="email" placeholder="email" onFocus="this.placeholder=''" onBlur="this.placeholder='email'" class="form-control" [(ngModel)]="email">
+        </div>
+        <div class="btn-container" *ngIf="!this.LoginActive">
+          <button type="" class="btn btn-primary" (click)="sendVerificationEmail()">Send Code</button>
+        </div>
+        <!--Dto password -->
+        <p class="message" *ngIf="this.validatingPassword">email envoyé ,  saisir le code</p>
+        <div class="otp-container" *ngIf="this.validatingPassword">
+          <form class="otp-form">
+            <input type="text" class="otp-input" maxlength="1">
+            <input type="text" class="otp-input" maxlength="1">
+            <input type="text" class="otp-input" maxlength="1">
+            <input type="text" class="otp-input" maxlength="1">
+            <input type="text" class="otp-input" maxlength="1">
+          </form>
+          <button class="btn btn-primary" id="verify-btn">Verify OTP</button>
         </div>
     </form>
 </div>

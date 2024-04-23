@@ -202,9 +202,14 @@ a.disabled{
 }
 
 
-.action-container img{
+.btns img{
     width: 28px;
     cursor: pointer;
+}
+
+.btns{
+    display: flex;
+    gap:10px;
 }
 
 

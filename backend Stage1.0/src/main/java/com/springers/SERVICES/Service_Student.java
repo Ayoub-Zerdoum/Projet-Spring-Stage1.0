@@ -24,7 +24,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.PageRequest;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,14 +38,12 @@ public class Service_Student implements I_Service_Student{
 	
 	@Autowired
 	OfferApplicationRepo offerAppRepo;
+	
+	@Autowired
+	Service_EmailSender ServiceEmail;
 
 	@Override
 	public void ajouter_Student(Student std){
-	//PasswordEncoder passwordEncode=encoder();
-		//String rawPassword = std.getPassword();
-	    //String encodedPassword = passwordEncode.encode(rawPassword);
-	    //std.setPassword(encodedPassword);
-	
 	    Student std2 = StdRepo.save(std);
 	    System.out.println(std2);
 	}
@@ -149,8 +148,14 @@ public class Service_Student implements I_Service_Student{
         if (studentData.containsKey("telephone")) {
             student.setTelephone((String) studentData.get("telephone"));
         }
-        if (studentData.containsKey("password")) {
-            student.setPassword((String) studentData.get("password"));
+        if (studentData.containsKey("password") && !studentData.get("password").equals("")) {
+        	BCryptPasswordEncoder Bcrypt = new BCryptPasswordEncoder();
+        	String password =(String) studentData.get("password");
+        	student.setPassword(Bcrypt.encode(password));
+        	ServiceEmail.sendemail(student.getEmail(), "Modification de mot de passe de l'application Stage1.0\n ",
+        			"votre mot de pass a été modifé par un administrateur\n "
+            		+ "Votre nom d'utilisateur est :" + student.getUsername() + "\nVotre nouveau Mot de passe  est :" + password);
+            	System.out.print("email sent succesfully to :" + student.getUsername());
         }
         if (studentData.containsKey("dateOfBirth")) {
             // Assuming the dateOfBirth is sent as a String in the format "yyyy-MM-dd"

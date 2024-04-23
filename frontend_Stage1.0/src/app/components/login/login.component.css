@@ -127,4 +127,54 @@
     transform: scale(1.05);
 }
 
+/*OTP Style*/
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+ 
+.otp-container {
+  border-radius: 12px;
+  background-color: rgb(253, 253, 253);
+  width: 90%;
+  max-width: 500px;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+#otp-form {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+#otp-form input {
+  border: none;
+  background-color: #343738;
+  color: white;
+  font-size: 32px;
+  text-align: center;
+  padding: 10px;
+  width: 100%;
+  max-width: 70px;
+  height: 70px;
+  border-radius: 4px;
+  outline: 2px solid rgb(66, 66, 66);
+}
+#otp-form input:focus-visible {
+  outline: 2px solid rgb(225, 110, 65);
+}
+#otp-form input.filled {
+  outline: 2px solid rgb(7, 192, 99);
+}
+#verify-btn {
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 30px;
+  background: rgb(233, 96, 10);
+  color: white;
+  padding: 7px 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  border: none;
+}
 

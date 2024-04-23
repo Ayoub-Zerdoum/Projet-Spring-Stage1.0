@@ -112,8 +112,11 @@
                     </div>
                 </div>
                 <div class="btns">
-                    <button type="button" class="btn btn-primary" *ngIf="offer.rank === -1" [disabled]="offer.rank === offer.nbPlaces">Apply</button>
-                    <button type="button" class="btn btn-primary" *ngIf="offer.rank > -1" [disabled]="offer.rank > offer.nbPlaces" (click)="this.offerToView = offer" data-bs-toggle="modal" data-bs-target="#view-offre-modal">Edit contact Info</button> 
+                  <img *ngIf="!offer.isActive" (click)="activateOffer(offer)" src="./assets/images/locked-icon.svg" alt="lock">
+                  <img *ngIf="offer.isActive" (click)="suspendOffer(offer)" src="./assets/images/unlocked-icon.svg" alt="unlock">
+                  <img src="./assets/images/eye-icon-dark.svg" alt="view"  data-bs-toggle="modal" data-bs-target="#view-offer-modal">
+                  <img src="./assets/images/edit-icon-dark.svg" alt="edit" data-bs-toggle="modal" data-bs-target="#edit-offer-modal" (click)="setOfferToEdit(offer)">
+                  <img src="./assets/images/trash-icon.svg" alt="trash" (click)="DeleteThisStudent(offer)" data-bs-toggle="modal" data-bs-target="#delete-offer-modal"> 
                 </div>
             </div>
             

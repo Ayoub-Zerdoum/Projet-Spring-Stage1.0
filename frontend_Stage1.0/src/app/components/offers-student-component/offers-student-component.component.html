@@ -60,13 +60,16 @@
             <ul *ngIf="offerToView">
             <li>Email du societé: {{ offerToView.mailRH }}</li>
             </ul>
-            <google-map style="margin: auto;"
+            <div class="map-container" style="margin: auto;">
+              <google-map 
                 [center]="center" 
                 [zoom]="zoom" 
                 [options]="options"
                 >
                 <map-marker [position]="markerPosition"></map-marker>
             </google-map>
+            </div>
+            
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="this.offerToView = null">CLOSE</button>

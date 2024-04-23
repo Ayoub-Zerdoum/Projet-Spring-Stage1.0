@@ -83,7 +83,7 @@ export class StudentManagementTableComponent implements OnInit{
 
     this.editStudentForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
+      password: [''],
       email: ['', [Validators.required, Validators.email]],
       telephone: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8)]],
       dateOfBirth: [''],
@@ -436,7 +436,7 @@ activateAccount(student: any): void {
       email: student.email,
       telephone: student.telephone,
       dateOfBirth: student.dateOfBirth,
-      password: student.password
+      password: ''
     });
     this.incompleteEditUserSubmit = false;
     this.UserEditedSuccessfully = false;

@@ -14,9 +14,17 @@ export class LoginComponent {
   userType : string ='';
   username = '';
   password = '';
+  email = '';
   isValid: boolean = false;
   formSubmitted: boolean = false;
   PasswordVisibility: boolean = false;
+
+  LoginActive: boolean = true;
+  validatingPassword:boolean = false;
+  private verificationCode: string ='';
+  // Define variables to represent the status
+  private readonly STATUS_SUCCESS = 'success';
+  private readonly STATUS_FAIL = 'fail';
 
   
 
@@ -75,5 +83,44 @@ export class LoginComponent {
     } else {
       this.router.navigate(['/admin']);
     }
+  }
+
+  ForgotenPasswordStart(){
+    this.LoginActive = false;
+  }
+
+  generateVerificationCode(): void {
+    // Generate a random verification code
+    this.verificationCode = Math.floor(Math.random() * 90000) + 10000 + ''; // Generate a 6-digit code
+  }
+
+  getVerificationCode(): string {
+    return this.verificationCode;
+  }
+
+  sendVerificationEmail(): void {
+    // Generate verification code
+    this.generateVerificationCode();
+
+    // Send verification email with the generated code
+    this.authService.sendPasswordVerificationEmail(this.email, this.verificationCode).subscribe(
+      (response: any) => {
+        console.log('Response:', response);
+        this.validatingPassword = true;
+      },
+      (error) => {
+        console.error('Error sending verification email:', error);
+        // Handle error
+      }
+    );
+  }
+
+  // Check for status variables
+  isVerificationEmailSent(status: string): boolean {
+    return status === this.STATUS_SUCCESS;
+  }
+
+  isVerificationEmailFailed(status: string): boolean {
+    return status === this.STATUS_FAIL;
   }
 }

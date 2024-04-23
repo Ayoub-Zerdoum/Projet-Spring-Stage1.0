@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,9 @@ public class Service_Admin implements I_Service_Admin{
 	
 	@Autowired
 	Service_Offer S_Offer;
+	
+	@Autowired
+	Service_EmailSender ServiceEmail;
 	
 	@Override
 	public void ajouter_Admin(Admin admin) {
@@ -120,8 +124,14 @@ public class Service_Admin implements I_Service_Admin{
         if (adminData.containsKey("telephone")) {
         	admin.setTelephone((String) adminData.get("telephone"));
         }
-        if (adminData.containsKey("password")) {
-        	admin.setPassword((String) adminData.get("password"));
+        if (adminData.containsKey("password") && !adminData.get("password").equals("")) {
+        	BCryptPasswordEncoder Bcrypt = new BCryptPasswordEncoder();
+        	String password = (String) adminData.get("password");
+        	admin.setPassword(Bcrypt.encode(password));
+        	ServiceEmail.sendemail(admin.getEmail(), "Modification de mot de passe de l'application Stage1.0\n ",
+        			"votre mot de pass a été modifé par un administrateur\\n "
+            		+ "Votre nom d'utilisateur est :" + admin.getUsername() + "\nVotre nouveau Mot de passe  est :" + password);
+            	System.out.print("email sent succesfully to :" + admin.getUsername());
         }
         if (adminData.containsKey("privilege")) {
             // Convert String to StudentStatus enum

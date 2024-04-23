@@ -29,7 +29,11 @@ export class OffersAdminComponent {
   searchOption: string = 'Username';
   searchInput = new FormControl('');
 
-  constructor(private authService: AuthenticationService,private offerService: OfferManagementService){}
+  constructor(private authService: AuthenticationService,private offerService: OfferManagementService){
+    this.currentUser = this.authService.getUserInfo();
+    this.userType = this.currentUser.role;
+    this.showTable('All');
+  }
 
   selectNewOfferSpecialization(specialization: string): void {
     this.selectedNewOfferSpecialization = specialization;
@@ -126,7 +130,7 @@ export class OffersAdminComponent {
         });
       });
     } else if (type === "Mine") {
-      this.offerService.getAllStudentOffers(this.currentUser.userId, page, size).subscribe(([offers, nboffers]) => {
+      this.offerService.getAllOffers(/*this.currentUser.userId,*/ page, size).subscribe(([offers, nboffers]) => {
         this.offers$ = of(offers);
         this.Nboffers = of(nboffers);
         this.Nboffers.subscribe(response => {
@@ -144,4 +148,9 @@ export class OffersAdminComponent {
     console.log(totalPages);
     this.totalPages = Array.from({ length: totalPages }, (_, index) => index);
   }
+
+  activateOffer(offer:any){}
+  suspendOffer(offer:any){}
+  DeleteThisStudent(offer:any){}
+  setOfferToEdit(offer:any){}
 }

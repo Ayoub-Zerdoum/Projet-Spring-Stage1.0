@@ -35,20 +35,28 @@ public class JwtAuthentification extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull FilterChain filterChain)
 			throws ServletException, IOException {
-	final String authead= request.getHeader("Autorisation");
-	final String Jwt;
-	final String user_name;
-	
-		if(!authead.startsWith("Bearer") || authead == null  ) {
+		final String authead= request.getHeader("Authorization");
+		final String Jwt;
+		final String user_name;
+		
+		System.out.println("dans le filtre");
+		System.out.println("request: "+ request.getServletPath());
+		
+		//if(request.getServletPath().startsWith("/api/auth")) {return;}
+		if(authead == null  || !authead.startsWith("Bearer ")) {
+			System.out.println("message");
 			 filterChain.doFilter(request, response);
 			 return;
 		}
 		
 		
 		Jwt=authead.substring(7);
-		user_name = jwtService.extractUsername(Jwt);
-		if(user_name!=null|SecurityContextHolder.getContext().getAuthentication() == null) {
+		user_name = jwtService.getUsernameFromToken(Jwt);
+		System.out.println(user_name);
+		if(user_name!=null ||SecurityContextHolder.getContext().getAuthentication() == null) {
 			// extrat userdetails 
+			System.out.println(Jwt);
+			
 			UserDetails userDetails= userDetailsService.loadUserByUsername(user_name);
 			if (jwtService.validateToken(Jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
@@ -63,8 +71,8 @@ public class JwtAuthentification extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
-		}
-		
 	}
+		
+}
 
 

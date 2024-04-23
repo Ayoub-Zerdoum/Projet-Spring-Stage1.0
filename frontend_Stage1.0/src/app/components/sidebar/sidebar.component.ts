@@ -36,8 +36,8 @@ export class SidebarComponent implements OnInit{
 
   ngOnInit() {
     this.passwordForm = this.formBuilder.group({
-      password: [this.currentUser.password, Validators.required],
-      confirmPassword: [this.currentUser.password, Validators.required]
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
     });
 
     const passwordControl = this.passwordForm.get('password')!;
@@ -54,8 +54,8 @@ export class SidebarComponent implements OnInit{
     this.changingPassword = false;
     this.passwordVisibility = false;
     this.passwordConfirmVisibility = false;
-    this.passwordChoisi = this.currentUser.password;
-    this.passwordConfirme = this.currentUser.password;
+    this.passwordChoisi = '';
+    this.passwordConfirme = '';
     this.passwordChangeSuccess = false;
   }
 
@@ -85,11 +85,11 @@ export class SidebarComponent implements OnInit{
           // Handle unsupported user type
           console.error('Unsupported user type:', this.userType);
           return;
-          this.passwordChangeSuccess = true;
       }
       editService.subscribe(
         response => {
           this.passwordChangeSuccess = true;
+          this.changingPassword = false;
         },
         error => {
           console.error('Password change failed:', error);
