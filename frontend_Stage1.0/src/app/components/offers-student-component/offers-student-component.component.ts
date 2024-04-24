@@ -33,7 +33,7 @@ export class OffersStudentComponentComponent {
     zoomControl: true,
     scrollwheel: false,
     disableDoubleClickZoom: true,
-    maxZoom: 15,
+    maxZoom: 25,
     minZoom: 8
   };
 
@@ -128,7 +128,7 @@ export class OffersStudentComponentComponent {
 
   // Method to add an offer
   addOffer(offerId: number, studentId: number): void {
-    this.offerService.addOffer(offerId, studentId).subscribe(
+    this.offerService.reserveOffer(offerId, studentId).subscribe(
       response => {
         console.log(response); // Log the response from the backend
         console.log("vous avez appliqué a cette offre avec success");

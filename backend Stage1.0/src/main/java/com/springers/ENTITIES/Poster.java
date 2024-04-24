@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +28,6 @@ import lombok.AccessLevel;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode
 @FieldDefaults(level=AccessLevel.PRIVATE)
 @Table(name = "poster")
@@ -47,7 +50,7 @@ public class Poster {
     @JoinColumn(name = "session_poster_id")
     private SessionPoster sessionPoster;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "stage_id")
     private Stage stage;
 }

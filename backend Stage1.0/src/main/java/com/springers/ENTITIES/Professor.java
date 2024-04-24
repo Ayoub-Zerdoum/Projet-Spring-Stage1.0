@@ -3,6 +3,8 @@ package com.springers.ENTITIES;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +18,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @SuperBuilder
 @DiscriminatorValue("PROFESSOR")
 public class Professor extends User{
@@ -25,5 +26,6 @@ public class Professor extends User{
     private Departement department;
 	
 	@ManyToMany(cascade = CascadeType.ALL,mappedBy = "professors")
+	@JsonIgnoreProperties("professors")
     private Set<SessionPoster> sessionPosters;
 }

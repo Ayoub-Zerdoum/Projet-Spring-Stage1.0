@@ -27,7 +27,7 @@
                 </div>
                 <div class="btns">
                     <button type="button" class="btn btn-primary" *ngIf="offer.rank === -1" [disabled]="offer.rank === offer.nbPlaces" (click)="addOffer(offer.id, this.currentUser.userId)">Apply</button>
-                    <button type="button" class="btn btn-primary" *ngIf="offer.rank > -1" [disabled]="offer.rank > offer.nbPlaces" (click)="this.offerToView = offer" data-bs-toggle="modal" data-bs-target="#view-offre-modal">Check contact Info</button> 
+                    <button type="button" class="btn btn-primary" *ngIf="offer.rank > -1" [disabled]="offer.rank > offer.nbPlaces" (click)="this.offerToView = offer;setMarker(offer.localisation)" data-bs-toggle="modal" data-bs-target="#view-offre-modal">Check contact Info</button> 
                 </div>
             </div>
             

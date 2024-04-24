@@ -151,11 +151,12 @@ public class Service_Student implements I_Service_Student{
         if (studentData.containsKey("password") && !studentData.get("password").equals("")) {
         	BCryptPasswordEncoder Bcrypt = new BCryptPasswordEncoder();
         	String password =(String) studentData.get("password");
+        	System.out.print("mot de passe est :"+studentData.get("password"));
         	student.setPassword(Bcrypt.encode(password));
         	ServiceEmail.sendemail(student.getEmail(), "Modification de mot de passe de l'application Stage1.0\n ",
         			"votre mot de pass a été modifé par un administrateur\n "
-            		+ "Votre nom d'utilisateur est :" + student.getUsername() + "\nVotre nouveau Mot de passe  est :" + password);
-            	System.out.print("email sent succesfully to :" + student.getUsername());
+            		+ "Votre nom d'utilisateur est :" + student.getUsername() + "\nVotre nouveau Mot de passe  est :" + studentData.get("password"));
+            	System.out.print("email sent succesfully to :" + student.getUsername() +"/n mot de passe est :"+studentData.get("password"));
         }
         if (studentData.containsKey("dateOfBirth")) {
             // Assuming the dateOfBirth is sent as a String in the format "yyyy-MM-dd"

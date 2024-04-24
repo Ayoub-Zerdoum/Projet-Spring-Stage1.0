@@ -126,7 +126,7 @@ public class Application {
 	        //S_Student.ReserveOffer(4L,18L);
 			
 			BCryptPasswordEncoder Bcrypt = new BCryptPasswordEncoder();
-			String mdp = Bcrypt.encode("pass1");
+			String mdp = Bcrypt.encode("pass41");
 			System.out.println(mdp);
 		};
 		

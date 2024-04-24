@@ -2,22 +2,23 @@ package com.springers.ENTITIES;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode
 @FieldDefaults(level=AccessLevel.PRIVATE)
 @Builder
 @Table(name = "stage")
 public class Stage {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "stage_id")
     private Long id;
@@ -38,10 +39,11 @@ public class Stage {
     @ManyToOne
     @JoinColumn(name = "societe_id")
     private Societe societe;
-    
+
     @OneToOne(mappedBy = "stage")
+    @JsonIgnore
     private Poster poster;
-    
-    @OneToOne(mappedBy = "stage")
+
+    @OneToOne(mappedBy = "stage", cascade = CascadeType.ALL)
     private RequestStage requestStage;
 }

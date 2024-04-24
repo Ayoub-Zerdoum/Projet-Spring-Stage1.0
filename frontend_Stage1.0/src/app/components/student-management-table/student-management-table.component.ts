@@ -102,6 +102,9 @@ export class StudentManagementTableComponent implements OnInit{
     this.newUserForm.patchValue({ 
       password: randomPassword
      });
+     this.editStudentForm.patchValue({ 
+      password: randomPassword
+     });
   }
   
   getStudentById(studentId: number): any {

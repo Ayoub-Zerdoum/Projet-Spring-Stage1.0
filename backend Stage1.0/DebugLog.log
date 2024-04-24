@@ -1,0 +1,30 @@
+2024-04-24 01:12:30.368 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Getting poster list
+2024-04-24 01:12:30.381 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Updating poster com.springers.ENTITIES.Poster@1a194865
+2024-04-24 01:12:30.390 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Deleting poster 1
+2024-04-24 01:12:30.396 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Adding poster com.springers.ENTITIES.Poster@1a194865
+2024-04-24 01:12:30.404 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Finding poster by session id 1
+2024-04-24 01:37:11.735 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Getting poster list
+2024-04-24 01:37:11.763 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Updating poster com.springers.ENTITIES.Poster@1a194865
+2024-04-24 01:37:11.778 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Deleting poster 1
+2024-04-24 01:37:11.786 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Adding poster com.springers.ENTITIES.Poster@1a194865
+2024-04-24 01:37:11.809 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Finding poster by session id 1
+2024-04-24 01:38:28.679 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Getting poster list
+2024-04-24 01:38:28.686 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Updating poster com.springers.ENTITIES.Poster@1a194865
+2024-04-24 01:38:28.690 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Deleting poster 1
+2024-04-24 01:38:28.695 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Adding poster com.springers.ENTITIES.Poster@1a194865
+2024-04-24 01:38:28.700 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Finding poster by session id 1
+2024-04-24 01:39:11.881 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Getting poster list
+2024-04-24 01:39:11.891 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Updating poster com.springers.ENTITIES.Poster@1a194865
+2024-04-24 01:39:11.896 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Deleting poster 1
+2024-04-24 01:39:11.900 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Adding poster com.springers.ENTITIES.Poster@1a194865
+2024-04-24 01:39:11.905 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Finding poster by session id 1
+2024-04-24 01:39:34.169 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Getting poster list
+2024-04-24 01:39:34.180 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Updating poster com.springers.ENTITIES.Poster@1a194865
+2024-04-24 01:39:34.189 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Deleting poster 1
+2024-04-24 01:39:34.197 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Adding poster com.springers.ENTITIES.Poster@1a194865
+2024-04-24 01:39:34.225 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Finding poster by session id 1
+2024-04-24 04:31:04.561 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Getting poster list
+2024-04-24 04:31:04.610 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Updating poster com.springers.ENTITIES.Poster@1a194865
+2024-04-24 04:31:04.636 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Deleting poster 1
+2024-04-24 04:31:04.661 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Adding poster com.springers.ENTITIES.Poster@1a194865
+2024-04-24 04:31:04.668 DEBUG    [main]:com.springers.SERVICES.ServicePoster - Finding poster by session id 1

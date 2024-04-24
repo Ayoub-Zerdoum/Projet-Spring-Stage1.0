@@ -60,22 +60,6 @@ public class AuthController {
     }
 	
 	
-	 
-	/*
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
-    	String username = loginRequest.get("username");
-        String password = loginRequest.get("password");
-
-        User user = authService.authenticate(username, password);
-        if (user != null) {
-              //Return user information in the response
-            return ResponseEntity.ok(user);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
-        }
-    }*/
-	
 	@PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
     	String username = loginRequest.getUsername();

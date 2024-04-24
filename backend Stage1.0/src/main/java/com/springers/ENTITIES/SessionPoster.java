@@ -1,5 +1,7 @@
 package com.springers.ENTITIES;
 
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +14,7 @@ import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.AccessLevel;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 
@@ -28,26 +29,23 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "session_poster")
 public class SessionPoster {
-	@Id
-	@Column(name = "session_poster_id")
+    @Id
+    @Column(name = "session_poster_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "salle")
-    Salle salle;
+    @Column(name = "classroom")
+    int classroom;
 
     @Column(name = "date")
-    LocalDate date;
+    LocalDateTime dateTime;
 
-    @Column(name = "heure")
-    LocalTime heure;
-
+    @JsonManagedReference
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "professor_session_poster",
             joinColumns = @JoinColumn(name = "professor_id"),
             inverseJoinColumns = @JoinColumn(name = "session_poster_id")
-        )
+    )
     Set<Professor> professors;
 }
