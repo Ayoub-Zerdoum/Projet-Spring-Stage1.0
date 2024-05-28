@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'frontend_Stage1.0';
+
+  ngOnInit() {
+    // Attach the beforeunload event listener to clear localStorage
+    window.addEventListener('beforeunload', this.clearLocalStorage);
+  }
+
+  clearLocalStorage(event: Event) {
+    // Clear local storage
+    localStorage.clear();
+  }
 }

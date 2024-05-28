@@ -17,6 +17,8 @@ export class AuthenticationService {
 
   login(username: string, password: string) {
     console.log('Attempting login...');
+    localStorage.removeItem('token');
+    localStorage.removeItem('currentUser');
     return this.http.post<any>(`${environment.apiUrl}/auth/login`, { username, password })
       .pipe(
         tap(response => {

@@ -63,17 +63,20 @@ public class SessionPosterController {
 
 
     //search by professor name
+    @Secured("ROLE_ADMIN")
     @GetMapping("/search-professor")
     public ResponseEntity<List<SessionPoster>> searchSessionPostersByProfessor(@RequestParam String username) {
         return ResponseEntity.ok(serviceSessionPoster.searchPosterSessionsByProfName(username));
     }
 
     //search by classroom
+    @Secured("ROLE_ADMIN")
     @GetMapping("/search-classroom")
     public ResponseEntity<List<SessionPoster>> searchSessionPostersByClassroom(@RequestParam int classroom) {
         return ResponseEntity.ok(serviceSessionPoster.searchPosterSessionsByClassroom(classroom));
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/all")
     public ResponseEntity<List<SessionPoster>> searchSessionPosters(@RequestParam(required = false) Integer classroom,
                                                                     @RequestParam(required = false) String professorName) {
@@ -86,6 +89,7 @@ public class SessionPosterController {
         return ResponseEntity.ok(serviceSessionPoster.getPosterSessions());
     }
 
+    @Secured("ROLE_ADMIN")
     @PutMapping("/update")
     public ResponseEntity<String> updateSessionPoster(
             @RequestBody SessionPosterDTO sessionPosterDTO) {
@@ -107,6 +111,7 @@ public class SessionPosterController {
         return ResponseEntity.ok("Session poster updated successfully");
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteSessionPoster(@NotNull @PathVariable Long id) {
         serviceSessionPoster.deletPosterSession(id);
