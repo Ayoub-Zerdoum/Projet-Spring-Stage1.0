@@ -46,27 +46,34 @@ The application should allow students to :
 ### USER MANAGEMENT INTERFACE
 interface:
 <img src="/frontend_Stage1.0/src/assets/captures/admin interface.png">
+
 search feature:
 <img src="/frontend_Stage1.0/src/assets/captures/search.png">
+
 filter feature:
 <img src="/frontend_Stage1.0/src/assets/captures/filter.png">
+
 adding user feature:
 <img src="/frontend_Stage1.0/src/assets/captures/adding.png">
 <img src="/frontend_Stage1.0/src/assets/captures/adding interface.png">
 <img src="/frontend_Stage1.0/src/assets/captures/adding notif.png">
 <img src="/frontend_Stage1.0/src/assets/captures/confirmation email.png">
+
 deleting user feature:
 <img src="/frontend_Stage1.0/src/assets/captures/deleting warning.png">
+
 ### STUDENT INTERFACE
 changing password feature:
 <img src="/frontend_Stage1.0/src/assets/captures/change pwd 1.png">
 <img src="/frontend_Stage1.0/src/assets/captures/change pwd 2.png">
 <img src="/frontend_Stage1.0/src/assets/captures/change pwd 3.png">
+
 ### STUDENT OFFERS INTERFACE
 Review offers:
 <img src="/frontend_Stage1.0/src/assets/captures/interface student.png">
 <img src="/frontend_Stage1.0/src/assets/captures/stage confirmation.png">
 <img src="/frontend_Stage1.0/src/assets/captures/contact info.png">
+
 ## Incomplete Features
 <ul>
   <li>Posting offers by the admin</li>
